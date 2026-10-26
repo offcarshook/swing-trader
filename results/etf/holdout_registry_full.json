@@ -1,0 +1,18 @@
+[
+ {
+  "ts": "2026-10-26T22:18:19+00:00",
+  "candidate_id": "calendar_long_tom1_s2_none_h3_notrend",
+  "hash": "095d3fc078c15e02",
+  "evaluation_number": 1,
+  "override_reason": null,
+  "git": "dc20b23"
+ },
+ {
+  "ts": "2026-10-26T22:18:30+00:00",
+  "candidate_id": "calendar_long_tom1_s2_none_h3_notrend",
+  "hash": "095d3fc078c15e02",
+  "evaluation_number": 2,
+  "override_reason": null,
+  "git": "dc20b23+dirty"
+ }
+]

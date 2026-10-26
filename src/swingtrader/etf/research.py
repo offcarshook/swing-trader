@@ -142,7 +142,7 @@ def final_test(cfg: dict, bars: dict[str, pd.DataFrame], sel: dict) -> dict:
             pd.period_range(res.equity.index[0], res.equity.index[-1], freq="W"), fill_value=0)
         out["weeks_with_0_setups_pct"] = round(float((wk == 0).mean() * 100), 1)
         out["weeks_in_1_to_5_pct"] = round(float(((wk >= 1) & (wk <= 5)).mean() * 100), 1)
-    bh = {s: round(100.0 * float(b.loc[sp["final_start"]:sp["final_end"], "close"].iloc[-1] /
-                          b.loc[sp["final_start"]:sp["final_end"], "open"].iloc[0] - 1), 2) for s, b in bars.items()}
+    win = {s: b.loc[sp["final_start"]:sp["final_end"]] for s, b in bars.items()}
+    bh = {s: round(100.0 * float(w["close"].iloc[-1] / w["open"].iloc[0] - 1), 2) for s, w in win.items() if len(w)}
     out["buy_and_hold_pct"] = bh
     return out, res

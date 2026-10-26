@@ -112,3 +112,27 @@ The final test did *better* than training (train PF 1.13 at 1× costs), so treat
 friendlier regime, not as an edge that improved. 2022 lost money (few signals, because the uptrend
 filter was off most of the year). The 1–5 setups/week target was met in only ~50% of weeks with
 2 ETFs. The other 13 ETFs (bonds, metals, energy, international) are what would spread the signals out.
+
+## Round 4: all 15 ETFs (Kaggle sources) — the strategies don't generalise
+Sources (`scripts/import_kaggle_etfs.py`, provenance in `data/raw/etf_full/provenance.json`, not committed):
+SPY/QQQ user uploads; DIA GLD XLE XLF XLK SMH from `liewyousheng/historical-etf` (ends 2022-08-08);
+IEF SLV USO EFA EEM IWM from `jacksoncrow/stock-market-dataset` (ends 2020-04-01, so **training only**);
+TLT from `kornilovag94/etfs-bonds-market-dataset` (unadjusted, ends 2024-08-19). The 2-ETF results
+from round 3 were renamed `*full2etf*`.
+
+**Training (2008–2020, all 52 candidates, 2× costs): only turn-of-month (after a down week, no trend
+filter) passed** (498 trades, PF 1.33, 77% positive years, above 100% of random runs). Every mean-reversion
+setup that worked on SPY+QQQ **failed on the basket**. IBS < 0.2, for example, lost money on 10 of 15
+ETFs (SLV, IEF, EEM, USO, IWM, XLF, DIA, XLE …). The edge belongs to US large-cap equity indexes, not
+to "ETFs".
+
+**Final test 2021+ (run once; a crash in the buy-and-hold line forced one rerun of the same frozen
+candidate, logged as evaluation #2):** 85 trades, PF **0.93**, **−2.1%**, max DD −12.6%. 0.29 trades/week.
+It fails. Only 9 ETFs have post-2021 data, and most of those stop in 2022-08, so the window is thin.
+
+### What the whole phase says
+1. Short-term mean reversion on **SPY/QQQ** is the only thing that survived a clean out-of-sample test
+   (round 3: PF 1.37, +29.5%, robust at 3× costs). It is not a basket-wide edge.
+2. Gap, NR7, RSI2-dip and downtrend-short families did not hold up on tradable data.
+3. 1–5 setups/week cannot be reached honestly: the rules that work fire ~1.2×/week on two correlated ETFs,
+   and spreading them to other ETFs adds losing trades, not edge.
