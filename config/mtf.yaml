@@ -1,0 +1,16 @@
+# Multi-timeframe MES study (genuine 1-minute data). Written 2026-10-26 before the full study ran.
+# Disclosure: three variants (A, C, D long) were smoke-run on the TRAIN window while debugging the
+# engine; their train numbers were seen before this file was written. Nothing was tuned on them.
+instrument: MES
+periods:
+  train:       ["2019-11-01", "2022-12-31"]     # daily features need ~126 sessions of warm-up
+  validation:  ["2023-01-01", "2023-12-31"]
+  final_viewed: ["2024-01-02", "2026-10-20"]    # MES 2024+ was the phase-1 holdout (daily level): VIEWED
+decision_rule: >
+  Multi-timeframe confirmation "adds value" only if a multi-timeframe variant (C, D or E) beats BOTH
+  the single-timeframe baseline A and the context-only variant B on net expectancy (R) at 2x costs
+  in the train AND the validation period, with at least 100 train trades. The final period is
+  reported, never used to choose.
+stress:
+  cost_mults: [1.0, 2.0, 3.0]
+  entry_delay_minutes: [0, 5]

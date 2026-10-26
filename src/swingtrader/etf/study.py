@@ -233,10 +233,24 @@ def _clean(o):
     return o
 
 
-def run_study(wf_seeds: int = 20, boot: int = 2000, skip_wf: bool = False) -> dict:
+def reselect(cfg, out_dir: Path) -> dict:
+    """Training-only selection on SPY+QQQ with the current (audited) engine; same grid and gates."""
+    from swingtrader.etf.research import selection_hash
+    bars = load_basket(resolve("data/raw/etf_full"), SYMS)
+    sel = evaluate_train(cfg, bars, grid_name="all")
+    sel["hash"] = selection_hash(sel)
+    sel["note"] = ("audited engine: executable-price fills + dividends, intraday exits no longer free the "
+                   "same session's opening slot; pre-registered grid 'all' and gates unchanged; train only")
+    (out_dir / "train_selection_corrected.json").write_text(json.dumps(sel, indent=1, default=str))
+    return sel
+
+
+def run_study(wf_seeds: int = 20, boot: int = 2000, skip_wf: bool = False, reselect_first: bool = False) -> dict:
     cfg = load_config(resolve("config/etf.yaml"))
     out_dir = resolve("results/etf/study")
     out_dir.mkdir(parents=True, exist_ok=True)
+    if reselect_first:
+        reselect(cfg, out_dir)
     sel = json.loads((out_dir / "train_selection_corrected.json").read_text())
     params = _params(sel)
     bars = load_basket(resolve("data/raw/etf_full"), SYMS)

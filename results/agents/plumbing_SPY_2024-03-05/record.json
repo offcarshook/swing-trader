@@ -1,0 +1,39 @@
+{
+ "instrument": "SPY",
+ "decision_ts": "2024-03-05T13:25:00+00:00",
+ "data_cutoff": "2024-03-04T21:00:00+00:00",
+ "generated_at": "2026-10-26T23:09:36.153774+00:00",
+ "status": "plumbing_test",
+ "timeframes_assessed": [
+  "1d"
+ ],
+ "rating": "Hold",
+ "direction_bias": 0,
+ "confidence": null,
+ "thesis": "\nBull Analyst: [FAKE LLM - plumbing test, not research]\nRating: Hold\nThis text is canned and carries no opinion.",
+ "counter_thesis": "\nBear Analyst: [FAKE LLM - plumbing test, not research]\nRating: Hold\nThis text is canned and carries no opinion.",
+ "risks": "\nAggressive Analyst: [FAKE LLM - plumbing test, not research]\nRating: Hold\nThis text is canned and carries no opinion.\nConservative Analyst: [FAKE LLM - plumbing test, not research]\nRating: Hold\nThis text is canned and carries no opinion.\nNeutral Analyst: [FAKE LLM - plumbing test, not research]\nRating: Hold\nThis text is canned and carries no opinion.",
+ "invalidation_conditions": [],
+ "source_timestamps": [
+  "2024-03-05",
+  "2024-03-05"
+ ],
+ "model": null,
+ "provider": "fake",
+ "prompt_config_version": "ta-v0.7.0-market-only-local-vendor/1",
+ "schema_version": "etf-research-record/1",
+ "run_id": "1fd527c14e0343e79f88ae2930928db3",
+ "candidate": {
+  "sym": "SPY"
+ },
+ "disabled_inputs": {
+  "news": "no point-in-time dated news archive available to this project; upstream vendors would return today's news",
+  "social": "no point-in-time sentiment archive; disabled",
+  "fundamentals": "ETFs have no single-issuer fundamentals; upstream fundamentals are not point-in-time",
+  "macro": "no point-in-time macro vintage data (e.g. ALFRED) wired in; disabled"
+ },
+ "data_fingerprint": null,
+ "temperature": null,
+ "seed": null,
+ "notes": "scripted local model: wiring test only, not research"
+}

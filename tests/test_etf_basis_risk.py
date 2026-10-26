@@ -142,3 +142,24 @@ def test_worst_equity_never_above_close_equity():
     df = bars()
     r = simulate({"X": df}, [P], df.index[0], df.index[-1], RiskCfg(), sigs=sig(df, 300, 1.5))
     assert (r.equity_worst <= r.equity + 1e-9).all()
+
+
+def test_intraday_exit_does_not_free_the_slot_for_the_same_open():
+    # Regression (look-ahead in slot accounting): a position stopped out DURING session k used to
+    # free its symbol slot and risk budget for an entry at session k's OPEN, i.e. before it exited.
+    df = bars()
+    k = 300
+    df.iloc[k + 1, df.columns.get_loc("low")] = df.open.iloc[k + 1] - 20     # stop hit intraday on k+1
+    df.iloc[k, df.columns.get_loc("low")] = df.open.iloc[k] - 0.1            # but not on the entry bar
+    s = pd.concat([sig(df, k, 1.0), sig(df, k + 1, 1.0)], ignore_index=True)
+    r = simulate({"X": df}, [P], df.index[0], df.index[-1], RiskCfg(**NOCOST), sigs=s)
+    assert len(r.trades) == 1 and r.trades.reason.iloc[0] == "stop" and r.skipped["same_symbol"] == 1
+
+
+def test_exit_decided_before_open_frees_the_slot():
+    df = bars()
+    k = 300
+    p = Params("dip", "long", "rsi2<", 10, 2.0, None, 1)       # time stop after one session
+    s = pd.concat([sig(df, k, 1000.0, pid=p.id), sig(df, k + 2, 1000.0, pid=p.id)], ignore_index=True)
+    r = simulate({"X": df}, [p], df.index[0], df.index[-1], RiskCfg(**NOCOST), sigs=s, exec_style="lumibot")
+    assert len(r.trades) == 2      # the time exit at the open of k+2 is known before that open

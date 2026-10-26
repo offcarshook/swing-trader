@@ -37,10 +37,10 @@ class OrderIntent:
             raise ValueError("side must be +1/-1")
         if self.qty <= 0:
             raise ValueError("qty must be > 0")
-        if self.order_type not in ("market", "stop"):
+        if self.order_type not in ("market", "stop", "limit"):
             raise ValueError("unsupported order type")
-        if self.order_type == "stop" and not self.stop_price:
-            raise ValueError("stop order needs stop_price")
+        if self.order_type in ("stop", "limit") and not self.stop_price:
+            raise ValueError(f"{self.order_type} order needs a price (stop_price field)")
 
 
 class DuplicateOrderError(RuntimeError):

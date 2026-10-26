@@ -1,0 +1,1 @@
+{"as_of": "2024-03-05", "ticker": "SPY", "analysts": ["market"], "candidate": {"sym": "SPY"}, "bars_path": "/home/user/swing-trader/results/agents/plumbing_SPY_2024-03-05/SPY_pit.parquet", "work_dir": "/home/user/swing-trader/results/agents/plumbing_SPY_2024-03-05/ta_home", "provider": null}

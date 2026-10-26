@@ -1,0 +1,38 @@
+{
+ "status": "fake_llm_plumbing_test",
+ "as_of": "2024-03-05",
+ "ticker": "SPY",
+ "rating": "Hold",
+ "direction_bias": 0,
+ "bull_case": "\nBull Analyst: [FAKE LLM - plumbing test, not research]\nRating: Hold\nThis text is canned and carries no opinion.",
+ "bear_case": "\nBear Analyst: [FAKE LLM - plumbing test, not research]\nRating: Hold\nThis text is canned and carries no opinion.",
+ "research_plan": "[FAKE LLM - plumbing test, not research]\nRating: Hold\nThis text is canned and carries no opinion.",
+ "trader_plan": "[FAKE LLM - plumbing test, not research]\nRating: Hold\nThis text is canned and carries no opinion.",
+ "risk_debate": "\nAggressive Analyst: [FAKE LLM - plumbing test, not research]\nRating: Hold\nThis text is canned and carries no opinion.\nConservative Analyst: [FAKE LLM - plumbing test, not research]\nRating: Hold\nThis text is canned and carries no opinion.\nNeutral Analyst: [FAKE LLM - plumbing test, not research]\nRating: Hold\nThis text is canned and carries no opinion.",
+ "final_decision": "[FAKE LLM - plumbing test, not research]\nRating: Hold\nThis text is canned and carries no opinion.",
+ "market_report": "[FAKE LLM - plumbing test, not research]\nRating: Hold\nThis text is canned and carries no opinion.",
+ "news_report": "",
+ "candidate": {
+  "sym": "SPY"
+ },
+ "model_info": {
+  "tradingagents": "0.7.0",
+  "provider": "fake",
+  "deep": null,
+  "quick": null
+ },
+ "tool_calls": [
+  {
+   "tool": "get_stock_data",
+   "start": "2023-11-06",
+   "end": "2024-03-05"
+  },
+  {
+   "tool": "get_indicators",
+   "indicator": "rsi",
+   "curr_date": "2024-03-05"
+  }
+ ],
+ "elapsed_s": 1.8,
+ "reason": "scripted local model: wiring test only, not research"
+}

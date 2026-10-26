@@ -161,8 +161,31 @@ def cmd_etf(cfg, args):
 
 def cmd_etf_study(cfg, args):
     from swingtrader.etf.study import run_study
-    run_study(wf_seeds=args.wf_seeds, boot=args.boot, skip_wf=args.skip_wf)
+    run_study(wf_seeds=args.wf_seeds, boot=args.boot, skip_wf=args.skip_wf, reselect_first=args.reselect)
     print("wrote results/etf/study/study.json (+ trades/equity/opportunity CSVs)")
+
+
+def cmd_lumibot_etf(cfg, args):
+    from swingtrader.etf.data import load_basket
+    from swingtrader.lumibot_bridge.etf_parity import run_parity
+    ecfg = load_config(resolve("config/etf.yaml"))
+    sel = json.loads((resolve("results/etf/study") / "train_selection_corrected.json").read_text())
+    bars = load_basket(resolve(ecfg["data"]["full_dir"]), ["SPY", "QQQ"])
+    risk = {**ecfg["risk"], **ecfg["costs"]}
+    full = ("2021-01-04", "2025-09-11") if args.full else None
+    rep = run_parity(bars, sel["selected_params"], risk, resolve("results/parity"), (args.start, args.end), full)
+    print(json.dumps(rep, indent=1, default=str))
+
+
+def cmd_mtf_study(cfg, args):
+    from swingtrader.mtf.study import run_mtf_study
+    out = run_mtf_study()
+    print(json.dumps(out["verdict"], indent=1))
+
+
+def cmd_etf_paper(cfg, args):
+    from swingtrader.lumibot_bridge.etf_paper import run_etf_paper
+    print(json.dumps(run_etf_paper(dry_run=not args.broker, sessions=args.sessions), indent=1, default=str))
 
 
 def cmd_paper(cfg, args):
@@ -205,6 +228,15 @@ def main(argv=None):
     p.add_argument("--wf-seeds", type=int, default=20)
     p.add_argument("--boot", type=int, default=2000)
     p.add_argument("--skip-wf", action="store_true")
+    p.add_argument("--reselect", action="store_true", help="redo the training-only selection first")
+    p = sub.add_parser("lumibot-etf", help="ETF book through Lumibot + parity report vs reference engine")
+    p.add_argument("--start", default="2019-01-02")
+    p.add_argument("--end", default="2019-12-31")
+    p.add_argument("--full", action="store_true", help="also run the 2021-01-04..2025-09-11 common window")
+    sub.add_parser("mtf-study", help="multi-timeframe comparison on MES 1-minute data")
+    p = sub.add_parser("etf-paper", help="ETF book paper mode via Lumibot (dry run or PAPER broker only)")
+    p.add_argument("--broker", action="store_true", help="connect a PAPER broker (credentials required)")
+    p.add_argument("--sessions", type=int, default=120)
     p = sub.add_parser("paper", help="paper-trading step (requires a promoted candidate)")
     p.add_argument("--as-of", default=None)
     p.add_argument("--dry-run", action="store_true")
@@ -213,7 +245,7 @@ def main(argv=None):
     args = ap.parse_args(argv)
     cfg = load_config(args.config)
     {"download": cmd_download, "data": cmd_data, "select": cmd_select, "holdout": cmd_holdout, "report": cmd_report,
-     "lumibot-backtest": cmd_lumibot, "agent-research": cmd_agent, "paper": cmd_paper, "etf": cmd_etf, "etf-study": cmd_etf_study}[args.cmd](cfg, args)
+     "lumibot-backtest": cmd_lumibot, "agent-research": cmd_agent, "paper": cmd_paper, "etf": cmd_etf, "etf-study": cmd_etf_study, "lumibot-etf": cmd_lumibot_etf, "mtf-study": cmd_mtf_study, "etf-paper": cmd_etf_paper}[args.cmd](cfg, args)
 
 
 if __name__ == "__main__":

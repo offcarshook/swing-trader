@@ -12,6 +12,21 @@ import pandas as pd
 log = logging.getLogger(__name__)
 
 
+ORDERS_DISABLED_ENV = "SWINGTRADER_DISABLE_ORDERS"
+
+
+def order_submission_enabled(kill_file: Path | None = None) -> tuple[bool, str]:
+    """Global switch, independent of every strategy/risk setting: when it is off, NO order of any
+    kind (entry, exit, stop) may be submitted by any adapter. Set SWINGTRADER_DISABLE_ORDERS=1 or
+    create the configured file to engage it."""
+    import os
+    if os.environ.get(ORDERS_DISABLED_ENV, "").strip().lower() in ("1", "true", "yes", "on"):
+        return False, f"{ORDERS_DISABLED_ENV} is set"
+    if kill_file is not None and Path(kill_file).exists():
+        return False, f"order-submission switch file {kill_file} present"
+    return True, "enabled"
+
+
 def kill_switch_active(path: Path) -> bool:
     """Touch the file to stop all new orders; exits/flatten remain allowed."""
     return path.exists()

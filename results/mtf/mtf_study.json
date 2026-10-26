@@ -1,0 +1,3416 @@
+{
+ "config": {
+  "instrument": "MES",
+  "periods": {
+   "train": [
+    "2019-11-01",
+    "2022-12-31"
+   ],
+   "validation": [
+    "2023-01-01",
+    "2023-12-31"
+   ],
+   "final_viewed": [
+    "2024-01-02",
+    "2026-10-20"
+   ]
+  },
+  "decision_rule": "Multi-timeframe confirmation \"adds value\" only if a multi-timeframe variant (C, D or E) beats BOTH the single-timeframe baseline A and the context-only variant B on net expectancy (R) at 2x costs in the train AND the validation period, with at least 100 train trades. The final period is reported, never used to choose.\n",
+  "stress": {
+   "cost_mults": [
+    1.0,
+    2.0,
+    3.0
+   ],
+   "entry_delay_minutes": [
+    0,
+    5
+   ]
+  }
+ },
+ "data": {
+  "first_minute": "2019-05-05 17:00:00",
+  "last_minute": "2026-10-20 20:44:00",
+  "minutes": 2627538,
+  "bars": {
+   "15m": 175740,
+   "1h": 44090,
+   "4h": 11501,
+   "1d": 1931
+  },
+  "decision_points_rth_15m": 47375
+ },
+ "costs": {
+  "commission_per_side": 0.62,
+  "exchange_fees_per_side": 0.38,
+  "market_slippage_ticks": 1.0,
+  "stop_slippage_ticks": 2.0,
+  "gap_extra_ticks": 1.0,
+  "roll_slippage_ticks": 1.0,
+  "cost_multiplier": 1.0
+ },
+ "variants": {
+  "A_daily_only": {
+   "definition": {
+    "name": "A_daily_only",
+    "entry": "daily_open",
+    "use_daily": true,
+    "use_vol": false,
+    "use_h4": false,
+    "use_h1_setup": false,
+    "setup_window_h": 4,
+    "side": "long",
+    "stop_atr": 2.0,
+    "target_r": 1.5
+   },
+   "candidates": 62,
+   "diagnostics_full_sample": {
+    "daily_signals": 62
+   },
+   "train_costs_1x": {
+    "trades": 26,
+    "trades_per_week": 0.16,
+    "zero_trade_weeks_pct": 87.8,
+    "win_rate": 0.462,
+    "profit_factor": 1.198,
+    "expectancy_r": 0.121,
+    "expectancy_usd": 101.98,
+    "total_return_pct": 2.65,
+    "cagr_pct": 0.83,
+    "geometric_monthly_pct": 0.069,
+    "max_dd_pct": -5.12,
+    "sharpe": 0.27,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 14,
+     "target": 12
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "train_by_year": {
+    "2019": 339.0,
+    "2020": 2061.0,
+    "2021": 1390.0,
+    "2022": -1139.0
+   },
+   "train_costs_2x": {
+    "trades": 26,
+    "trades_per_week": 0.16,
+    "zero_trade_weeks_pct": 87.8,
+    "win_rate": 0.462,
+    "profit_factor": 1.174,
+    "expectancy_r": 0.088,
+    "expectancy_usd": 87.29,
+    "total_return_pct": 2.27,
+    "cagr_pct": 0.71,
+    "geometric_monthly_pct": 0.059,
+    "max_dd_pct": -5.06,
+    "sharpe": 0.24,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 14,
+     "target": 12
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "train_costs_3x": {
+    "trades": 26,
+    "trades_per_week": 0.16,
+    "zero_trade_weeks_pct": 87.8,
+    "win_rate": 0.462,
+    "profit_factor": 1.074,
+    "expectancy_r": 0.055,
+    "expectancy_usd": 36.34,
+    "total_return_pct": 0.94,
+    "cagr_pct": 0.3,
+    "geometric_monthly_pct": 0.025,
+    "max_dd_pct": -4.97,
+    "sharpe": 0.12,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 14,
+     "target": 12
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "train_delay5min": {
+    "trades": 28,
+    "expectancy_r": 0.038,
+    "profit_factor": 1.051
+   },
+   "validation_costs_1x": {
+    "trades": 7,
+    "trades_per_week": 0.14,
+    "zero_trade_weeks_pct": 90.3,
+    "win_rate": 0.429,
+    "profit_factor": 1.054,
+    "expectancy_r": 0.035,
+    "expectancy_usd": 28.74,
+    "total_return_pct": 0.2,
+    "cagr_pct": 0.2,
+    "geometric_monthly_pct": 0.017,
+    "max_dd_pct": -1.87,
+    "sharpe": 0.08,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 4,
+     "target": 3
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_by_year": {
+    "2023": 201.0
+   },
+   "validation_costs_2x": {
+    "trades": 7,
+    "trades_per_week": 0.14,
+    "zero_trade_weeks_pct": 90.3,
+    "win_rate": 0.429,
+    "profit_factor": 0.988,
+    "expectancy_r": -0.001,
+    "expectancy_usd": -6.32,
+    "total_return_pct": -0.04,
+    "cagr_pct": -0.04,
+    "geometric_monthly_pct": -0.004,
+    "max_dd_pct": -1.88,
+    "sharpe": 0.0,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 4,
+     "target": 3
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_costs_3x": {
+    "trades": 7,
+    "trades_per_week": 0.14,
+    "zero_trade_weeks_pct": 90.3,
+    "win_rate": 0.429,
+    "profit_factor": 0.917,
+    "expectancy_r": -0.037,
+    "expectancy_usd": -44.11,
+    "total_return_pct": -0.31,
+    "cagr_pct": -0.31,
+    "geometric_monthly_pct": -0.026,
+    "max_dd_pct": -1.85,
+    "sharpe": -0.08,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 4,
+     "target": 3
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_delay5min": {
+    "trades": 7,
+    "expectancy_r": 0.035,
+    "profit_factor": 1.054
+   },
+   "final_viewed_costs_1x": {
+    "trades": 23,
+    "trades_per_week": 0.16,
+    "zero_trade_weeks_pct": 86.9,
+    "win_rate": 0.565,
+    "profit_factor": 1.813,
+    "expectancy_r": 0.384,
+    "expectancy_usd": 342.58,
+    "total_return_pct": 7.88,
+    "cagr_pct": 2.75,
+    "geometric_monthly_pct": 0.226,
+    "max_dd_pct": -2.82,
+    "sharpe": 0.86,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "target": 13,
+     "stop": 10
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "final_viewed_by_year": {
+    "2024": 3344.0,
+    "2025": 3487.0,
+    "2026": 1049.0
+   }
+  },
+  "B_context_only": {
+   "definition": {
+    "name": "B_context_only",
+    "entry": "h1_close",
+    "use_daily": true,
+    "use_vol": true,
+    "use_h4": true,
+    "use_h1_setup": false,
+    "setup_window_h": 4,
+    "side": "long",
+    "stop_atr": 2.0,
+    "target_r": 1.5
+   },
+   "candidates": 5148,
+   "diagnostics_full_sample": {
+    "rejected_by_daily_trend": 18436,
+    "rejected_by_vol_regime": 12794,
+    "rejected_by_4h_trend": 16863
+   },
+   "train_costs_1x": {
+    "trades": 444,
+    "trades_per_week": 2.71,
+    "zero_trade_weeks_pct": 43.8,
+    "win_rate": 0.417,
+    "profit_factor": 0.942,
+    "expectancy_r": -0.028,
+    "expectancy_usd": -30.76,
+    "total_return_pct": -13.66,
+    "cagr_pct": -4.54,
+    "geometric_monthly_pct": -0.386,
+    "max_dd_pct": -21.61,
+    "sharpe": -0.31,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 252,
+     "target": 173,
+     "time": 14,
+     "stop_gap": 4,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_by_year": {
+    "2019": 2391.0,
+    "2020": -1392.0,
+    "2021": -3501.0,
+    "2022": -11154.0
+   },
+   "train_costs_2x": {
+    "trades": 443,
+    "trades_per_week": 2.71,
+    "zero_trade_weeks_pct": 43.8,
+    "win_rate": 0.415,
+    "profit_factor": 0.868,
+    "expectancy_r": -0.08,
+    "expectancy_usd": -62.43,
+    "total_return_pct": -27.66,
+    "cagr_pct": -9.73,
+    "geometric_monthly_pct": -0.85,
+    "max_dd_pct": -30.47,
+    "sharpe": -0.79,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 252,
+     "target": 172,
+     "time": 13,
+     "stop_gap": 5,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_costs_3x": {
+    "trades": 446,
+    "trades_per_week": 2.73,
+    "zero_trade_weeks_pct": 43.8,
+    "win_rate": 0.406,
+    "profit_factor": 0.791,
+    "expectancy_r": -0.145,
+    "expectancy_usd": -89.74,
+    "total_return_pct": -40.02,
+    "cagr_pct": -14.93,
+    "geometric_monthly_pct": -1.338,
+    "max_dd_pct": -41.01,
+    "sharpe": -1.32,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 258,
+     "target": 169,
+     "time": 13,
+     "stop_gap": 4,
+     "target_gap": 2
+    },
+    "reliability": "ok"
+   },
+   "train_delay5min": {
+    "trades": 424,
+    "expectancy_r": -0.042,
+    "profit_factor": 0.923
+   },
+   "validation_costs_1x": {
+    "trades": 177,
+    "trades_per_week": 3.43,
+    "zero_trade_weeks_pct": 36.0,
+    "win_rate": 0.435,
+    "profit_factor": 1.012,
+    "expectancy_r": 0.009,
+    "expectancy_usd": 6.5,
+    "total_return_pct": 0.23,
+    "cagr_pct": 0.24,
+    "geometric_monthly_pct": 0.02,
+    "max_dd_pct": -12.38,
+    "sharpe": 0.09,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 99,
+     "target": 69,
+     "time": 8,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "validation_by_year": {
+    "2023": 1151.0
+   },
+   "validation_costs_2x": {
+    "trades": 178,
+    "trades_per_week": 3.45,
+    "zero_trade_weeks_pct": 36.0,
+    "win_rate": 0.421,
+    "profit_factor": 0.911,
+    "expectancy_r": -0.053,
+    "expectancy_usd": -45.62,
+    "total_return_pct": -8.83,
+    "cagr_pct": -8.96,
+    "geometric_monthly_pct": -0.779,
+    "max_dd_pct": -17.65,
+    "sharpe": -0.62,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 101,
+     "target": 69,
+     "time": 8
+    },
+    "reliability": "ok"
+   },
+   "validation_costs_3x": {
+    "trades": 176,
+    "trades_per_week": 3.41,
+    "zero_trade_weeks_pct": 36.0,
+    "win_rate": 0.415,
+    "profit_factor": 0.826,
+    "expectancy_r": -0.114,
+    "expectancy_usd": -86.01,
+    "total_return_pct": -15.78,
+    "cagr_pct": -15.99,
+    "geometric_monthly_pct": -1.441,
+    "max_dd_pct": -21.82,
+    "sharpe": -1.26,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 101,
+     "target": 67,
+     "time": 8
+    },
+    "reliability": "ok"
+   },
+   "validation_delay5min": {
+    "trades": 168,
+    "expectancy_r": -0.045,
+    "profit_factor": 0.917
+   },
+   "final_viewed_costs_1x": {
+    "trades": 500,
+    "trades_per_week": 3.45,
+    "zero_trade_weeks_pct": 33.1,
+    "win_rate": 0.376,
+    "profit_factor": 0.855,
+    "expectancy_r": -0.102,
+    "expectancy_usd": -73.36,
+    "total_return_pct": -36.68,
+    "cagr_pct": -15.07,
+    "geometric_monthly_pct": -1.352,
+    "max_dd_pct": -41.91,
+    "sharpe": -1.01,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 302,
+     "target": 179,
+     "time": 11,
+     "stop_gap": 6,
+     "target_gap": 2
+    },
+    "reliability": "ok"
+   },
+   "final_viewed_by_year": {
+    "2024": -8605.0,
+    "2025": -14201.0,
+    "2026": -13872.0
+   }
+  },
+  "C_context_setup": {
+   "definition": {
+    "name": "C_context_setup",
+    "entry": "h1_close",
+    "use_daily": true,
+    "use_vol": true,
+    "use_h4": true,
+    "use_h1_setup": true,
+    "setup_window_h": 4,
+    "side": "long",
+    "stop_atr": 2.0,
+    "target_r": 1.5
+   },
+   "candidates": 694,
+   "diagnostics_full_sample": {
+    "rejected_by_daily_trend": 18436,
+    "rejected_by_vol_regime": 12794,
+    "rejected_by_4h_trend": 16863,
+    "rejected_by_no_1h_setup": 45750
+   },
+   "train_costs_1x": {
+    "trades": 184,
+    "trades_per_week": 1.12,
+    "zero_trade_weeks_pct": 52.3,
+    "win_rate": 0.418,
+    "profit_factor": 0.928,
+    "expectancy_r": -0.03,
+    "expectancy_usd": -35.9,
+    "total_return_pct": -6.61,
+    "cagr_pct": -2.14,
+    "geometric_monthly_pct": -0.18,
+    "max_dd_pct": -17.48,
+    "sharpe": -0.22,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 105,
+     "target": 70,
+     "time": 6,
+     "stop_gap": 2,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_by_year": {
+    "2019": -1881.0,
+    "2020": -12145.0,
+    "2021": 15201.0,
+    "2022": -7781.0
+   },
+   "train_costs_2x": {
+    "trades": 184,
+    "trades_per_week": 1.12,
+    "zero_trade_weeks_pct": 52.3,
+    "win_rate": 0.408,
+    "profit_factor": 0.824,
+    "expectancy_r": -0.097,
+    "expectancy_usd": -85.01,
+    "total_return_pct": -15.64,
+    "cagr_pct": -5.24,
+    "geometric_monthly_pct": -0.447,
+    "max_dd_pct": -21.06,
+    "sharpe": -0.62,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 105,
+     "target": 69,
+     "time": 5,
+     "stop_gap": 4,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_costs_3x": {
+    "trades": 184,
+    "trades_per_week": 1.12,
+    "zero_trade_weeks_pct": 52.3,
+    "win_rate": 0.402,
+    "profit_factor": 0.758,
+    "expectancy_r": -0.152,
+    "expectancy_usd": -112.8,
+    "total_return_pct": -20.76,
+    "cagr_pct": -7.09,
+    "geometric_monthly_pct": -0.611,
+    "max_dd_pct": -23.22,
+    "sharpe": -0.9,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 108,
+     "target": 69,
+     "time": 4,
+     "stop_gap": 2,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_delay5min": {
+    "trades": 179,
+    "expectancy_r": -0.041,
+    "profit_factor": 0.912
+   },
+   "validation_costs_1x": {
+    "trades": 55,
+    "trades_per_week": 1.07,
+    "zero_trade_weeks_pct": 39.9,
+    "win_rate": 0.473,
+    "profit_factor": 1.262,
+    "expectancy_r": 0.147,
+    "expectancy_usd": 128.49,
+    "total_return_pct": 6.15,
+    "cagr_pct": 6.24,
+    "geometric_monthly_pct": 0.506,
+    "max_dd_pct": -4.6,
+    "sharpe": 0.78,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 28,
+     "target": 25,
+     "time": 2
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_by_year": {
+    "2023": 7067.0
+   },
+   "validation_costs_2x": {
+    "trades": 56,
+    "trades_per_week": 1.09,
+    "zero_trade_weeks_pct": 39.9,
+    "win_rate": 0.464,
+    "profit_factor": 1.149,
+    "expectancy_r": 0.084,
+    "expectancy_usd": 72.89,
+    "total_return_pct": 3.24,
+    "cagr_pct": 3.29,
+    "geometric_monthly_pct": 0.27,
+    "max_dd_pct": -5.82,
+    "sharpe": 0.44,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 29,
+     "target": 25,
+     "time": 2
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_costs_3x": {
+    "trades": 56,
+    "trades_per_week": 1.09,
+    "zero_trade_weeks_pct": 39.9,
+    "win_rate": 0.464,
+    "profit_factor": 1.072,
+    "expectancy_r": 0.043,
+    "expectancy_usd": 34.54,
+    "total_return_pct": 1.17,
+    "cagr_pct": 1.18,
+    "geometric_monthly_pct": 0.098,
+    "max_dd_pct": -6.09,
+    "sharpe": 0.19,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 29,
+     "target": 25,
+     "time": 2
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_delay5min": {
+    "trades": 53,
+    "expectancy_r": 0.021,
+    "profit_factor": 1.021
+   },
+   "final_viewed_costs_1x": {
+    "trades": 193,
+    "trades_per_week": 1.33,
+    "zero_trade_weeks_pct": 42.8,
+    "win_rate": 0.347,
+    "profit_factor": 0.728,
+    "expectancy_r": -0.186,
+    "expectancy_usd": -142.76,
+    "total_return_pct": -27.55,
+    "cagr_pct": -10.88,
+    "geometric_monthly_pct": -0.955,
+    "max_dd_pct": -30.55,
+    "sharpe": -1.28,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 122,
+     "target": 65,
+     "stop_gap": 4,
+     "time": 2
+    },
+    "reliability": "ok"
+   },
+   "final_viewed_by_year": {
+    "2024": -12355.0,
+    "2025": -8976.0,
+    "2026": -6221.0
+   }
+  },
+  "D_full_mtf": {
+   "definition": {
+    "name": "D_full_mtf",
+    "entry": "m15_trigger",
+    "use_daily": true,
+    "use_vol": true,
+    "use_h4": true,
+    "use_h1_setup": true,
+    "setup_window_h": 4,
+    "side": "long",
+    "stop_atr": 2.0,
+    "target_r": 1.5
+   },
+   "candidates": 1741,
+   "diagnostics_full_sample": {
+    "rejected_by_daily_trend": 18436,
+    "rejected_by_vol_regime": 12794,
+    "rejected_by_4h_trend": 16863,
+    "rejected_by_no_1h_setup": 30413,
+    "rejected_by_no_15m_trigger": 35350
+   },
+   "train_costs_1x": {
+    "trades": 218,
+    "trades_per_week": 1.33,
+    "zero_trade_weeks_pct": 48.7,
+    "win_rate": 0.44,
+    "profit_factor": 1.045,
+    "expectancy_r": 0.041,
+    "expectancy_usd": 24.52,
+    "total_return_pct": 5.35,
+    "cagr_pct": 1.66,
+    "geometric_monthly_pct": 0.137,
+    "max_dd_pct": -8.12,
+    "sharpe": 0.22,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 119,
+     "target": 93,
+     "time": 3,
+     "stop_gap": 3
+    },
+    "reliability": "ok"
+   },
+   "train_by_year": {
+    "2019": 4773.0,
+    "2020": -2216.0,
+    "2021": 4167.0,
+    "2022": -1377.0
+   },
+   "train_costs_2x": {
+    "trades": 220,
+    "trades_per_week": 1.34,
+    "zero_trade_weeks_pct": 48.7,
+    "win_rate": 0.436,
+    "profit_factor": 0.955,
+    "expectancy_r": -0.009,
+    "expectancy_usd": -23.34,
+    "total_return_pct": -5.13,
+    "cagr_pct": -1.65,
+    "geometric_monthly_pct": -0.139,
+    "max_dd_pct": -14.06,
+    "sharpe": -0.15,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 121,
+     "target": 93,
+     "stop_gap": 3,
+     "time": 2,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_costs_3x": {
+    "trades": 222,
+    "trades_per_week": 1.36,
+    "zero_trade_weeks_pct": 48.7,
+    "win_rate": 0.423,
+    "profit_factor": 0.848,
+    "expectancy_r": -0.094,
+    "expectancy_usd": -73.37,
+    "total_return_pct": -16.29,
+    "cagr_pct": -5.47,
+    "geometric_monthly_pct": -0.467,
+    "max_dd_pct": -21.05,
+    "sharpe": -0.63,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 125,
+     "target": 89,
+     "stop_gap": 3,
+     "time": 3,
+     "target_gap": 2
+    },
+    "reliability": "ok"
+   },
+   "train_delay5min": {
+    "trades": 210,
+    "expectancy_r": 0.09,
+    "profit_factor": 1.144
+   },
+   "validation_costs_1x": {
+    "trades": 75,
+    "trades_per_week": 1.45,
+    "zero_trade_weeks_pct": 39.9,
+    "win_rate": 0.427,
+    "profit_factor": 1.04,
+    "expectancy_r": 0.025,
+    "expectancy_usd": 21.85,
+    "total_return_pct": 0.86,
+    "cagr_pct": 0.88,
+    "geometric_monthly_pct": 0.073,
+    "max_dd_pct": -7.86,
+    "sharpe": 0.14,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 40,
+     "target": 32,
+     "time": 2,
+     "stop_gap": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_by_year": {
+    "2023": 1639.0
+   },
+   "validation_costs_2x": {
+    "trades": 75,
+    "trades_per_week": 1.45,
+    "zero_trade_weeks_pct": 39.9,
+    "win_rate": 0.427,
+    "profit_factor": 0.96,
+    "expectancy_r": -0.021,
+    "expectancy_usd": -21.6,
+    "total_return_pct": -2.28,
+    "cagr_pct": -2.31,
+    "geometric_monthly_pct": -0.195,
+    "max_dd_pct": -7.8,
+    "sharpe": -0.2,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 40,
+     "target": 32,
+     "time": 2,
+     "stop_gap": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_costs_3x": {
+    "trades": 75,
+    "trades_per_week": 1.45,
+    "zero_trade_weeks_pct": 39.9,
+    "win_rate": 0.427,
+    "profit_factor": 0.905,
+    "expectancy_r": -0.067,
+    "expectancy_usd": -49.93,
+    "total_return_pct": -4.34,
+    "cagr_pct": -4.4,
+    "geometric_monthly_pct": -0.374,
+    "max_dd_pct": -8.35,
+    "sharpe": -0.46,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 40,
+     "target": 31,
+     "time": 2,
+     "target_gap": 1,
+     "stop_gap": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_delay5min": {
+    "trades": 73,
+    "expectancy_r": -0.048,
+    "profit_factor": 0.911
+   },
+   "final_viewed_costs_1x": {
+    "trades": 225,
+    "trades_per_week": 1.55,
+    "zero_trade_weeks_pct": 39.3,
+    "win_rate": 0.36,
+    "profit_factor": 0.787,
+    "expectancy_r": -0.147,
+    "expectancy_usd": -117.47,
+    "total_return_pct": -26.43,
+    "cagr_pct": -10.39,
+    "geometric_monthly_pct": -0.91,
+    "max_dd_pct": -28.43,
+    "sharpe": -1.13,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 142,
+     "target": 79,
+     "time": 2,
+     "stop_gap": 2
+    },
+    "reliability": "ok"
+   },
+   "final_viewed_by_year": {
+    "2024": -3222.0,
+    "2025": -12072.0,
+    "2026": -11136.0
+   }
+  },
+  "E_moderate": {
+   "definition": {
+    "name": "E_moderate",
+    "entry": "m15_trigger",
+    "use_daily": true,
+    "use_vol": false,
+    "use_h4": false,
+    "use_h1_setup": true,
+    "setup_window_h": 4,
+    "side": "long",
+    "stop_atr": 2.0,
+    "target_r": 1.5
+   },
+   "candidates": 2355,
+   "diagnostics_full_sample": {
+    "rejected_by_daily_trend": 18436,
+    "rejected_by_no_1h_setup": 30413,
+    "rejected_by_no_15m_trigger": 35350
+   },
+   "train_costs_1x": {
+    "trades": 290,
+    "trades_per_week": 1.77,
+    "zero_trade_weeks_pct": 36.4,
+    "win_rate": 0.421,
+    "profit_factor": 0.976,
+    "expectancy_r": -0.003,
+    "expectancy_usd": -12.97,
+    "total_return_pct": -3.76,
+    "cagr_pct": -1.2,
+    "geometric_monthly_pct": -0.101,
+    "max_dd_pct": -15.39,
+    "sharpe": -0.06,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 164,
+     "target": 118,
+     "time": 4,
+     "stop_gap": 4
+    },
+    "reliability": "ok"
+   },
+   "train_by_year": {
+    "2019": 8004.0,
+    "2020": -11695.0,
+    "2021": 6570.0,
+    "2022": -6640.0
+   },
+   "train_costs_2x": {
+    "trades": 293,
+    "trades_per_week": 1.79,
+    "zero_trade_weeks_pct": 36.4,
+    "win_rate": 0.413,
+    "profit_factor": 0.89,
+    "expectancy_r": -0.06,
+    "expectancy_usd": -55.94,
+    "total_return_pct": -16.39,
+    "cagr_pct": -5.5,
+    "geometric_monthly_pct": -0.471,
+    "max_dd_pct": -22.44,
+    "sharpe": -0.5,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 168,
+     "target": 117,
+     "stop_gap": 4,
+     "time": 3,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_costs_3x": {
+    "trades": 295,
+    "trades_per_week": 1.8,
+    "zero_trade_weeks_pct": 36.4,
+    "win_rate": 0.403,
+    "profit_factor": 0.792,
+    "expectancy_r": -0.132,
+    "expectancy_usd": -96.4,
+    "total_return_pct": -28.44,
+    "cagr_pct": -10.04,
+    "geometric_monthly_pct": -0.878,
+    "max_dd_pct": -31.73,
+    "sharpe": -1.03,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 172,
+     "target": 113,
+     "stop_gap": 4,
+     "time": 4,
+     "target_gap": 2
+    },
+    "reliability": "ok"
+   },
+   "train_delay5min": {
+    "trades": 280,
+    "expectancy_r": 0.05,
+    "profit_factor": 1.068
+   },
+   "validation_costs_1x": {
+    "trades": 89,
+    "trades_per_week": 1.72,
+    "zero_trade_weeks_pct": 34.1,
+    "win_rate": 0.438,
+    "profit_factor": 1.091,
+    "expectancy_r": 0.055,
+    "expectancy_usd": 49.07,
+    "total_return_pct": 3.59,
+    "cagr_pct": 3.64,
+    "geometric_monthly_pct": 0.299,
+    "max_dd_pct": -5.67,
+    "sharpe": 0.39,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 47,
+     "target": 39,
+     "time": 2,
+     "stop_gap": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_by_year": {
+    "2023": 4367.0
+   },
+   "validation_costs_2x": {
+    "trades": 89,
+    "trades_per_week": 1.72,
+    "zero_trade_weeks_pct": 34.1,
+    "win_rate": 0.438,
+    "profit_factor": 1.026,
+    "expectancy_r": 0.012,
+    "expectancy_usd": 13.6,
+    "total_return_pct": 0.5,
+    "cagr_pct": 0.51,
+    "geometric_monthly_pct": 0.042,
+    "max_dd_pct": -5.6,
+    "sharpe": 0.1,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 47,
+     "target": 39,
+     "time": 2,
+     "stop_gap": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_costs_3x": {
+    "trades": 89,
+    "trades_per_week": 1.72,
+    "zero_trade_weeks_pct": 34.1,
+    "win_rate": 0.438,
+    "profit_factor": 0.958,
+    "expectancy_r": -0.032,
+    "expectancy_usd": -21.38,
+    "total_return_pct": -2.5,
+    "cagr_pct": -2.53,
+    "geometric_monthly_pct": -0.213,
+    "max_dd_pct": -6.05,
+    "sharpe": -0.21,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 47,
+     "target": 37,
+     "time": 2,
+     "target_gap": 2,
+     "stop_gap": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_delay5min": {
+    "trades": 87,
+    "expectancy_r": -0.034,
+    "profit_factor": 0.933
+   },
+   "final_viewed_costs_1x": {
+    "trades": 298,
+    "trades_per_week": 2.06,
+    "zero_trade_weeks_pct": 25.5,
+    "win_rate": 0.393,
+    "profit_factor": 0.895,
+    "expectancy_r": -0.066,
+    "expectancy_usd": -59.35,
+    "total_return_pct": -17.69,
+    "cagr_pct": -6.72,
+    "geometric_monthly_pct": -0.578,
+    "max_dd_pct": -26.41,
+    "sharpe": -0.57,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 178,
+     "target": 112,
+     "time": 5,
+     "stop_gap": 3
+    },
+    "reliability": "ok"
+   },
+   "final_viewed_by_year": {
+    "2024": -190.0,
+    "2025": -3427.0,
+    "2026": -14069.0
+   }
+  },
+  "F_no_daily": {
+   "definition": {
+    "name": "F_no_daily",
+    "entry": "m15_trigger",
+    "use_daily": false,
+    "use_vol": true,
+    "use_h4": true,
+    "use_h1_setup": true,
+    "setup_window_h": 4,
+    "side": "long",
+    "stop_atr": 2.0,
+    "target_r": 1.5
+   },
+   "candidates": 1939,
+   "diagnostics_full_sample": {
+    "rejected_by_vol_regime": 12794,
+    "rejected_by_4h_trend": 16863,
+    "rejected_by_no_1h_setup": 30413,
+    "rejected_by_no_15m_trigger": 35350
+   },
+   "train_costs_1x": {
+    "trades": 238,
+    "trades_per_week": 1.45,
+    "zero_trade_weeks_pct": 41.9,
+    "win_rate": 0.433,
+    "profit_factor": 1.018,
+    "expectancy_r": 0.025,
+    "expectancy_usd": 10.23,
+    "total_return_pct": 2.43,
+    "cagr_pct": 0.76,
+    "geometric_monthly_pct": 0.063,
+    "max_dd_pct": -8.18,
+    "sharpe": 0.13,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 132,
+     "target": 100,
+     "time": 3,
+     "stop_gap": 3
+    },
+    "reliability": "ok"
+   },
+   "train_by_year": {
+    "2019": 4773.0,
+    "2020": -1683.0,
+    "2021": 4557.0,
+    "2022": -5213.0
+   },
+   "train_costs_2x": {
+    "trades": 240,
+    "trades_per_week": 1.47,
+    "zero_trade_weeks_pct": 41.9,
+    "win_rate": 0.429,
+    "profit_factor": 0.938,
+    "expectancy_r": -0.023,
+    "expectancy_usd": -32.36,
+    "total_return_pct": -7.77,
+    "cagr_pct": -2.52,
+    "geometric_monthly_pct": -0.213,
+    "max_dd_pct": -14.38,
+    "sharpe": -0.24,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 134,
+     "target": 100,
+     "stop_gap": 3,
+     "time": 2,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_costs_3x": {
+    "trades": 242,
+    "trades_per_week": 1.48,
+    "zero_trade_weeks_pct": 41.9,
+    "win_rate": 0.417,
+    "profit_factor": 0.838,
+    "expectancy_r": -0.103,
+    "expectancy_usd": -78.02,
+    "total_return_pct": -18.88,
+    "cagr_pct": -6.4,
+    "geometric_monthly_pct": -0.55,
+    "max_dd_pct": -21.71,
+    "sharpe": -0.72,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 138,
+     "target": 96,
+     "stop_gap": 3,
+     "time": 3,
+     "target_gap": 2
+    },
+    "reliability": "ok"
+   },
+   "train_delay5min": {
+    "trades": 231,
+    "expectancy_r": 0.065,
+    "profit_factor": 1.098
+   },
+   "validation_costs_1x": {
+    "trades": 101,
+    "trades_per_week": 1.96,
+    "zero_trade_weeks_pct": 24.4,
+    "win_rate": 0.465,
+    "profit_factor": 1.231,
+    "expectancy_r": 0.124,
+    "expectancy_usd": 121.2,
+    "total_return_pct": 11.41,
+    "cagr_pct": 11.59,
+    "geometric_monthly_pct": 0.918,
+    "max_dd_pct": -7.17,
+    "sharpe": 1.09,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 51,
+     "target": 47,
+     "time": 2,
+     "stop_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "validation_by_year": {
+    "2023": 12241.0
+   },
+   "validation_costs_2x": {
+    "trades": 101,
+    "trades_per_week": 1.96,
+    "zero_trade_weeks_pct": 24.4,
+    "win_rate": 0.465,
+    "profit_factor": 1.126,
+    "expectancy_r": 0.081,
+    "expectancy_usd": 64.37,
+    "total_return_pct": 5.79,
+    "cagr_pct": 5.88,
+    "geometric_monthly_pct": 0.477,
+    "max_dd_pct": -7.5,
+    "sharpe": 0.61,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 51,
+     "target": 47,
+     "time": 2,
+     "stop_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "validation_costs_3x": {
+    "trades": 101,
+    "trades_per_week": 1.96,
+    "zero_trade_weeks_pct": 24.4,
+    "win_rate": 0.465,
+    "profit_factor": 1.062,
+    "expectancy_r": 0.039,
+    "expectancy_usd": 31.17,
+    "total_return_pct": 2.5,
+    "cagr_pct": 2.54,
+    "geometric_monthly_pct": 0.209,
+    "max_dd_pct": -8.09,
+    "sharpe": 0.3,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 51,
+     "target": 46,
+     "time": 2,
+     "target_gap": 1,
+     "stop_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "validation_delay5min": {
+    "trades": 97,
+    "expectancy_r": 0.095,
+    "profit_factor": 1.166
+   },
+   "final_viewed_costs_1x": {
+    "trades": 238,
+    "trades_per_week": 1.64,
+    "zero_trade_weeks_pct": 36.6,
+    "win_rate": 0.353,
+    "profit_factor": 0.77,
+    "expectancy_r": -0.165,
+    "expectancy_usd": -124.12,
+    "total_return_pct": -29.54,
+    "cagr_pct": -11.76,
+    "geometric_monthly_pct": -1.037,
+    "max_dd_pct": -31.46,
+    "sharpe": -1.26,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 151,
+     "target": 82,
+     "stop_gap": 3,
+     "time": 2
+    },
+    "reliability": "ok"
+   },
+   "final_viewed_by_year": {
+    "2024": -3222.0,
+    "2025": -14431.0,
+    "2026": -11887.0
+   }
+  },
+  "F_no_vol_filter": {
+   "definition": {
+    "name": "F_no_vol_filter",
+    "entry": "m15_trigger",
+    "use_daily": true,
+    "use_vol": false,
+    "use_h4": true,
+    "use_h1_setup": true,
+    "setup_window_h": 4,
+    "side": "long",
+    "stop_atr": 2.0,
+    "target_r": 1.5
+   },
+   "candidates": 1870,
+   "diagnostics_full_sample": {
+    "rejected_by_daily_trend": 18436,
+    "rejected_by_4h_trend": 16863,
+    "rejected_by_no_1h_setup": 30413,
+    "rejected_by_no_15m_trigger": 35350
+   },
+   "train_costs_1x": {
+    "trades": 230,
+    "trades_per_week": 1.41,
+    "zero_trade_weeks_pct": 46.2,
+    "win_rate": 0.439,
+    "profit_factor": 1.036,
+    "expectancy_r": 0.036,
+    "expectancy_usd": 19.79,
+    "total_return_pct": 4.55,
+    "cagr_pct": 1.42,
+    "geometric_monthly_pct": 0.117,
+    "max_dd_pct": -8.01,
+    "sharpe": 0.2,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 126,
+     "target": 97,
+     "time": 4,
+     "stop_gap": 3
+    },
+    "reliability": "ok"
+   },
+   "train_by_year": {
+    "2019": 6591.0,
+    "2020": -2385.0,
+    "2021": 550.0,
+    "2022": -205.0
+   },
+   "train_costs_2x": {
+    "trades": 232,
+    "trades_per_week": 1.42,
+    "zero_trade_weeks_pct": 46.2,
+    "win_rate": 0.435,
+    "profit_factor": 0.958,
+    "expectancy_r": -0.013,
+    "expectancy_usd": -21.98,
+    "total_return_pct": -5.1,
+    "cagr_pct": -1.64,
+    "geometric_monthly_pct": -0.138,
+    "max_dd_pct": -13.17,
+    "sharpe": -0.14,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 128,
+     "target": 97,
+     "stop_gap": 3,
+     "time": 3,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_costs_3x": {
+    "trades": 234,
+    "trades_per_week": 1.43,
+    "zero_trade_weeks_pct": 46.2,
+    "win_rate": 0.423,
+    "profit_factor": 0.845,
+    "expectancy_r": -0.096,
+    "expectancy_usd": -75.05,
+    "total_return_pct": -17.56,
+    "cagr_pct": -5.92,
+    "geometric_monthly_pct": -0.508,
+    "max_dd_pct": -21.2,
+    "sharpe": -0.68,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 132,
+     "target": 93,
+     "time": 4,
+     "stop_gap": 3,
+     "target_gap": 2
+    },
+    "reliability": "ok"
+   },
+   "train_delay5min": {
+    "trades": 222,
+    "expectancy_r": 0.084,
+    "profit_factor": 1.129
+   },
+   "validation_costs_1x": {
+    "trades": 75,
+    "trades_per_week": 1.45,
+    "zero_trade_weeks_pct": 39.9,
+    "win_rate": 0.427,
+    "profit_factor": 1.04,
+    "expectancy_r": 0.025,
+    "expectancy_usd": 21.85,
+    "total_return_pct": 0.86,
+    "cagr_pct": 0.88,
+    "geometric_monthly_pct": 0.073,
+    "max_dd_pct": -7.86,
+    "sharpe": 0.14,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 40,
+     "target": 32,
+     "time": 2,
+     "stop_gap": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_by_year": {
+    "2023": 1639.0
+   },
+   "validation_costs_2x": {
+    "trades": 75,
+    "trades_per_week": 1.45,
+    "zero_trade_weeks_pct": 39.9,
+    "win_rate": 0.427,
+    "profit_factor": 0.96,
+    "expectancy_r": -0.021,
+    "expectancy_usd": -21.6,
+    "total_return_pct": -2.28,
+    "cagr_pct": -2.31,
+    "geometric_monthly_pct": -0.195,
+    "max_dd_pct": -7.8,
+    "sharpe": -0.2,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 40,
+     "target": 32,
+     "time": 2,
+     "stop_gap": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_costs_3x": {
+    "trades": 75,
+    "trades_per_week": 1.45,
+    "zero_trade_weeks_pct": 39.9,
+    "win_rate": 0.427,
+    "profit_factor": 0.905,
+    "expectancy_r": -0.067,
+    "expectancy_usd": -49.93,
+    "total_return_pct": -4.34,
+    "cagr_pct": -4.4,
+    "geometric_monthly_pct": -0.374,
+    "max_dd_pct": -8.35,
+    "sharpe": -0.46,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 40,
+     "target": 31,
+     "time": 2,
+     "target_gap": 1,
+     "stop_gap": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_delay5min": {
+    "trades": 73,
+    "expectancy_r": -0.048,
+    "profit_factor": 0.911
+   },
+   "final_viewed_costs_1x": {
+    "trades": 240,
+    "trades_per_week": 1.66,
+    "zero_trade_weeks_pct": 35.2,
+    "win_rate": 0.362,
+    "profit_factor": 0.791,
+    "expectancy_r": -0.144,
+    "expectancy_usd": -115.08,
+    "total_return_pct": -27.62,
+    "cagr_pct": -10.91,
+    "geometric_monthly_pct": -0.958,
+    "max_dd_pct": -29.59,
+    "sharpe": -1.14,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 151,
+     "target": 83,
+     "time": 4,
+     "stop_gap": 2
+    },
+    "reliability": "ok"
+   },
+   "final_viewed_by_year": {
+    "2024": -4205.0,
+    "2025": -10058.0,
+    "2026": -13356.0
+   }
+  },
+  "F_no_4h": {
+   "definition": {
+    "name": "F_no_4h",
+    "entry": "m15_trigger",
+    "use_daily": true,
+    "use_vol": true,
+    "use_h4": false,
+    "use_h1_setup": true,
+    "setup_window_h": 4,
+    "side": "long",
+    "stop_atr": 2.0,
+    "target_r": 1.5
+   },
+   "candidates": 2188,
+   "diagnostics_full_sample": {
+    "rejected_by_daily_trend": 18436,
+    "rejected_by_vol_regime": 12794,
+    "rejected_by_no_1h_setup": 30413,
+    "rejected_by_no_15m_trigger": 35350
+   },
+   "train_costs_1x": {
+    "trades": 277,
+    "trades_per_week": 1.69,
+    "zero_trade_weeks_pct": 38.9,
+    "win_rate": 0.419,
+    "profit_factor": 0.975,
+    "expectancy_r": -0.007,
+    "expectancy_usd": -13.65,
+    "total_return_pct": -3.78,
+    "cagr_pct": -1.21,
+    "geometric_monthly_pct": -0.102,
+    "max_dd_pct": -15.14,
+    "sharpe": -0.07,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 157,
+     "target": 113,
+     "stop_gap": 4,
+     "time": 3
+    },
+    "reliability": "ok"
+   },
+   "train_by_year": {
+    "2019": 6083.0,
+    "2020": -11129.0,
+    "2021": 9095.0,
+    "2022": -7830.0
+   },
+   "train_costs_2x": {
+    "trades": 280,
+    "trades_per_week": 1.71,
+    "zero_trade_weeks_pct": 38.9,
+    "win_rate": 0.411,
+    "profit_factor": 0.884,
+    "expectancy_r": -0.065,
+    "expectancy_usd": -58.19,
+    "total_return_pct": -16.29,
+    "cagr_pct": -5.47,
+    "geometric_monthly_pct": -0.468,
+    "max_dd_pct": -21.98,
+    "sharpe": -0.51,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 161,
+     "target": 112,
+     "stop_gap": 4,
+     "time": 2,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_costs_3x": {
+    "trades": 282,
+    "trades_per_week": 1.72,
+    "zero_trade_weeks_pct": 38.9,
+    "win_rate": 0.401,
+    "profit_factor": 0.789,
+    "expectancy_r": -0.138,
+    "expectancy_usd": -97.95,
+    "total_return_pct": -27.62,
+    "cagr_pct": -9.72,
+    "geometric_monthly_pct": -0.848,
+    "max_dd_pct": -30.31,
+    "sharpe": -1.01,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 165,
+     "target": 108,
+     "stop_gap": 4,
+     "time": 3,
+     "target_gap": 2
+    },
+    "reliability": "ok"
+   },
+   "train_delay5min": {
+    "trades": 267,
+    "expectancy_r": 0.048,
+    "profit_factor": 1.073
+   },
+   "validation_costs_1x": {
+    "trades": 89,
+    "trades_per_week": 1.72,
+    "zero_trade_weeks_pct": 34.1,
+    "win_rate": 0.438,
+    "profit_factor": 1.091,
+    "expectancy_r": 0.055,
+    "expectancy_usd": 49.07,
+    "total_return_pct": 3.59,
+    "cagr_pct": 3.64,
+    "geometric_monthly_pct": 0.299,
+    "max_dd_pct": -5.67,
+    "sharpe": 0.39,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 47,
+     "target": 39,
+     "time": 2,
+     "stop_gap": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_by_year": {
+    "2023": 4367.0
+   },
+   "validation_costs_2x": {
+    "trades": 89,
+    "trades_per_week": 1.72,
+    "zero_trade_weeks_pct": 34.1,
+    "win_rate": 0.438,
+    "profit_factor": 1.026,
+    "expectancy_r": 0.012,
+    "expectancy_usd": 13.6,
+    "total_return_pct": 0.5,
+    "cagr_pct": 0.51,
+    "geometric_monthly_pct": 0.042,
+    "max_dd_pct": -5.6,
+    "sharpe": 0.1,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 47,
+     "target": 39,
+     "time": 2,
+     "stop_gap": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_costs_3x": {
+    "trades": 89,
+    "trades_per_week": 1.72,
+    "zero_trade_weeks_pct": 34.1,
+    "win_rate": 0.438,
+    "profit_factor": 0.958,
+    "expectancy_r": -0.032,
+    "expectancy_usd": -21.38,
+    "total_return_pct": -2.5,
+    "cagr_pct": -2.53,
+    "geometric_monthly_pct": -0.213,
+    "max_dd_pct": -6.05,
+    "sharpe": -0.21,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 47,
+     "target": 37,
+     "time": 2,
+     "target_gap": 2,
+     "stop_gap": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_delay5min": {
+    "trades": 87,
+    "expectancy_r": -0.034,
+    "profit_factor": 0.933
+   },
+   "final_viewed_costs_1x": {
+    "trades": 279,
+    "trades_per_week": 1.92,
+    "zero_trade_weeks_pct": 31.0,
+    "win_rate": 0.391,
+    "profit_factor": 0.893,
+    "expectancy_r": -0.069,
+    "expectancy_usd": -61.2,
+    "total_return_pct": -17.08,
+    "cagr_pct": -6.47,
+    "geometric_monthly_pct": -0.556,
+    "max_dd_pct": -25.04,
+    "sharpe": -0.58,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 167,
+     "target": 106,
+     "time": 3,
+     "stop_gap": 3
+    },
+    "reliability": "ok"
+   },
+   "final_viewed_by_year": {
+    "2024": 845.0,
+    "2025": -5473.0,
+    "2026": -12448.0
+   }
+  },
+  "F_no_1h_setup": {
+   "definition": {
+    "name": "F_no_1h_setup",
+    "entry": "m15_trigger",
+    "use_daily": true,
+    "use_vol": true,
+    "use_h4": true,
+    "use_h1_setup": false,
+    "setup_window_h": 4,
+    "side": "long",
+    "stop_atr": 2.0,
+    "target_r": 1.5
+   },
+   "candidates": 5412,
+   "diagnostics_full_sample": {
+    "rejected_by_daily_trend": 18436,
+    "rejected_by_vol_regime": 12794,
+    "rejected_by_4h_trend": 16863,
+    "rejected_by_no_15m_trigger": 35250
+   },
+   "train_costs_1x": {
+    "trades": 416,
+    "trades_per_week": 2.54,
+    "zero_trade_weeks_pct": 44.4,
+    "win_rate": 0.428,
+    "profit_factor": 0.995,
+    "expectancy_r": 0.005,
+    "expectancy_usd": -2.96,
+    "total_return_pct": -1.23,
+    "cagr_pct": -0.39,
+    "geometric_monthly_pct": -0.033,
+    "max_dd_pct": -18.78,
+    "sharpe": 0.03,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 232,
+     "target": 166,
+     "time": 13,
+     "stop_gap": 4,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_by_year": {
+    "2019": 4819.0,
+    "2020": 3298.0,
+    "2021": 1905.0,
+    "2022": -11255.0
+   },
+   "train_costs_2x": {
+    "trades": 415,
+    "trades_per_week": 2.54,
+    "zero_trade_weeks_pct": 44.4,
+    "win_rate": 0.424,
+    "profit_factor": 0.912,
+    "expectancy_r": -0.052,
+    "expectancy_usd": -46.0,
+    "total_return_pct": -19.09,
+    "cagr_pct": -6.48,
+    "geometric_monthly_pct": -0.557,
+    "max_dd_pct": -25.44,
+    "sharpe": -0.53,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 233,
+     "target": 162,
+     "time": 13,
+     "stop_gap": 4,
+     "target_gap": 3
+    },
+    "reliability": "ok"
+   },
+   "train_costs_3x": {
+    "trades": 414,
+    "trades_per_week": 2.53,
+    "zero_trade_weeks_pct": 44.4,
+    "win_rate": 0.42,
+    "profit_factor": 0.845,
+    "expectancy_r": -0.107,
+    "expectancy_usd": -73.05,
+    "total_return_pct": -30.24,
+    "cagr_pct": -10.76,
+    "geometric_monthly_pct": -0.945,
+    "max_dd_pct": -33.8,
+    "sharpe": -1.0,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 235,
+     "target": 160,
+     "time": 13,
+     "stop_gap": 3,
+     "target_gap": 3
+    },
+    "reliability": "ok"
+   },
+   "train_delay5min": {
+    "trades": 401,
+    "expectancy_r": 0.009,
+    "profit_factor": 0.997
+   },
+   "validation_costs_1x": {
+    "trades": 170,
+    "trades_per_week": 3.29,
+    "zero_trade_weeks_pct": 38.0,
+    "win_rate": 0.4,
+    "profit_factor": 0.919,
+    "expectancy_r": -0.047,
+    "expectancy_usd": -42.79,
+    "total_return_pct": -7.94,
+    "cagr_pct": -8.05,
+    "geometric_monthly_pct": -0.697,
+    "max_dd_pct": -13.83,
+    "sharpe": -0.56,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 100,
+     "target": 64,
+     "time": 4,
+     "target_gap": 2
+    },
+    "reliability": "ok"
+   },
+   "validation_by_year": {
+    "2023": -7275.0
+   },
+   "validation_costs_2x": {
+    "trades": 171,
+    "trades_per_week": 3.31,
+    "zero_trade_weeks_pct": 38.0,
+    "win_rate": 0.398,
+    "profit_factor": 0.834,
+    "expectancy_r": -0.1,
+    "expectancy_usd": -84.37,
+    "total_return_pct": -15.03,
+    "cagr_pct": -15.23,
+    "geometric_monthly_pct": -1.367,
+    "max_dd_pct": -18.85,
+    "sharpe": -1.24,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 101,
+     "target": 65,
+     "time": 5
+    },
+    "reliability": "ok"
+   },
+   "validation_costs_3x": {
+    "trades": 172,
+    "trades_per_week": 3.33,
+    "zero_trade_weeks_pct": 38.0,
+    "win_rate": 0.39,
+    "profit_factor": 0.786,
+    "expectancy_r": -0.149,
+    "expectancy_usd": -104.59,
+    "total_return_pct": -18.47,
+    "cagr_pct": -18.72,
+    "geometric_monthly_pct": -1.712,
+    "max_dd_pct": -21.8,
+    "sharpe": -1.62,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 102,
+     "target": 64,
+     "time": 5,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "validation_delay5min": {
+    "trades": 161,
+    "expectancy_r": 0.005,
+    "profit_factor": 0.993
+   },
+   "final_viewed_costs_1x": {
+    "trades": 442,
+    "trades_per_week": 3.05,
+    "zero_trade_weeks_pct": 33.1,
+    "win_rate": 0.389,
+    "profit_factor": 0.889,
+    "expectancy_r": -0.069,
+    "expectancy_usd": -58.95,
+    "total_return_pct": -26.05,
+    "cagr_pct": -10.23,
+    "geometric_monthly_pct": -0.895,
+    "max_dd_pct": -29.67,
+    "sharpe": -0.71,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 266,
+     "target": 165,
+     "time": 6,
+     "stop_gap": 3,
+     "target_gap": 2
+    },
+    "reliability": "ok"
+   },
+   "final_viewed_by_year": {
+    "2024": -2657.0,
+    "2025": -9518.0,
+    "2026": -13879.0
+   }
+  },
+  "F_no_15m_trigger": {
+   "definition": {
+    "name": "F_no_15m_trigger",
+    "entry": "h1_close",
+    "use_daily": true,
+    "use_vol": true,
+    "use_h4": true,
+    "use_h1_setup": true,
+    "setup_window_h": 4,
+    "side": "long",
+    "stop_atr": 2.0,
+    "target_r": 1.5
+   },
+   "candidates": 694,
+   "diagnostics_full_sample": {
+    "rejected_by_daily_trend": 18436,
+    "rejected_by_vol_regime": 12794,
+    "rejected_by_4h_trend": 16863,
+    "rejected_by_no_1h_setup": 45750
+   },
+   "train_costs_1x": {
+    "trades": 184,
+    "trades_per_week": 1.12,
+    "zero_trade_weeks_pct": 52.3,
+    "win_rate": 0.418,
+    "profit_factor": 0.928,
+    "expectancy_r": -0.03,
+    "expectancy_usd": -35.9,
+    "total_return_pct": -6.61,
+    "cagr_pct": -2.14,
+    "geometric_monthly_pct": -0.18,
+    "max_dd_pct": -17.48,
+    "sharpe": -0.22,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 105,
+     "target": 70,
+     "time": 6,
+     "stop_gap": 2,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_by_year": {
+    "2019": -1881.0,
+    "2020": -12145.0,
+    "2021": 15201.0,
+    "2022": -7781.0
+   },
+   "train_costs_2x": {
+    "trades": 184,
+    "trades_per_week": 1.12,
+    "zero_trade_weeks_pct": 52.3,
+    "win_rate": 0.408,
+    "profit_factor": 0.824,
+    "expectancy_r": -0.097,
+    "expectancy_usd": -85.01,
+    "total_return_pct": -15.64,
+    "cagr_pct": -5.24,
+    "geometric_monthly_pct": -0.447,
+    "max_dd_pct": -21.06,
+    "sharpe": -0.62,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 105,
+     "target": 69,
+     "time": 5,
+     "stop_gap": 4,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_costs_3x": {
+    "trades": 184,
+    "trades_per_week": 1.12,
+    "zero_trade_weeks_pct": 52.3,
+    "win_rate": 0.402,
+    "profit_factor": 0.758,
+    "expectancy_r": -0.152,
+    "expectancy_usd": -112.8,
+    "total_return_pct": -20.76,
+    "cagr_pct": -7.09,
+    "geometric_monthly_pct": -0.611,
+    "max_dd_pct": -23.22,
+    "sharpe": -0.9,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 108,
+     "target": 69,
+     "time": 4,
+     "stop_gap": 2,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_delay5min": {
+    "trades": 179,
+    "expectancy_r": -0.041,
+    "profit_factor": 0.912
+   },
+   "validation_costs_1x": {
+    "trades": 55,
+    "trades_per_week": 1.07,
+    "zero_trade_weeks_pct": 39.9,
+    "win_rate": 0.473,
+    "profit_factor": 1.262,
+    "expectancy_r": 0.147,
+    "expectancy_usd": 128.49,
+    "total_return_pct": 6.15,
+    "cagr_pct": 6.24,
+    "geometric_monthly_pct": 0.506,
+    "max_dd_pct": -4.6,
+    "sharpe": 0.78,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 28,
+     "target": 25,
+     "time": 2
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_by_year": {
+    "2023": 7067.0
+   },
+   "validation_costs_2x": {
+    "trades": 56,
+    "trades_per_week": 1.09,
+    "zero_trade_weeks_pct": 39.9,
+    "win_rate": 0.464,
+    "profit_factor": 1.149,
+    "expectancy_r": 0.084,
+    "expectancy_usd": 72.89,
+    "total_return_pct": 3.24,
+    "cagr_pct": 3.29,
+    "geometric_monthly_pct": 0.27,
+    "max_dd_pct": -5.82,
+    "sharpe": 0.44,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 29,
+     "target": 25,
+     "time": 2
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_costs_3x": {
+    "trades": 56,
+    "trades_per_week": 1.09,
+    "zero_trade_weeks_pct": 39.9,
+    "win_rate": 0.464,
+    "profit_factor": 1.072,
+    "expectancy_r": 0.043,
+    "expectancy_usd": 34.54,
+    "total_return_pct": 1.17,
+    "cagr_pct": 1.18,
+    "geometric_monthly_pct": 0.098,
+    "max_dd_pct": -6.09,
+    "sharpe": 0.19,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 29,
+     "target": 25,
+     "time": 2
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_delay5min": {
+    "trades": 53,
+    "expectancy_r": 0.021,
+    "profit_factor": 1.021
+   },
+   "final_viewed_costs_1x": {
+    "trades": 193,
+    "trades_per_week": 1.33,
+    "zero_trade_weeks_pct": 42.8,
+    "win_rate": 0.347,
+    "profit_factor": 0.728,
+    "expectancy_r": -0.186,
+    "expectancy_usd": -142.76,
+    "total_return_pct": -27.55,
+    "cagr_pct": -10.88,
+    "geometric_monthly_pct": -0.955,
+    "max_dd_pct": -30.55,
+    "sharpe": -1.28,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 122,
+     "target": 65,
+     "stop_gap": 4,
+     "time": 2
+    },
+    "reliability": "ok"
+   },
+   "final_viewed_by_year": {
+    "2024": -12355.0,
+    "2025": -8976.0,
+    "2026": -6221.0
+   }
+  },
+  "E_moderate_setup8h": {
+   "definition": {
+    "name": "E_moderate_setup8h",
+    "entry": "m15_trigger",
+    "use_daily": true,
+    "use_vol": false,
+    "use_h4": false,
+    "use_h1_setup": true,
+    "setup_window_h": 8,
+    "side": "long",
+    "stop_atr": 2.0,
+    "target_r": 1.5
+   },
+   "candidates": 3818,
+   "diagnostics_full_sample": {
+    "rejected_by_daily_trend": 18436,
+    "rejected_by_no_1h_setup": 21564,
+    "rejected_by_no_15m_trigger": 35350
+   },
+   "train_costs_1x": {
+    "trades": 378,
+    "trades_per_week": 2.31,
+    "zero_trade_weeks_pct": 32.8,
+    "win_rate": 0.413,
+    "profit_factor": 0.947,
+    "expectancy_r": -0.027,
+    "expectancy_usd": -27.92,
+    "total_return_pct": -10.55,
+    "cagr_pct": -3.47,
+    "geometric_monthly_pct": -0.294,
+    "max_dd_pct": -22.59,
+    "sharpe": -0.23,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 218,
+     "target": 146,
+     "time": 10,
+     "stop_gap": 3,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_by_year": {
+    "2019": 12201.0,
+    "2020": -15537.0,
+    "2021": 5066.0,
+    "2022": -12284.0
+   },
+   "train_costs_2x": {
+    "trades": 379,
+    "trades_per_week": 2.32,
+    "zero_trade_weeks_pct": 32.8,
+    "win_rate": 0.406,
+    "profit_factor": 0.864,
+    "expectancy_r": -0.082,
+    "expectancy_usd": -66.46,
+    "total_return_pct": -25.19,
+    "cagr_pct": -8.77,
+    "geometric_monthly_pct": -0.762,
+    "max_dd_pct": -32.93,
+    "sharpe": -0.73,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 221,
+     "target": 144,
+     "time": 9,
+     "stop_gap": 3,
+     "target_gap": 2
+    },
+    "reliability": "ok"
+   },
+   "train_costs_3x": {
+    "trades": 383,
+    "trades_per_week": 2.34,
+    "zero_trade_weeks_pct": 32.8,
+    "win_rate": 0.399,
+    "profit_factor": 0.785,
+    "expectancy_r": -0.146,
+    "expectancy_usd": -95.0,
+    "total_return_pct": -36.39,
+    "cagr_pct": -13.33,
+    "geometric_monthly_pct": -1.185,
+    "max_dd_pct": -40.33,
+    "sharpe": -1.22,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 226,
+     "target": 142,
+     "time": 9,
+     "stop_gap": 3,
+     "target_gap": 3
+    },
+    "reliability": "ok"
+   },
+   "train_delay5min": {
+    "trades": 368,
+    "expectancy_r": 0.029,
+    "profit_factor": 1.03
+   },
+   "validation_costs_1x": {
+    "trades": 125,
+    "trades_per_week": 2.42,
+    "zero_trade_weeks_pct": 30.2,
+    "win_rate": 0.448,
+    "profit_factor": 1.115,
+    "expectancy_r": 0.069,
+    "expectancy_usd": 60.61,
+    "total_return_pct": 6.74,
+    "cagr_pct": 6.85,
+    "geometric_monthly_pct": 0.553,
+    "max_dd_pct": -8.47,
+    "sharpe": 0.58,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 66,
+     "target": 55,
+     "time": 3,
+     "stop_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "validation_by_year": {
+    "2023": 7576.0
+   },
+   "validation_costs_2x": {
+    "trades": 125,
+    "trades_per_week": 2.42,
+    "zero_trade_weeks_pct": 30.2,
+    "win_rate": 0.44,
+    "profit_factor": 0.994,
+    "expectancy_r": 0.007,
+    "expectancy_usd": -3.01,
+    "total_return_pct": -1.03,
+    "cagr_pct": -1.05,
+    "geometric_monthly_pct": -0.088,
+    "max_dd_pct": -9.14,
+    "sharpe": -0.03,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 67,
+     "target": 54,
+     "time": 3,
+     "stop_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "validation_costs_3x": {
+    "trades": 125,
+    "trades_per_week": 2.42,
+    "zero_trade_weeks_pct": 30.2,
+    "win_rate": 0.432,
+    "profit_factor": 0.946,
+    "expectancy_r": -0.035,
+    "expectancy_usd": -27.03,
+    "total_return_pct": -3.97,
+    "cagr_pct": -4.03,
+    "geometric_monthly_pct": -0.342,
+    "max_dd_pct": -9.13,
+    "sharpe": -0.29,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 67,
+     "target": 52,
+     "time": 3,
+     "target_gap": 2,
+     "stop_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "validation_delay5min": {
+    "trades": 123,
+    "expectancy_r": 0.024,
+    "profit_factor": 1.047
+   },
+   "final_viewed_costs_1x": {
+    "trades": 395,
+    "trades_per_week": 2.72,
+    "zero_trade_weeks_pct": 23.4,
+    "win_rate": 0.413,
+    "profit_factor": 0.97,
+    "expectancy_r": -0.01,
+    "expectancy_usd": -17.96,
+    "total_return_pct": -7.1,
+    "cagr_pct": -2.6,
+    "geometric_monthly_pct": -0.219,
+    "max_dd_pct": -27.89,
+    "sharpe": -0.14,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 229,
+     "target": 159,
+     "time": 4,
+     "stop_gap": 3
+    },
+    "reliability": "ok"
+   },
+   "final_viewed_by_year": {
+    "2024": 4234.0,
+    "2025": 7728.0,
+    "2026": -19057.0
+   }
+  },
+  "A_daily_only_short": {
+   "definition": {
+    "name": "A_daily_only_short",
+    "entry": "daily_open",
+    "use_daily": true,
+    "use_vol": false,
+    "use_h4": false,
+    "use_h1_setup": false,
+    "setup_window_h": 4,
+    "side": "short",
+    "stop_atr": 2.0,
+    "target_r": 1.5
+   },
+   "candidates": 32,
+   "diagnostics_full_sample": {
+    "daily_signals": 32
+   },
+   "train_costs_1x": {
+    "trades": 17,
+    "trades_per_week": 0.1,
+    "zero_trade_weeks_pct": 92.7,
+    "win_rate": 0.353,
+    "profit_factor": 0.778,
+    "expectancy_r": -0.14,
+    "expectancy_usd": -127.23,
+    "total_return_pct": -2.16,
+    "cagr_pct": -0.69,
+    "geometric_monthly_pct": -0.058,
+    "max_dd_pct": -7.09,
+    "sharpe": -0.26,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 11,
+     "target": 6
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "train_by_year": {
+    "2020": -2696.0,
+    "2022": 534.0
+   },
+   "train_costs_2x": {
+    "trades": 17,
+    "trades_per_week": 0.1,
+    "zero_trade_weeks_pct": 92.7,
+    "win_rate": 0.353,
+    "profit_factor": 0.771,
+    "expectancy_r": -0.163,
+    "expectancy_usd": -127.64,
+    "total_return_pct": -2.17,
+    "cagr_pct": -0.69,
+    "geometric_monthly_pct": -0.058,
+    "max_dd_pct": -6.8,
+    "sharpe": -0.27,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 11,
+     "target": 6
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "train_costs_3x": {
+    "trades": 17,
+    "trades_per_week": 0.1,
+    "zero_trade_weeks_pct": 92.7,
+    "win_rate": 0.353,
+    "profit_factor": 0.744,
+    "expectancy_r": -0.186,
+    "expectancy_usd": -134.36,
+    "total_return_pct": -2.28,
+    "cagr_pct": -0.73,
+    "geometric_monthly_pct": -0.061,
+    "max_dd_pct": -6.17,
+    "sharpe": -0.31,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 11,
+     "target": 6
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "train_delay5min": {
+    "trades": 18,
+    "expectancy_r": -0.469,
+    "profit_factor": 0.397
+   },
+   "validation_costs_1x": {
+    "trades": 6,
+    "trades_per_week": 0.12,
+    "zero_trade_weeks_pct": 94.2,
+    "win_rate": 0.333,
+    "profit_factor": 0.704,
+    "expectancy_r": -0.213,
+    "expectancy_usd": -187.15,
+    "total_return_pct": -1.12,
+    "cagr_pct": -1.14,
+    "geometric_monthly_pct": -0.095,
+    "max_dd_pct": -2.81,
+    "sharpe": -0.39,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 4,
+     "target": 2
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_by_year": {
+    "2023": -1123.0
+   },
+   "validation_costs_2x": {
+    "trades": 6,
+    "trades_per_week": 0.12,
+    "zero_trade_weeks_pct": 94.2,
+    "win_rate": 0.333,
+    "profit_factor": 0.656,
+    "expectancy_r": -0.258,
+    "expectancy_usd": -210.23,
+    "total_return_pct": -1.26,
+    "cagr_pct": -1.28,
+    "geometric_monthly_pct": -0.107,
+    "max_dd_pct": -2.74,
+    "sharpe": -0.48,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 4,
+     "target": 2
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_costs_3x": {
+    "trades": 6,
+    "trades_per_week": 0.12,
+    "zero_trade_weeks_pct": 94.2,
+    "win_rate": 0.167,
+    "profit_factor": 0.244,
+    "expectancy_r": -0.736,
+    "expectancy_usd": -557.87,
+    "total_return_pct": -3.35,
+    "cagr_pct": -3.4,
+    "geometric_monthly_pct": -0.287,
+    "max_dd_pct": -3.35,
+    "sharpe": -1.44,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 5,
+     "target": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_delay5min": {
+    "trades": 6,
+    "expectancy_r": 0.21,
+    "profit_factor": 1.428
+   },
+   "final_viewed_costs_1x": {
+    "trades": 6,
+    "trades_per_week": 0.04,
+    "zero_trade_weeks_pct": 97.9,
+    "win_rate": 0.5,
+    "profit_factor": 1.513,
+    "expectancy_r": 0.226,
+    "expectancy_usd": 223.4,
+    "total_return_pct": 1.34,
+    "cagr_pct": 0.48,
+    "geometric_monthly_pct": 0.04,
+    "max_dd_pct": -2.07,
+    "sharpe": 0.25,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 3,
+     "target": 3
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "final_viewed_by_year": {
+    "2024": -1797.0,
+    "2025": 3137.0
+   }
+  },
+  "B_context_only_short": {
+   "definition": {
+    "name": "B_context_only_short",
+    "entry": "h1_close",
+    "use_daily": true,
+    "use_vol": true,
+    "use_h4": true,
+    "use_h1_setup": false,
+    "setup_window_h": 4,
+    "side": "short",
+    "stop_atr": 2.0,
+    "target_r": 1.5
+   },
+   "candidates": 342,
+   "diagnostics_full_sample": {
+    "rejected_by_daily_trend": 39730,
+    "rejected_by_vol_regime": 12794,
+    "rejected_by_4h_trend": 30512
+   },
+   "train_costs_1x": {
+    "trades": 24,
+    "trades_per_week": 0.15,
+    "zero_trade_weeks_pct": 95.1,
+    "win_rate": 0.292,
+    "profit_factor": 0.624,
+    "expectancy_r": -0.291,
+    "expectancy_usd": -227.26,
+    "total_return_pct": -5.45,
+    "cagr_pct": -1.76,
+    "geometric_monthly_pct": -0.148,
+    "max_dd_pct": -7.02,
+    "sharpe": -0.58,
+    "median_sessions": 0.5,
+    "exit_reasons": {
+     "stop": 17,
+     "target": 7
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "train_by_year": {
+    "2020": -2775.0,
+    "2021": -872.0,
+    "2022": -1808.0
+   },
+   "train_costs_2x": {
+    "trades": 24,
+    "trades_per_week": 0.15,
+    "zero_trade_weeks_pct": 95.1,
+    "win_rate": 0.292,
+    "profit_factor": 0.555,
+    "expectancy_r": -0.311,
+    "expectancy_usd": -265.13,
+    "total_return_pct": -6.36,
+    "cagr_pct": -2.06,
+    "geometric_monthly_pct": -0.173,
+    "max_dd_pct": -7.68,
+    "sharpe": -0.71,
+    "median_sessions": 0.5,
+    "exit_reasons": {
+     "stop": 17,
+     "target": 7
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "train_costs_3x": {
+    "trades": 24,
+    "trades_per_week": 0.15,
+    "zero_trade_weeks_pct": 95.1,
+    "win_rate": 0.292,
+    "profit_factor": 0.538,
+    "expectancy_r": -0.332,
+    "expectancy_usd": -271.8,
+    "total_return_pct": -6.52,
+    "cagr_pct": -2.11,
+    "geometric_monthly_pct": -0.178,
+    "max_dd_pct": -7.84,
+    "sharpe": -0.75,
+    "median_sessions": 0.5,
+    "exit_reasons": {
+     "stop": 17,
+     "target": 7
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "train_delay5min": {
+    "trades": 26,
+    "expectancy_r": -0.347,
+    "profit_factor": 0.506
+   },
+   "validation_costs_1x": {
+    "trades": 27,
+    "trades_per_week": 0.52,
+    "zero_trade_weeks_pct": 86.4,
+    "win_rate": 0.407,
+    "profit_factor": 0.994,
+    "expectancy_r": 0.004,
+    "expectancy_usd": -3.15,
+    "total_return_pct": -0.08,
+    "cagr_pct": -0.09,
+    "geometric_monthly_pct": -0.007,
+    "max_dd_pct": -6.85,
+    "sharpe": 0.02,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 15,
+     "target": 10,
+     "target_gap": 1,
+     "time": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_by_year": {
+    "2023": -85.0
+   },
+   "validation_costs_2x": {
+    "trades": 27,
+    "trades_per_week": 0.52,
+    "zero_trade_weeks_pct": 86.4,
+    "win_rate": 0.407,
+    "profit_factor": 0.945,
+    "expectancy_r": -0.025,
+    "expectancy_usd": -29.96,
+    "total_return_pct": -0.81,
+    "cagr_pct": -0.82,
+    "geometric_monthly_pct": -0.069,
+    "max_dd_pct": -6.7,
+    "sharpe": -0.1,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 15,
+     "target": 11,
+     "time": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_costs_3x": {
+    "trades": 27,
+    "trades_per_week": 0.52,
+    "zero_trade_weeks_pct": 86.4,
+    "win_rate": 0.407,
+    "profit_factor": 0.916,
+    "expectancy_r": -0.054,
+    "expectancy_usd": -45.49,
+    "total_return_pct": -1.23,
+    "cagr_pct": -1.25,
+    "geometric_monthly_pct": -0.104,
+    "max_dd_pct": -6.82,
+    "sharpe": -0.18,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 15,
+     "target": 11,
+     "time": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_delay5min": {
+    "trades": 29,
+    "expectancy_r": -0.168,
+    "profit_factor": 0.738
+   },
+   "final_viewed_costs_1x": {
+    "trades": 29,
+    "trades_per_week": 0.2,
+    "zero_trade_weeks_pct": 95.2,
+    "win_rate": 0.414,
+    "profit_factor": 1.032,
+    "expectancy_r": 0.017,
+    "expectancy_usd": 16.58,
+    "total_return_pct": 0.48,
+    "cagr_pct": 0.17,
+    "geometric_monthly_pct": 0.014,
+    "max_dd_pct": -2.77,
+    "sharpe": 0.07,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 17,
+     "target": 12
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "final_viewed_by_year": {
+    "2025": 720.0,
+    "2026": -240.0
+   }
+  },
+  "C_context_setup_short": {
+   "definition": {
+    "name": "C_context_setup_short",
+    "entry": "h1_close",
+    "use_daily": true,
+    "use_vol": true,
+    "use_h4": true,
+    "use_h1_setup": true,
+    "setup_window_h": 4,
+    "side": "short",
+    "stop_atr": 2.0,
+    "target_r": 1.5
+   },
+   "candidates": 56,
+   "diagnostics_full_sample": {
+    "rejected_by_daily_trend": 39730,
+    "rejected_by_vol_regime": 12794,
+    "rejected_by_4h_trend": 30512,
+    "rejected_by_no_1h_setup": 45259
+   },
+   "train_costs_1x": {
+    "trades": 9,
+    "trades_per_week": 0.06,
+    "zero_trade_weeks_pct": 95.7,
+    "win_rate": 0.222,
+    "profit_factor": 0.495,
+    "expectancy_r": -0.374,
+    "expectancy_usd": -308.77,
+    "total_return_pct": -2.78,
+    "cagr_pct": -0.89,
+    "geometric_monthly_pct": -0.074,
+    "max_dd_pct": -5.19,
+    "sharpe": -0.52,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 6,
+     "target": 2,
+     "time": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "train_by_year": {
+    "2020": 404.0,
+    "2021": -971.0,
+    "2022": -2212.0
+   },
+   "train_costs_2x": {
+    "trades": 9,
+    "trades_per_week": 0.06,
+    "zero_trade_weeks_pct": 95.7,
+    "win_rate": 0.222,
+    "profit_factor": 0.451,
+    "expectancy_r": -0.394,
+    "expectancy_usd": -335.16,
+    "total_return_pct": -3.02,
+    "cagr_pct": -0.96,
+    "geometric_monthly_pct": -0.081,
+    "max_dd_pct": -5.18,
+    "sharpe": -0.58,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 6,
+     "target": 2,
+     "time": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "train_costs_3x": {
+    "trades": 9,
+    "trades_per_week": 0.06,
+    "zero_trade_weeks_pct": 95.7,
+    "win_rate": 0.222,
+    "profit_factor": 0.427,
+    "expectancy_r": -0.413,
+    "expectancy_usd": -332.92,
+    "total_return_pct": -3.0,
+    "cagr_pct": -0.96,
+    "geometric_monthly_pct": -0.08,
+    "max_dd_pct": -4.92,
+    "sharpe": -0.61,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 6,
+     "target": 2,
+     "time": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "train_delay5min": {
+    "trades": 9,
+    "expectancy_r": -0.376,
+    "profit_factor": 0.494
+   },
+   "validation_costs_1x": {
+    "trades": 10,
+    "trades_per_week": 0.19,
+    "zero_trade_weeks_pct": 90.3,
+    "win_rate": 0.3,
+    "profit_factor": 0.597,
+    "expectancy_r": -0.279,
+    "expectancy_usd": -257.26,
+    "total_return_pct": -2.57,
+    "cagr_pct": -2.61,
+    "geometric_monthly_pct": -0.22,
+    "max_dd_pct": -3.85,
+    "sharpe": -0.85,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 7,
+     "target": 3
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_by_year": {
+    "2023": -2573.0
+   },
+   "validation_costs_2x": {
+    "trades": 10,
+    "trades_per_week": 0.19,
+    "zero_trade_weeks_pct": 90.3,
+    "win_rate": 0.3,
+    "profit_factor": 0.585,
+    "expectancy_r": -0.308,
+    "expectancy_usd": -268.12,
+    "total_return_pct": -2.68,
+    "cagr_pct": -2.72,
+    "geometric_monthly_pct": -0.23,
+    "max_dd_pct": -3.9,
+    "sharpe": -0.87,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 7,
+     "target": 3
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_costs_3x": {
+    "trades": 11,
+    "trades_per_week": 0.21,
+    "zero_trade_weeks_pct": 90.3,
+    "win_rate": 0.273,
+    "profit_factor": 0.528,
+    "expectancy_r": -0.408,
+    "expectancy_usd": -304.62,
+    "total_return_pct": -3.35,
+    "cagr_pct": -3.4,
+    "geometric_monthly_pct": -0.288,
+    "max_dd_pct": -4.63,
+    "sharpe": -1.04,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 8,
+     "target": 3
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_delay5min": {
+    "trades": 10,
+    "expectancy_r": -0.279,
+    "profit_factor": 0.597
+   },
+   "final_viewed_costs_1x": {
+    "trades": 9,
+    "trades_per_week": 0.06,
+    "zero_trade_weeks_pct": 95.9,
+    "win_rate": 0.444,
+    "profit_factor": 1.09,
+    "expectancy_r": 0.096,
+    "expectancy_usd": 47.34,
+    "total_return_pct": 0.43,
+    "cagr_pct": 0.15,
+    "geometric_monthly_pct": 0.013,
+    "max_dd_pct": -3.27,
+    "sharpe": 0.08,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 5,
+     "target": 4
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "final_viewed_by_year": {
+    "2025": 2435.0,
+    "2026": -2009.0
+   }
+  },
+  "D_full_mtf_short": {
+   "definition": {
+    "name": "D_full_mtf_short",
+    "entry": "m15_trigger",
+    "use_daily": true,
+    "use_vol": true,
+    "use_h4": true,
+    "use_h1_setup": true,
+    "setup_window_h": 4,
+    "side": "short",
+    "stop_atr": 2.0,
+    "target_r": 1.5
+   },
+   "candidates": 108,
+   "diagnostics_full_sample": {
+    "rejected_by_daily_trend": 39730,
+    "rejected_by_vol_regime": 12794,
+    "rejected_by_4h_trend": 30512,
+    "rejected_by_no_1h_setup": 27753,
+    "rejected_by_no_15m_trigger": 37026
+   },
+   "train_costs_1x": {
+    "trades": 7,
+    "trades_per_week": 0.04,
+    "zero_trade_weeks_pct": 96.3,
+    "win_rate": 0.286,
+    "profit_factor": 0.59,
+    "expectancy_r": -0.248,
+    "expectancy_usd": -238.1,
+    "total_return_pct": -1.67,
+    "cagr_pct": -0.53,
+    "geometric_monthly_pct": -0.044,
+    "max_dd_pct": -3.92,
+    "sharpe": -0.35,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 4,
+     "target": 2,
+     "time": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "train_by_year": {
+    "2020": -1508.0,
+    "2021": -971.0,
+    "2022": 812.0
+   },
+   "train_costs_2x": {
+    "trades": 7,
+    "trades_per_week": 0.04,
+    "zero_trade_weeks_pct": 96.3,
+    "win_rate": 0.286,
+    "profit_factor": 0.591,
+    "expectancy_r": -0.268,
+    "expectancy_usd": -235.0,
+    "total_return_pct": -1.65,
+    "cagr_pct": -0.52,
+    "geometric_monthly_pct": -0.044,
+    "max_dd_pct": -3.87,
+    "sharpe": -0.34,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 4,
+     "target": 2,
+     "time": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "train_costs_3x": {
+    "trades": 7,
+    "trades_per_week": 0.04,
+    "zero_trade_weeks_pct": 96.3,
+    "win_rate": 0.286,
+    "profit_factor": 0.57,
+    "expectancy_r": -0.288,
+    "expectancy_usd": -231.02,
+    "total_return_pct": -1.62,
+    "cagr_pct": -0.51,
+    "geometric_monthly_pct": -0.043,
+    "max_dd_pct": -3.55,
+    "sharpe": -0.37,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 4,
+     "target": 2,
+     "time": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "train_delay5min": {
+    "trades": 7,
+    "expectancy_r": -0.255,
+    "profit_factor": 0.584
+   },
+   "validation_costs_1x": {
+    "trades": 13,
+    "trades_per_week": 0.25,
+    "zero_trade_weeks_pct": 88.4,
+    "win_rate": 0.231,
+    "profit_factor": 0.438,
+    "expectancy_r": -0.457,
+    "expectancy_usd": -388.37,
+    "total_return_pct": -5.05,
+    "cagr_pct": -5.12,
+    "geometric_monthly_pct": -0.437,
+    "max_dd_pct": -5.41,
+    "sharpe": -1.38,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 10,
+     "target": 3
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_by_year": {
+    "2023": -5049.0
+   },
+   "validation_costs_2x": {
+    "trades": 13,
+    "trades_per_week": 0.25,
+    "zero_trade_weeks_pct": 88.4,
+    "win_rate": 0.231,
+    "profit_factor": 0.407,
+    "expectancy_r": -0.49,
+    "expectancy_usd": -421.22,
+    "total_return_pct": -5.48,
+    "cagr_pct": -5.55,
+    "geometric_monthly_pct": -0.475,
+    "max_dd_pct": -5.72,
+    "sharpe": -1.48,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 10,
+     "target": 3
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_costs_3x": {
+    "trades": 13,
+    "trades_per_week": 0.25,
+    "zero_trade_weeks_pct": 88.4,
+    "win_rate": 0.231,
+    "profit_factor": 0.38,
+    "expectancy_r": -0.524,
+    "expectancy_usd": -417.46,
+    "total_return_pct": -5.43,
+    "cagr_pct": -5.5,
+    "geometric_monthly_pct": -0.471,
+    "max_dd_pct": -5.69,
+    "sharpe": -1.59,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 10,
+     "target": 3
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_delay5min": {
+    "trades": 13,
+    "expectancy_r": -0.457,
+    "profit_factor": 0.438
+   },
+   "final_viewed_costs_1x": {
+    "trades": 17,
+    "trades_per_week": 0.12,
+    "zero_trade_weeks_pct": 95.9,
+    "win_rate": 0.471,
+    "profit_factor": 1.249,
+    "expectancy_r": 0.161,
+    "expectancy_usd": 120.93,
+    "total_return_pct": 2.06,
+    "cagr_pct": 0.73,
+    "geometric_monthly_pct": 0.061,
+    "max_dd_pct": -2.94,
+    "sharpe": 0.25,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 9,
+     "target": 8
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "final_viewed_by_year": {
+    "2025": 3151.0,
+    "2026": -1095.0
+   }
+  },
+  "E_moderate_short": {
+   "definition": {
+    "name": "E_moderate_short",
+    "entry": "m15_trigger",
+    "use_daily": true,
+    "use_vol": false,
+    "use_h4": false,
+    "use_h1_setup": true,
+    "setup_window_h": 4,
+    "side": "short",
+    "stop_atr": 2.0,
+    "target_r": 1.5
+   },
+   "candidates": 593,
+   "diagnostics_full_sample": {
+    "rejected_by_daily_trend": 39730,
+    "rejected_by_no_1h_setup": 27753,
+    "rejected_by_no_15m_trigger": 37026
+   },
+   "train_costs_1x": {
+    "trades": 106,
+    "trades_per_week": 0.65,
+    "zero_trade_weeks_pct": 76.8,
+    "win_rate": 0.368,
+    "profit_factor": 0.854,
+    "expectancy_r": -0.081,
+    "expectancy_usd": -76.43,
+    "total_return_pct": -8.1,
+    "cagr_pct": -2.64,
+    "geometric_monthly_pct": -0.222,
+    "max_dd_pct": -11.21,
+    "sharpe": -0.37,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 63,
+     "target": 37,
+     "time": 5,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_by_year": {
+    "2020": -3223.0,
+    "2021": -260.0,
+    "2022": -4619.0
+   },
+   "train_costs_2x": {
+    "trades": 106,
+    "trades_per_week": 0.65,
+    "zero_trade_weeks_pct": 76.8,
+    "win_rate": 0.368,
+    "profit_factor": 0.81,
+    "expectancy_r": -0.099,
+    "expectancy_usd": -97.87,
+    "total_return_pct": -10.37,
+    "cagr_pct": -3.4,
+    "geometric_monthly_pct": -0.288,
+    "max_dd_pct": -12.92,
+    "sharpe": -0.51,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 63,
+     "target": 37,
+     "time": 5,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_costs_3x": {
+    "trades": 106,
+    "trades_per_week": 0.65,
+    "zero_trade_weeks_pct": 76.8,
+    "win_rate": 0.358,
+    "profit_factor": 0.775,
+    "expectancy_r": -0.141,
+    "expectancy_usd": -114.42,
+    "total_return_pct": -12.13,
+    "cagr_pct": -4.01,
+    "geometric_monthly_pct": -0.34,
+    "max_dd_pct": -14.61,
+    "sharpe": -0.64,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 64,
+     "target": 36,
+     "time": 5,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_delay5min": {
+    "trades": 108,
+    "expectancy_r": -0.091,
+    "profit_factor": 0.863
+   },
+   "validation_costs_1x": {
+    "trades": 20,
+    "trades_per_week": 0.39,
+    "zero_trade_weeks_pct": 84.5,
+    "win_rate": 0.25,
+    "profit_factor": 0.48,
+    "expectancy_r": -0.409,
+    "expectancy_usd": -351.12,
+    "total_return_pct": -7.02,
+    "cagr_pct": -7.12,
+    "geometric_monthly_pct": -0.614,
+    "max_dd_pct": -7.38,
+    "sharpe": -1.51,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 15,
+     "target": 5
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_by_year": {
+    "2023": -7022.0
+   },
+   "validation_costs_2x": {
+    "trades": 20,
+    "trades_per_week": 0.39,
+    "zero_trade_weeks_pct": 84.5,
+    "win_rate": 0.25,
+    "profit_factor": 0.451,
+    "expectancy_r": -0.444,
+    "expectancy_usd": -369.94,
+    "total_return_pct": -7.4,
+    "cagr_pct": -7.5,
+    "geometric_monthly_pct": -0.648,
+    "max_dd_pct": -7.64,
+    "sharpe": -1.62,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 15,
+     "target": 5
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_costs_3x": {
+    "trades": 20,
+    "trades_per_week": 0.39,
+    "zero_trade_weeks_pct": 84.5,
+    "win_rate": 0.25,
+    "profit_factor": 0.436,
+    "expectancy_r": -0.478,
+    "expectancy_usd": -365.16,
+    "total_return_pct": -7.3,
+    "cagr_pct": -7.41,
+    "geometric_monthly_pct": -0.639,
+    "max_dd_pct": -7.56,
+    "sharpe": -1.69,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 15,
+     "target": 5
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_delay5min": {
+    "trades": 20,
+    "expectancy_r": -0.409,
+    "profit_factor": 0.48
+   },
+   "final_viewed_costs_1x": {
+    "trades": 60,
+    "trades_per_week": 0.41,
+    "zero_trade_weeks_pct": 85.5,
+    "win_rate": 0.383,
+    "profit_factor": 0.863,
+    "expectancy_r": -0.071,
+    "expectancy_usd": -72.96,
+    "total_return_pct": -4.38,
+    "cagr_pct": -1.59,
+    "geometric_monthly_pct": -0.133,
+    "max_dd_pct": -9.0,
+    "sharpe": -0.28,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 34,
+     "target": 22,
+     "time": 3,
+     "stop_gap": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "final_viewed_by_year": {
+    "2024": -3776.0,
+    "2025": 2859.0,
+    "2026": -3461.0
+   }
+  },
+  "E_moderate_setup8h_short": {
+   "definition": {
+    "name": "E_moderate_setup8h_short",
+    "entry": "m15_trigger",
+    "use_daily": true,
+    "use_vol": false,
+    "use_h4": false,
+    "use_h1_setup": true,
+    "setup_window_h": 8,
+    "side": "short",
+    "stop_atr": 2.0,
+    "target_r": 1.5
+   },
+   "candidates": 979,
+   "diagnostics_full_sample": {
+    "rejected_by_daily_trend": 39730,
+    "rejected_by_no_1h_setup": 18335,
+    "rejected_by_no_15m_trigger": 37026
+   },
+   "train_costs_1x": {
+    "trades": 139,
+    "trades_per_week": 0.85,
+    "zero_trade_weeks_pct": 75.6,
+    "win_rate": 0.424,
+    "profit_factor": 1.113,
+    "expectancy_r": 0.064,
+    "expectancy_usd": 56.81,
+    "total_return_pct": 7.9,
+    "cagr_pct": 2.43,
+    "geometric_monthly_pct": 0.2,
+    "max_dd_pct": -7.99,
+    "sharpe": 0.35,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 75,
+     "target": 57,
+     "time": 6,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_by_year": {
+    "2020": -5937.0,
+    "2021": -261.0,
+    "2022": 14095.0
+   },
+   "train_costs_2x": {
+    "trades": 139,
+    "trades_per_week": 0.85,
+    "zero_trade_weeks_pct": 75.6,
+    "win_rate": 0.424,
+    "profit_factor": 1.082,
+    "expectancy_r": 0.047,
+    "expectancy_usd": 40.59,
+    "total_return_pct": 5.64,
+    "cagr_pct": 1.75,
+    "geometric_monthly_pct": 0.145,
+    "max_dd_pct": -7.76,
+    "sharpe": 0.27,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 75,
+     "target": 57,
+     "time": 6,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_costs_3x": {
+    "trades": 140,
+    "trades_per_week": 0.86,
+    "zero_trade_weeks_pct": 75.6,
+    "win_rate": 0.414,
+    "profit_factor": 0.993,
+    "expectancy_r": 0.003,
+    "expectancy_usd": -3.53,
+    "total_return_pct": -0.49,
+    "cagr_pct": -0.16,
+    "geometric_monthly_pct": -0.013,
+    "max_dd_pct": -8.73,
+    "sharpe": 0.01,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 77,
+     "target": 56,
+     "time": 6,
+     "target_gap": 1
+    },
+    "reliability": "ok"
+   },
+   "train_delay5min": {
+    "trades": 142,
+    "expectancy_r": 0.04,
+    "profit_factor": 1.06
+   },
+   "validation_costs_1x": {
+    "trades": 28,
+    "trades_per_week": 0.54,
+    "zero_trade_weeks_pct": 84.5,
+    "win_rate": 0.393,
+    "profit_factor": 0.932,
+    "expectancy_r": -0.049,
+    "expectancy_usd": -39.46,
+    "total_return_pct": -1.1,
+    "cagr_pct": -1.12,
+    "geometric_monthly_pct": -0.094,
+    "max_dd_pct": -7.36,
+    "sharpe": -0.18,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 17,
+     "target": 11
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_by_year": {
+    "2023": -1105.0
+   },
+   "validation_costs_2x": {
+    "trades": 28,
+    "trades_per_week": 0.54,
+    "zero_trade_weeks_pct": 84.5,
+    "win_rate": 0.357,
+    "profit_factor": 0.741,
+    "expectancy_r": -0.172,
+    "expectancy_usd": -153.98,
+    "total_return_pct": -4.31,
+    "cagr_pct": -4.37,
+    "geometric_monthly_pct": -0.372,
+    "max_dd_pct": -7.18,
+    "sharpe": -0.84,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 18,
+     "target": 10
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_costs_3x": {
+    "trades": 28,
+    "trades_per_week": 0.54,
+    "zero_trade_weeks_pct": 84.5,
+    "win_rate": 0.357,
+    "profit_factor": 0.715,
+    "expectancy_r": -0.205,
+    "expectancy_usd": -168.6,
+    "total_return_pct": -4.72,
+    "cagr_pct": -4.79,
+    "geometric_monthly_pct": -0.408,
+    "max_dd_pct": -7.16,
+    "sharpe": -0.94,
+    "median_sessions": 0.0,
+    "exit_reasons": {
+     "stop": 18,
+     "target": 10
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "validation_delay5min": {
+    "trades": 26,
+    "expectancy_r": -0.168,
+    "profit_factor": 0.775
+   },
+   "final_viewed_costs_1x": {
+    "trades": 77,
+    "trades_per_week": 0.53,
+    "zero_trade_weeks_pct": 84.8,
+    "win_rate": 0.377,
+    "profit_factor": 0.85,
+    "expectancy_r": -0.085,
+    "expectancy_usd": -79.89,
+    "total_return_pct": -6.15,
+    "cagr_pct": -2.24,
+    "geometric_monthly_pct": -0.189,
+    "max_dd_pct": -11.46,
+    "sharpe": -0.35,
+    "median_sessions": 1.0,
+    "exit_reasons": {
+     "stop": 45,
+     "target": 28,
+     "time": 3,
+     "stop_gap": 1
+    },
+    "reliability": "unreliable (small sample)"
+   },
+   "final_viewed_by_year": {
+    "2024": -3776.0,
+    "2025": 745.0,
+    "2026": -3121.0
+   }
+  }
+ },
+ "verdict": {
+  "C_context_setup": {
+   "adds_value_per_rule": false,
+   "why_not": [
+    "train: -0.097 <= A_daily_only 0.088",
+    "train: -0.097 <= B_context_only -0.08"
+   ]
+  },
+  "D_full_mtf": {
+   "adds_value_per_rule": false,
+   "why_not": [
+    "train: -0.009 <= A_daily_only 0.088",
+    "validation: -0.021 <= A_daily_only -0.001"
+   ]
+  },
+  "E_moderate": {
+   "adds_value_per_rule": false,
+   "why_not": [
+    "train: -0.06 <= A_daily_only 0.088"
+   ]
+  },
+  "C_context_setup_short": {
+   "adds_value_per_rule": false,
+   "why_not": [
+    "train: -0.394 <= A_daily_only_short -0.163",
+    "train: -0.394 <= B_context_only_short -0.311",
+    "validation: -0.308 <= A_daily_only_short -0.258",
+    "validation: -0.308 <= B_context_only_short -0.025",
+    "fewer than 100 train trades"
+   ]
+  },
+  "D_full_mtf_short": {
+   "adds_value_per_rule": false,
+   "why_not": [
+    "train: -0.268 <= A_daily_only_short -0.163",
+    "validation: -0.49 <= A_daily_only_short -0.258",
+    "validation: -0.49 <= B_context_only_short -0.025",
+    "fewer than 100 train trades"
+   ]
+  },
+  "E_moderate_short": {
+   "adds_value_per_rule": false,
+   "why_not": [
+    "validation: -0.444 <= A_daily_only_short -0.258",
+    "validation: -0.444 <= B_context_only_short -0.025"
+   ]
+  }
+ }
+}

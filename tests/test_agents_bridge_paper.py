@@ -46,10 +46,10 @@ def test_overlay_veto_mode():
     assert overlay_multiplier(1, thesis("Buy"), "veto")[0] == 1.0
     assert overlay_multiplier(1, thesis("Hold"), "veto")[0] == 1.0
     assert overlay_multiplier(-1, thesis("Buy"), "veto")[0] == 0.0
-    # unusable research never acts (fail-open), even if it "says" Sell
-    assert overlay_multiplier(1, thesis("Sell", STATUS_PLUMBING), "veto")[0] == 1.0
-    assert overlay_multiplier(1, thesis("Sell", STATUS_UNAVAILABLE), "veto")[0] == 1.0
-    assert overlay_multiplier(1, None, "veto")[0] == 1.0
+    # spec change 2026-10-26: unusable/missing research in veto (agent-assisted) mode FAILS CLOSED
+    assert overlay_multiplier(1, thesis("Buy", STATUS_PLUMBING), "veto")[0] == 0.0
+    assert overlay_multiplier(1, thesis("Sell", STATUS_UNAVAILABLE), "veto")[0] == 0.0
+    assert overlay_multiplier(1, None, "veto")[0] == 0.0
     with pytest.raises(ValueError):
         overlay_multiplier(1, None, "boost")
 

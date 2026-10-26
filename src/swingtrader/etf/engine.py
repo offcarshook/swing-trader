@@ -34,6 +34,7 @@ import numpy as np
 import pandas as pd
 
 from swingtrader.etf.data import signal_view
+from swingtrader.etf.risk import PortfolioRiskGate
 from swingtrader.etf.strategies import Params, features, signals
 
 # extra slippage for the thinner / more volatile members of the basket
@@ -123,7 +124,13 @@ EntryFilter = Callable[[dict], tuple[float, str]]
 
 def simulate(bars: dict[str, pd.DataFrame], params: list[Params], start, end, risk: RiskCfg | None = None,
              sigs: pd.DataFrame | None = None, feats: dict | None = None,
-             entry_filter: EntryFilter | None = None) -> Result:
+             entry_filter: EntryFilter | None = None, exec_style: str = "reference") -> Result:
+    """exec_style="lumibot" reproduces the Lumibot adapter's order timing for parity checks:
+    protective stop/target orders start acting on the session AFTER the entry, and the time stop
+    is a market order at the open after session `max_hold` (Lumibot has no market-on-close)."""
+    if exec_style not in ("reference", "lumibot"):
+        raise ValueError(exec_style)
+    lb = exec_style == "lumibot"
     risk = risk or RiskCfg()
     pmap = {p.id: p for p in params}
     sigs = build_signals(bars, params, feats, risk.entry_delay) if sigs is None else sigs
@@ -146,8 +153,7 @@ def simulate(bars: dict[str, pd.DataFrame], params: list[Params], start, end, ri
                 adj_close = signal_view(b)["close"]
                 smas[(s, p.exit_sma)] = (adj_close.rolling(p.exit_sma).mean().reindex(cal).to_numpy(),
                                          adj_close.reindex(cal).to_numpy())
-    clusters = risk.clusters or {}
-    kill_from = pd.Timestamp(risk.kill_switch_from) if risk.kill_switch_from else None
+    gate = PortfolioRiskGate(risk)
     rng = np.random.default_rng(risk.seed)
 
     def slip(sym):
@@ -156,19 +162,25 @@ def simulate(bars: dict[str, pd.DataFrame], params: list[Params], start, end, ri
     def stop_slip(sym):
         return slip(sym) + risk.stop_extra_bps * risk.cost_mult / 1e4
 
-    eq_prev, realized, peak = risk.equity, 0.0, risk.equity
+    realized = 0.0
     open_pos: list[dict] = []
     trades, sig_log, expo = [], [], []
     curve, worst = np.empty(len(cal)), np.empty(len(cal))
     skipped = {k: 0 for k in ("open_risk_cap", "cluster_risk_cap", "same_symbol", "gross_cap", "net_cap",
                               "not_triggered", "zero_size", "missed_fill", "daily_loss_lockout", "dd_lockout",
                               "kill_switch", "overlay_veto", "no_bar")}
-    daily_locked, halted, halted_on = False, False, None
     worst_extra = best_extra = 0.0
     best = np.empty(len(cal))
+    occupied_at_open: list[dict] = []
+
+    DECIDED_BEFORE_OPEN = ("sma_exit", "time_open", "dd_lockout")
 
     def close_pos(pos, k, px, reason, ref_px):
         nonlocal realized, worst_extra, best_extra
+        if reason not in DECIDED_BEFORE_OPEN and pos["k"] < k:
+            occupied_at_open.append({**pos, "mark": pos.get("last", pos["entry"])})
+        if reason == "time_open":
+            reason = "time"
         comm = risk.commission_per_share * risk.cost_mult * pos["shares"]
         gross = pos["dir"] * (ref_px - pos["entry_ref"]) * pos["shares"]
         pnl = pos["dir"] * (px - pos["entry"]) * pos["shares"] - comm - pos["entry_comm"] + pos["div"] - pos["borrow"]
@@ -203,7 +215,7 @@ def simulate(bars: dict[str, pd.DataFrame], params: list[Params], start, end, ri
                 pos["borrow"] += pos["shares"] * pos.get("last", pos["entry"]) * risk.borrow_bps_annual / 1e4 / 252
 
         # ---- drawdown lockout: flatten at the open, then stay halted
-        if halted and open_pos:
+        if gate.halted and open_pos:
             for pos in open_pos:
                 a = arr[pos["sym"]]
                 o = a["open"][k] if not np.isnan(a["open"][k]) else pos.get("last", pos["entry"])
@@ -213,6 +225,7 @@ def simulate(bars: dict[str, pd.DataFrame], params: list[Params], start, end, ri
 
         # ---- manage open positions on today's bar
         still = []
+        occupied_at_open: list[dict] = []   # exits that happen AFTER the open still occupy the book at the open
         for pos in open_pos:
             a = arr[pos["sym"]]
             o, h, l, c = a["open"][k], a["high"][k], a["low"][k], a["close"][k]
@@ -223,6 +236,8 @@ def simulate(bars: dict[str, pd.DataFrame], params: list[Params], start, end, ri
             d, st, tg, sym = pos["dir"], pos["stop"], pos["target"], pos["sym"]
             if pos.get("exit_next_open"):
                 close_pos(pos, k, o * (1 - d * slip(sym)), "sma_exit", o); continue
+            if lb and pos["held"] > pos["max_hold"]:
+                close_pos(pos, k, o * (1 - d * slip(sym)), "time_open", o); continue
             if d * (o - st) <= 0:
                 close_pos(pos, k, o * (1 - d * stop_slip(sym)), "stop_gap", o); continue
             if tg is not None and d * (o - tg) >= 0:
@@ -231,7 +246,7 @@ def simulate(bars: dict[str, pd.DataFrame], params: list[Params], start, end, ri
                 close_pos(pos, k, st * (1 - d * stop_slip(sym)), "stop", st); continue
             if tg is not None and ((h >= tg) if d > 0 else (l <= tg)):
                 close_pos(pos, k, tg, "target", tg); continue
-            if pos["held"] >= pos["max_hold"]:
+            if not lb and pos["held"] >= pos["max_hold"]:
                 close_pos(pos, k, c * (1 - d * slip(sym)), "time", c); continue
             if k == last_k[sym]:
                 close_pos(pos, k, c * (1 - d * slip(sym)), "instrument_data_end", c); continue
@@ -257,13 +272,13 @@ def simulate(bars: dict[str, pd.DataFrame], params: list[Params], start, end, ri
             o, h, l, c = a["open"][k], a["high"][k], a["low"][k], a["close"][k]
             if np.isnan(o):
                 reject("no_bar"); continue
-            if halted:
-                reject("dd_lockout"); continue
-            if kill_from is not None and day >= kill_from:
-                reject("kill_switch"); continue
-            if daily_locked:
-                reject("daily_loss_lockout"); continue
-            if any(p_["sym"] == sym and (not risk.stack_symbols or p_["pid"] == sg["pid"]) for p_ in open_pos):
+            # the decision is made BEFORE the open: positions that will only exit later today
+            # (intraday / gap stops, targets, closes) still count against slots and risk budget
+            book = [{**p_, "mark": p_.get("last", p_["entry"])} for p_ in open_pos] + occupied_at_open
+            why = gate.blocked(day)
+            if why:
+                reject(why); continue
+            if any(p_["sym"] == sym and (not risk.stack_symbols or p_["pid"] == sg["pid"]) for p_ in book):
                 reject("same_symbol"); continue
             s_ = slip(sym)
             stop_entry = not np.isnan(sg["entry_level"])
@@ -278,30 +293,16 @@ def simulate(bars: dict[str, pd.DataFrame], params: list[Params], start, end, ri
             mult, why = 1.0, ""
             if entry_filter is not None:
                 mult, why = entry_filter({**sg.to_dict(), "date": day})
-                mult = min(max(float(mult), 0.0), 1.0)  # research may only scale down
                 rec["overlay"] = why
-                if mult <= 0:
-                    reject("overlay_veto"); continue
             if risk.miss_fill_prob and rng.random() < risk.miss_fill_prob:
                 reject("missed_fill"); continue
             dist = float(sg["stop_dist"])
-            shares = int(risk.risk_pct / 100 * eq_prev * mult // dist) if dist > 0 else 0
-            if shares <= 0:
-                reject("zero_size"); continue
-            risk_usd = shares * dist
-            if sum(p_["risk_usd"] for p_ in open_pos) + risk_usd > risk.max_open_risk_pct / 100 * eq_prev + 1e-9:
-                reject("open_risk_cap"); continue
-            cl = clusters.get(sym)
-            if risk.max_cluster_risk_pct is not None and cl is not None:
-                cl_risk = sum(p_["risk_usd"] for p_ in open_pos if clusters.get(p_["sym"]) == cl)
-                if cl_risk + risk_usd > risk.max_cluster_risk_pct / 100 * eq_prev + 1e-9:
-                    reject("cluster_risk_cap"); continue
-            if sum(p_["shares"] * p_.get("last", p_["entry"]) for p_ in open_pos) + shares * fill > risk.max_gross * eq_prev:
-                reject("gross_cap"); continue
-            if risk.max_net_exposure is not None:
-                net = sum(p_["dir"] * p_["shares"] * p_.get("last", p_["entry"]) for p_ in open_pos) + d * shares * fill
-                if abs(net) > risk.max_net_exposure * eq_prev:
-                    reject("net_cap"); continue
+            dec = gate.check_entry(day=day, sym=sym, pid=sg["pid"], direction=d, fill=fill, stop_dist=dist,
+                                   positions=book, mult=mult)
+            if not dec.approved:
+                reject(dec.reason); continue
+            shares, risk_usd = dec.shares, dec.risk_usd
+            mult = min(max(float(mult), 0.0), 1.0)
             p = pmap[sg["pid"]]
             pos = {"sym": sym, "pid": p.id, "dir": d, "entry": fill, "entry_ref": ref, "shares": shares, "k": k,
                    "held": 0, "stop": fill - d * dist, "risk_usd": risk_usd, "max_hold": p.max_hold,
@@ -311,9 +312,9 @@ def simulate(bars: dict[str, pd.DataFrame], params: list[Params], start, end, ri
             rec["status"] = "accepted"
             sig_log.append(rec)
             st, tg = pos["stop"], pos["target"]
-            if (l <= st) if d > 0 else (h >= st):
+            if not lb and ((l <= st) if d > 0 else (h >= st)):
                 close_pos(pos, k, st * (1 - d * stop_slip(sym)), "stop", st); continue
-            if tg is not None and not stop_entry and ((h >= tg) if d > 0 else (l <= tg)):
+            if not lb and tg is not None and not stop_entry and ((h >= tg) if d > 0 else (l <= tg)):
                 close_pos(pos, k, tg, "target", tg); continue
             if k == last_k[sym]:
                 close_pos(pos, k, c * (1 - d * slip(sym)), "instrument_data_end", c); continue
@@ -345,13 +346,7 @@ def simulate(bars: dict[str, pd.DataFrame], params: list[Params], start, end, ri
         worst[k] = eq_today - adverse - worst_extra
         best[k] = eq_today + favour + best_extra
         expo.append((gross, net, open_risk, len(open_pos)))
-        daily_locked = (risk.daily_loss_lockout_pct is not None and eq_today / eq_prev - 1
-                        <= -risk.daily_loss_lockout_pct / 100)
-        peak = max(peak, eq_today)
-        if (not halted and risk.max_dd_lockout_pct is not None
-                and eq_today / peak - 1 <= -risk.max_dd_lockout_pct / 100):
-            halted, halted_on = True, str(day.date())
-        eq_prev = eq_today
+        gate.on_close(day, eq_today)
 
     for p_ in open_pos:  # end of window: mark out at the last close
         c = p_.get("last", p_["entry"])
@@ -359,7 +354,7 @@ def simulate(bars: dict[str, pd.DataFrame], params: list[Params], start, end, ri
     ex = pd.DataFrame(expo, index=cal, columns=["gross", "net", "open_risk", "positions"])
     return Result(pd.DataFrame(trades), pd.Series(curve, index=cal, name="equity"), skipped,
                   pd.Series(worst, index=cal, name="equity_worst"), pd.Series(best, index=cal, name="equity_best"),
-                  pd.DataFrame(sig_log), ex, halted_on)
+                  pd.DataFrame(sig_log), ex, gate.halted_on)
 
 
 def metrics(res: Result, start_equity: float = 100_000.0) -> dict:
