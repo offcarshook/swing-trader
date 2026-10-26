@@ -13,6 +13,10 @@ research that can, at most, veto an entry. **Live order execution does not exist
 > target is not supported**: even at 8% risk per trade the strategy averaged < 1%/month on training
 > data. Paper trading is unlocked by the promotion gates; nothing here promises returns.
 
+> **ETF 1–3 day phase ([docs/ETF_RESULTS.md](docs/ETF_RESULTS.md))** — the 15-ETF basket could not be
+> tested (free Alpha Vantage key: 100 sessions/ETF, 25 calls/day). On a SPY proxy, 4 of 5 families passed
+> training, but the fresh 2021–26 test made only +12.3% (PF 1.15, max DD −13.9%) vs +104.9% buy-and-hold.
+
 ## Quick start
 
 ```bash

@@ -1,0 +1,47 @@
+{
+ "SPY": {
+  "rows": 100,
+  "first": "2026-06-03",
+  "last": "2026-10-23",
+  "years": 0.39,
+  "bad_ohlc_rows": 0,
+  "max_calendar_gap_days": 4,
+  "usable": false
+ },
+ "QQQ": {
+  "rows": 100,
+  "first": "2026-06-03",
+  "last": "2026-10-23",
+  "years": 0.39,
+  "bad_ohlc_rows": 0,
+  "max_calendar_gap_days": 4,
+  "usable": false
+ },
+ "IWM": {
+  "rows": 100,
+  "first": "2026-06-03",
+  "last": "2026-10-23",
+  "years": 0.39,
+  "bad_ohlc_rows": 0,
+  "max_calendar_gap_days": 4,
+  "usable": false
+ },
+ "DIA": {
+  "rows": 100,
+  "first": "2026-06-03",
+  "last": "2026-10-23",
+  "years": 0.39,
+  "bad_ohlc_rows": 0,
+  "max_calendar_gap_days": 4,
+  "usable": false
+ },
+ "TLT": {
+  "rows": 100,
+  "first": "2026-06-03",
+  "last": "2026-10-23",
+  "years": 0.39,
+  "bad_ohlc_rows": 0,
+  "max_calendar_gap_days": 4,
+  "usable": false
+ }
+}

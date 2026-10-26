@@ -1,0 +1,121 @@
+{
+ "selected": [
+  "nrb_long_nr70_s1_1R_h3",
+  "gap_long_go0.5_s1_1.5R_h2",
+  "calendar_long_tom1_s2_none_h3_notrend",
+  "short_short_rsi2>90_s2_none_h3_x5"
+ ],
+ "window": [
+  "2021-01-01",
+  "2026-12-31"
+ ],
+ "costs_1x": {
+  "trades": 191,
+  "trades_per_week": 0.66,
+  "win_rate": 0.56,
+  "profit_factor": 1.15,
+  "expectancy_r": 0.068,
+  "avg_sessions": 1.94,
+  "total_return_pct": 12.27,
+  "cagr_pct": 2.04,
+  "monthly_pct": 0.168,
+  "max_dd_pct": -13.88,
+  "sharpe": 0.4
+ },
+ "skipped": {
+  "open_risk_cap": 0,
+  "same_symbol": 60,
+  "gross_cap": 0,
+  "not_triggered": 49,
+  "zero_size": 0
+ },
+ "costs_2x": {
+  "trades": 191,
+  "trades_per_week": 0.66,
+  "win_rate": 0.555,
+  "profit_factor": 1.11,
+  "expectancy_r": 0.05,
+  "avg_sessions": 1.93,
+  "total_return_pct": 8.99,
+  "cagr_pct": 1.51,
+  "monthly_pct": 0.125,
+  "max_dd_pct": -15.38,
+  "sharpe": 0.3
+ },
+ "costs_3x": {
+  "trades": 190,
+  "trades_per_week": 0.66,
+  "win_rate": 0.547,
+  "profit_factor": 1.04,
+  "expectancy_r": 0.024,
+  "avg_sessions": 1.94,
+  "total_return_pct": 3.75,
+  "cagr_pct": 0.64,
+  "monthly_pct": 0.053,
+  "max_dd_pct": -16.68,
+  "sharpe": 0.15
+ },
+ "by_family": {
+  "calendar": {
+   "trades": 21,
+   "pnl": 2459.84,
+   "win": 0.524,
+   "avg_r": 0.13
+  },
+  "gap": {
+   "trades": 70,
+   "pnl": -2205.131,
+   "win": 0.5,
+   "avg_r": -0.021
+  },
+  "nrb": {
+   "trades": 89,
+   "pnl": 13500.099,
+   "win": 0.629,
+   "avg_r": 0.15
+  },
+  "short": {
+   "trades": 11,
+   "pnl": -1485.473,
+   "win": 0.455,
+   "avg_r": -0.142
+  }
+ },
+ "by_year": {
+  "2021": {
+   "size": 31,
+   "sum": 6463.0
+  },
+  "2022": {
+   "size": 12,
+   "sum": -656.0
+  },
+  "2023": {
+   "size": 26,
+   "sum": 5625.0
+  },
+  "2024": {
+   "size": 44,
+   "sum": 10884.0
+  },
+  "2025": {
+   "size": 48,
+   "sum": -4462.0
+  },
+  "2026": {
+   "size": 30,
+   "sum": -5585.0
+  }
+ },
+ "sessions_hist": {
+  "0": 17,
+  "1": 39,
+  "2": 74,
+  "3": 61
+ },
+ "weeks_with_0_setups_pct": 48.5,
+ "weeks_in_1_to_5_pct": 51.5,
+ "buy_and_hold_pct": {
+  "SPY": 104.87
+ }
+}
