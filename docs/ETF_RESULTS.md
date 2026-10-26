@@ -61,3 +61,31 @@ duplicate each other. **The target is plausible with the full basket but unverif
 1. Full daily history for the 15 ETFs (Alpha Vantage premium, or any vendor CSVs) in `data/raw/etf_full/`.
 2. `python -m swingtrader etf audit --source full` → `etf select --source full` → commit → `etf final --source full`.
    That final run would be the basket's first and only look at 2021+.
+
+## Round 2 (same day): 12 more setups + "stacking" for more trades/week
+**Read this first:** the grid v2 candidates and the stacking option were added *after* the v1
+final test had been run, so the 2021+ results below are a **second look at a window that was already used**.
+Both runs are in `results/etf/holdout_registry_spx-proxy.json` with an override reason. Treat
+them as a hint, not as out-of-sample evidence. The first clean test will be the full ETF basket.
+
+New setups (`strategies.py:grid_v2`, 24 candidates, committed before running): IBS < 0.2, 3 down closes,
+close below the lower Bollinger band, close at a 7-day low, Williams %R < −90, weak outside day, key reversal,
+down Monday (all long, in an uptrend), the short mirrors IBS > 0.8 / 3 up closes / above the upper band
+(in a downtrend), and 10-day-high momentum.
+
+Passed training (2× costs, same gates): **Williams %R, weak outside day, IBS, 3 down closes**.
+Failed: Bollinger, 7-day low, key reversal, down Monday (on the random-entry check), every short
+mirror, and momentum (PF 0.91).
+
+`--stack` lets *different* strategies hold the same ETF at once (still 1% per trade, 4% open-risk cap).
+
+| run (2021-01 → 2026-10, 1× costs) | trades/wk | PF | total | %/mo | max DD | PF @3× |
+|---|---|---|---|---|---|---|
+| v1 only (clean test) | 0.66 | 1.15 | +12.3% | 0.17 | −13.9% | 1.04 |
+| v1 + v2 | 1.09 | 1.09 | +10.7% | 0.15 | −10.8% | 0.98 |
+| v1 + v2, stacked | **1.71** | **1.33** | **+63.3%** | 0.72 | −11.2% | 1.21 |
+| buy & hold | – | – | +104.9% | – | ~−25% | – |
+
+Caveats on the stacked run: on one market, stacking just means holding up to four long SPY bets
+at once in a strong bull market, so part of the gain is extra market exposure, not extra edge.
+Gap-and-go and downtrend shorts lost money again. Mean reversion (+$54k) and NR7 (+$11k) did the work.

@@ -1,0 +1,131 @@
+{
+ "selected": [
+  "nrb_long_nr70_s1_1R_h3",
+  "gap_long_go0.5_s1_1.5R_h2",
+  "calendar_long_tom1_s2_none_h3_notrend",
+  "short_short_rsi2>90_s2_none_h3_x5",
+  "mr_long_ibs0.2_s2_none_h3_x5",
+  "mr_long_down30_s1.5_1R_h3",
+  "mr_long_wr-90_s2_none_h3_x5",
+  "mr_long_outside_weak0_s2_none_h3_x5"
+ ],
+ "window": [
+  "2021-01-01",
+  "2026-12-31"
+ ],
+ "costs_1x": {
+  "trades": 494,
+  "trades_per_week": 1.71,
+  "win_rate": 0.623,
+  "profit_factor": 1.33,
+  "expectancy_r": 0.108,
+  "avg_sessions": 1.86,
+  "total_return_pct": 63.27,
+  "cagr_pct": 8.92,
+  "monthly_pct": 0.715,
+  "max_dd_pct": -11.19,
+  "sharpe": 0.96
+ },
+ "skipped": {
+  "open_risk_cap": 2,
+  "same_symbol": 110,
+  "gross_cap": 39,
+  "not_triggered": 54,
+  "zero_size": 0
+ },
+ "costs_2x": {
+  "trades": 497,
+  "trades_per_week": 1.72,
+  "win_rate": 0.62,
+  "profit_factor": 1.28,
+  "expectancy_r": 0.094,
+  "avg_sessions": 1.86,
+  "total_return_pct": 53.31,
+  "cagr_pct": 7.73,
+  "monthly_pct": 0.623,
+  "max_dd_pct": -11.59,
+  "sharpe": 0.84
+ },
+ "costs_3x": {
+  "trades": 497,
+  "trades_per_week": 1.72,
+  "win_rate": 0.604,
+  "profit_factor": 1.21,
+  "expectancy_r": 0.074,
+  "avg_sessions": 1.85,
+  "total_return_pct": 39.21,
+  "cagr_pct": 5.93,
+  "monthly_pct": 0.482,
+  "max_dd_pct": -12.29,
+  "sharpe": 0.66
+ },
+ "by_family": {
+  "calendar": {
+   "trades": 23,
+   "pnl": 3282.578,
+   "win": 0.522,
+   "avg_r": 0.099
+  },
+  "gap": {
+   "trades": 74,
+   "pnl": -3206.077,
+   "win": 0.486,
+   "avg_r": -0.023
+  },
+  "mr": {
+   "trades": 296,
+   "pnl": 54317.891,
+   "win": 0.676,
+   "avg_r": 0.144
+  },
+  "nrb": {
+   "trades": 90,
+   "pnl": 11214.296,
+   "win": 0.611,
+   "avg_r": 0.128
+  },
+  "short": {
+   "trades": 11,
+   "pnl": -2335.08,
+   "win": 0.455,
+   "avg_r": -0.142
+  }
+ },
+ "by_year": {
+  "2021": {
+   "size": 106,
+   "sum": 23737.0
+  },
+  "2022": {
+   "size": 22,
+   "sum": -7895.0
+  },
+  "2023": {
+   "size": 84,
+   "sum": 8754.0
+  },
+  "2024": {
+   "size": 113,
+   "sum": 30833.0
+  },
+  "2025": {
+   "size": 92,
+   "sum": 9584.0
+  },
+  "2026": {
+   "size": 77,
+   "sum": -1740.0
+  }
+ },
+ "sessions_hist": {
+  "0": 28,
+  "1": 162,
+  "2": 153,
+  "3": 151
+ },
+ "weeks_with_0_setups_pct": 28.4,
+ "weeks_in_1_to_5_pct": 70.3,
+ "buy_and_hold_pct": {
+  "SPY": 104.87
+ }
+}

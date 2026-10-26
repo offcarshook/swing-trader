@@ -6,5 +6,21 @@
   "evaluation_number": 1,
   "override_reason": null,
   "git": "4252edf"
+ },
+ {
+  "ts": "2026-10-26T20:11:37+00:00",
+  "candidate_id": "nrb_long_nr70_s1_1R_h3+gap_long_go0.5_s1_1.5R_h2+calendar_long_tom1_s2_none_h3_notrend+short_short_rsi2>90_s2_none_h3_x5+mr_long_ibs0.2_s2_none_h3_x5+mr_long_down30_s1.5_1R_h3+mr_long_wr-90_s2_none_h3_x5+mr_long_outside_weak0_s2_none_h3_x5",
+  "hash": "73a7ceb59968290b",
+  "evaluation_number": 2,
+  "override_reason": "grid v2 added after v1 final test; 2021+ window already seen, result is NOT a clean out-of-sample test",
+  "git": "4825418"
+ },
+ {
+  "ts": "2026-10-26T20:11:42+00:00",
+  "candidate_id": "nrb_long_nr70_s1_1R_h3+gap_long_go0.5_s1_1.5R_h2+calendar_long_tom1_s2_none_h3_notrend+short_short_rsi2>90_s2_none_h3_x5+mr_long_ibs0.2_s2_none_h3_x5+mr_long_down30_s1.5_1R_h3+mr_long_wr-90_s2_none_h3_x5+mr_long_outside_weak0_s2_none_h3_x5",
+  "hash": "ae9fd4be0cb2dbe8",
+  "evaluation_number": 3,
+  "override_reason": "grid v2 added after v1 final test; 2021+ window already seen, result is NOT a clean out-of-sample test",
+  "git": "4825418+dirty"
  }
 ]
