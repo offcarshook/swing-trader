@@ -1,0 +1,104 @@
+{
+ "selected": [
+  "mr_long_ibs0.2_s2_none_h3_x5",
+  "mr_long_bb_low0_s1.5_1R_h3",
+  "mr_long_wr-90_s1.5_1R_h3",
+  "mr_long_mon_down0_s2_none_h3_x5"
+ ],
+ "window": [
+  "2021-01-01",
+  "2026-12-31"
+ ],
+ "costs_1x": {
+  "trades": 355,
+  "trades_per_week": 1.23,
+  "win_rate": 0.634,
+  "profit_factor": 1.37,
+  "expectancy_r": 0.076,
+  "avg_sessions": 1.73,
+  "total_return_pct": 29.52,
+  "cagr_pct": 4.63,
+  "monthly_pct": 0.378,
+  "max_dd_pct": -10.84,
+  "sharpe": 0.75
+ },
+ "skipped": {
+  "open_risk_cap": 0,
+  "same_symbol": 268,
+  "gross_cap": 0,
+  "not_triggered": 0,
+  "zero_size": 0
+ },
+ "costs_2x": {
+  "trades": 355,
+  "trades_per_week": 1.23,
+  "win_rate": 0.623,
+  "profit_factor": 1.31,
+  "expectancy_r": 0.066,
+  "avg_sessions": 1.73,
+  "total_return_pct": 25.04,
+  "cagr_pct": 3.99,
+  "monthly_pct": 0.326,
+  "max_dd_pct": -11.42,
+  "sharpe": 0.65
+ },
+ "costs_3x": {
+  "trades": 355,
+  "trades_per_week": 1.23,
+  "win_rate": 0.614,
+  "profit_factor": 1.26,
+  "expectancy_r": 0.056,
+  "avg_sessions": 1.73,
+  "total_return_pct": 20.73,
+  "cagr_pct": 3.35,
+  "monthly_pct": 0.275,
+  "max_dd_pct": -11.97,
+  "sharpe": 0.56
+ },
+ "by_family": {
+  "mr": {
+   "trades": 355,
+   "pnl": 29519.265,
+   "win": 0.634,
+   "avg_r": 0.076
+  }
+ },
+ "by_year": {
+  "2021": {
+   "size": 98,
+   "sum": 10821.0
+  },
+  "2022": {
+   "size": 7,
+   "sum": -3964.0
+  },
+  "2023": {
+   "size": 75,
+   "sum": 3539.0
+  },
+  "2024": {
+   "size": 105,
+   "sum": 16399.0
+  },
+  "2025": {
+   "size": 52,
+   "sum": 4311.0
+  },
+  "2026": {
+   "size": 18,
+   "sum": -1586.0
+  }
+ },
+ "sessions_hist": {
+  "0": 6,
+  "1": 178,
+  "2": 77,
+  "3": 94
+ },
+ "weeks_with_0_setups_pct": 47.3,
+ "weeks_in_1_to_5_pct": 52.0,
+ "buy_and_hold_pct": {
+  "SPY": 86.64,
+  "QQQ": 142.14
+ }
+}

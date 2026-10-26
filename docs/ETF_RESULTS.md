@@ -89,3 +89,26 @@ mirror, and momentum (PF 0.91).
 Caveats on the stacked run: on one market, stacking just means holding up to four long SPY bets
 at once in a strong bull market, so part of the gain is extra market exposure, not extra edge.
 Gap-and-go and downtrend shorts lost money again. Mean reversion (+$54k) and NR7 (+$11k) did the work.
+
+## Round 3: real SPY + QQQ daily data (2 of the 15 ETFs)
+Data supplied by the user: SPY 1993-02 → 2025-09-11 (dividend-adjusted via `Adj Close`) and QQQ
+1999-03 → 2026-09-29 (already adjusted). Both pass the audit (one float-rounding row in QQQ is snapped).
+The full grid (v1 + v2, 52 candidates) was selected on 2008–2020 only, committed, then run once on 2021+.
+Caveats: SPY's 2021+ path was already seen through the S&P proxy. QQQ's had not been.
+
+**Key finding: the S&P cash-index proxy was misleading.** A cash index's daily "open" is stale (it is
+mostly built from the prior close), so on the index gaps and narrow-range bars were partly artefacts.
+On the tradable ETFs, gap-and-go (PF 0.90), NR7 (PF 1.06), turn-of-month and RSI2 dip-buying all
+**failed training**. Only short-term mean reversion survived: IBS < 0.2, close below the lower
+Bollinger band, Williams %R < −90, down Monday.
+
+| final 2021-01 → 2026-09 | trades/wk | PF | total | %/mo | max DD | PF @3× |
+|---|---|---|---|---|---|---|
+| mean-reversion book (primary) | 1.23 | **1.37** | **+29.5%** | 0.38 | −10.8% | 1.26 |
+| same, stacked (secondary) | 1.64 | 1.28 | +36.5% | 0.45 | −15.1% | 1.19 |
+| buy & hold SPY / QQQ | – | – | +86.6% / +142.1% | – | – | – |
+
+The final test did *better* than training (train PF 1.13 at 1× costs), so treat it as luck plus a
+friendlier regime, not as an edge that improved. 2022 lost money (few signals, because the uptrend
+filter was off most of the year). The 1–5 setups/week target was met in only ~50% of weeks with
+2 ETFs. The other 13 ETFs (bonds, metals, energy, international) are what would spread the signals out.
