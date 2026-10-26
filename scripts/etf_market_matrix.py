@@ -18,7 +18,7 @@ from swingtrader.etf.engine import simulate
 cfg = load_config(resolve("config/etf.yaml"))
 sel = json.loads((resolve("results/etf/study") / "train_selection_corrected.json").read_text())
 params = _params(sel)
-bars = load_basket(resolve("data/raw/etf_full"), BASKET)
+bars = load_basket(resolve("data/raw/etf_full"), BASKET + ["XLV", "DBC"])
 aud = audit(bars)
 K = ("trades", "profit_factor", "expectancy_r", "total_return_pct", "cagr_pct", "max_dd_pct", "sharpe", "reliability")
 out = {"selection": sel["selected"], "per_instrument": {}}

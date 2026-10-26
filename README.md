@@ -13,9 +13,18 @@ research that can, at most, veto an entry. **Live order execution does not exist
 > target is not supported**: even at 8% risk per trade the strategy averaged < 1%/month on training
 > data. Paper trading is unlocked by the promotion gates; nothing here promises returns.
 
-> **ETF 1–3 day phase ([docs/ETF_RESULTS.md](docs/ETF_RESULTS.md))** — the 15-ETF basket could not be
-> tested (free Alpha Vantage key: 100 sessions/ETF, 25 calls/day). On a SPY proxy, 4 of 5 families passed
-> training, but the fresh 2021–26 test made only +12.3% (PF 1.15, max DD −13.9%) vs +104.9% buy-and-hold.
+> **Audit round (2026-10-26) — current status ([docs/FINAL_VALIDATION.md](docs/FINAL_VALIDATION.md))**
+> Earlier ETF rounds filled at dividend-adjusted prices and had a slot look-ahead; both are fixed and every
+> result was rerun. On real SPY/QQQ (training 2008–2020, corrected engine) a US-equity mean-reversion book
+> makes PF 1.28 / CAGR 3.8 % before a multiple-testing haircut that leaves it insignificant (deflated
+> Sharpe probability 0.48); walk-forward of the selection procedure: +1.05 % over 2013–2020. It fails on
+> non-equity ETFs and trails buy & hold everywhere. Multi-timeframe confirmation on genuine MES 1-minute
+> data adds no value. Lumibot (4.6.30) runs the book with exact zero-cost parity and is the only order path;
+> TradingAgents (0.7.0) sits behind a point-in-time, fail-closed adapter. No untouched holdout remains.
+> Audit docs: [PROJECT_AUDIT](docs/PROJECT_AUDIT.md) · [FRAMEWORK_INTEGRATION](docs/FRAMEWORK_INTEGRATION.md) ·
+> [TAURIC_LUMIBOT_PARITY](docs/TAURIC_LUMIBOT_PARITY.md) · [DATA_AUDIT](docs/DATA_AUDIT.md) ·
+> [MTF_RESULTS](docs/MTF_RESULTS.md) · [MARKET_RESULTS](docs/MARKET_RESULTS.md) ·
+> [ACCOUNT_RULES_VALIDATION](docs/ACCOUNT_RULES_VALIDATION.md) · [ETF_RESULTS](docs/ETF_RESULTS.md).
 
 ## Quick start
 

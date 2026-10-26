@@ -1,0 +1,134 @@
+{
+ "book_members_run": [
+  "mr_long_bb_low0_s2_none_h3_x5",
+  "mr_long_low70_s2_none_h3_x5",
+  "mr_long_wr-90_s2_none_h3_x5",
+  "mr_long_key_rev0_s1.5_1R_h3",
+  "mr_long_mon_down0_s2_none_h3_x5",
+  "mrshort_short_up30_s2_none_h3_x5"
+ ],
+ "excluded_open_decided_or_stop_entry": [
+  "gap_long_go1_s1_1.5R_h2"
+ ],
+ "note": "excluded members need an intraday clock at the open (not available in Lumibot daily backtests); the reference engine runs the full book",
+ "fixture_zero_cost": {
+  "window": [
+   "2019-01-02",
+   "2019-12-31"
+  ],
+  "cost_mult": 1.0,
+  "lumibot_version": "4.6.30",
+  "trades_reference_lumibot_timing": 67,
+  "trades_lumibot": 65,
+  "matched": 65,
+  "only_reference": [
+   [
+    "QQQ",
+    "2019-12-31"
+   ],
+   [
+    "SPY",
+    "2019-12-31"
+   ]
+  ],
+  "only_lumibot": [],
+  "open_at_end_lumibot": [
+   "QQQ",
+   "SPY"
+  ],
+  "same_shares": 65,
+  "same_entry_price": 65,
+  "same_exit_session": 65,
+  "same_exit_price": 65,
+  "pnl_ex_fees_ref_total": 5450.13,
+  "pnl_ex_fees_lb_total": 5450.13,
+  "dividends_ref_total": 0.0,
+  "dividend_entitlements_lb_ledger_total": 0.0,
+  "final_value_lumibot": 105450.14,
+  "final_equity_reference_lumibot_timing": 106155.25,
+  "final_equity_reference_own_timing": 105228.48,
+  "trades_reference_own_timing": 69,
+  "equity_days_compared": 251,
+  "equity_daily_change_corr": 0.6522,
+  "equity_daily_change_corr_lb_shift1": 0.1683
+ },
+ "fixture_costs_1x": {
+  "window": [
+   "2019-01-02",
+   "2019-12-31"
+  ],
+  "cost_mult": 1.0,
+  "lumibot_version": "4.6.30",
+  "trades_reference_lumibot_timing": 68,
+  "trades_lumibot": 65,
+  "matched": 65,
+  "only_reference": [
+   [
+    "QQQ",
+    "2019-12-31"
+   ],
+   [
+    "SPY",
+    "2019-05-30"
+   ],
+   [
+    "SPY",
+    "2019-12-31"
+   ]
+  ],
+  "only_lumibot": [],
+  "open_at_end_lumibot": [
+   "QQQ",
+   "SPY"
+  ],
+  "same_shares": 28,
+  "same_entry_price": 0,
+  "same_exit_session": 64,
+  "same_exit_price": 0,
+  "pnl_ex_fees_ref_total": 4882.54,
+  "pnl_ex_fees_lb_total": 5409.42,
+  "dividends_ref_total": 0.0,
+  "dividend_entitlements_lb_ledger_total": 0.0,
+  "final_value_lumibot": 104675.26,
+  "final_equity_reference_lumibot_timing": 105856.44,
+  "final_equity_reference_own_timing": 104207.86,
+  "trades_reference_own_timing": 70,
+  "equity_days_compared": 251,
+  "equity_daily_change_corr": 0.6531,
+  "equity_daily_change_corr_lb_shift1": 0.1689
+ },
+ "production_window_costs_1x": {
+  "window": [
+   "2021-01-04",
+   "2025-09-11"
+  ],
+  "cost_mult": 1.0,
+  "lumibot_version": "4.6.30",
+  "trades_reference_lumibot_timing": 254,
+  "trades_lumibot": 253,
+  "matched": 253,
+  "only_reference": [
+   [
+    "SPY",
+    "2025-02-26"
+   ]
+  ],
+  "only_lumibot": [],
+  "open_at_end_lumibot": [],
+  "same_shares": 211,
+  "same_entry_price": 0,
+  "same_exit_session": 251,
+  "same_exit_price": 0,
+  "pnl_ex_fees_ref_total": 36347.44,
+  "pnl_ex_fees_lb_total": 38758.74,
+  "dividends_ref_total": 503.89,
+  "dividend_entitlements_lb_ledger_total": 503.89,
+  "final_value_lumibot": 136055.6,
+  "final_equity_reference_lumibot_timing": 135237.41,
+  "final_equity_reference_own_timing": 134732.31,
+  "trades_reference_own_timing": 257,
+  "equity_days_compared": 1177,
+  "equity_daily_change_corr": 0.6866,
+  "equity_daily_change_corr_lb_shift1": 0.0847
+ }
+}

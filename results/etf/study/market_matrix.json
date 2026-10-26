@@ -590,6 +590,86 @@
     "buy_hold_total_return_pct": null,
     "profit_factor_2x_costs": null
    }
+  },
+  "XLV": {
+   "data": {
+    "first": "1998-12-22",
+    "last": "2022-08-08",
+    "rows": 5945,
+    "price_basis": "raw OHLC + adj close (dividends inferred from factor jumps)"
+   },
+   "train_2008_2020": {
+    "trades": 375,
+    "profit_factor": 1.2,
+    "expectancy_r": 0.047,
+    "total_return_pct": 18.42,
+    "cagr_pct": 1.31,
+    "max_dd_pct": -8.85,
+    "sharpe": 0.39,
+    "reliability": "ok",
+    "window": [
+     "2008-01-02",
+     "2020-12-31"
+    ],
+    "buy_hold_total_return_pct": 301.88,
+    "profit_factor_2x_costs": 1.115
+   },
+   "after_2020_viewed": {
+    "trades": 46,
+    "profit_factor": 0.864,
+    "expectancy_r": -0.034,
+    "total_return_pct": -1.64,
+    "cagr_pct": -1.03,
+    "max_dd_pct": -4.32,
+    "sharpe": -0.33,
+    "reliability": "unreliable (small sample)",
+    "window": [
+     "2021-01-04",
+     "2022-08-08"
+    ],
+    "buy_hold_total_return_pct": 18.28,
+    "profit_factor_2x_costs": 0.821
+   }
+  },
+  "DBC": {
+   "data": {
+    "first": "2006-02-06",
+    "last": "2022-08-08",
+    "rows": 4155,
+    "price_basis": "raw OHLC + adj close (dividends inferred from factor jumps)"
+   },
+   "train_2008_2020": {
+    "trades": 287,
+    "profit_factor": 0.697,
+    "expectancy_r": -0.1,
+    "total_return_pct": -25.42,
+    "cagr_pct": -2.23,
+    "max_dd_pct": -27.7,
+    "sharpe": -0.68,
+    "reliability": "ok",
+    "window": [
+     "2008-01-02",
+     "2020-12-31"
+    ],
+    "buy_hold_total_return_pct": -52.06,
+    "profit_factor_2x_costs": 0.623
+   },
+   "after_2020_viewed": {
+    "trades": 60,
+    "profit_factor": 1.794,
+    "expectancy_r": 0.2,
+    "total_return_pct": 12.47,
+    "cagr_pct": 7.67,
+    "max_dd_pct": -4.01,
+    "sharpe": 1.41,
+    "reliability": "unreliable (small sample)",
+    "window": [
+     "2021-01-04",
+     "2022-08-08"
+    ],
+    "buy_hold_total_return_pct": 69.61,
+    "profit_factor_2x_costs": 1.611
+   }
   }
  },
  "stacking_ablation_train_2008_2020": {

@@ -1,4 +1,21 @@
-# ETF 1–3 day swing phase — results (2026-10-26)
+# ETF 1–3 day swing phase — results
+
+> **AUDIT CORRECTION (2026-10-26, round 5). Rounds 1–4 below are kept for the record but several of their
+> numbers and labels are superseded:**
+> * Every round 1–4 fill, stop and target used **dividend-adjusted prices** that never traded (loader bug).
+> * The reference engine let a position stopped out *during* a session free its slot for an entry at that
+>   session's *open* (look-ahead in slot/risk accounting).
+> * Round 3's "2021-01 → 2026-09 SPY+QQQ" label was wrong: SPY data ends **2025-09-11**; after that the
+>   "portfolio" was QQQ alone. Its buy & hold figures (+86.6 % SPY, +142.1 % QQQ) were on **different**
+>   windows (SPY to 2025-09-11, QQQ to 2026-09-29).
+> * The round-1/2 proxy results (S&P cash index) are proxy research only; the index's stale opens made gap
+>   and narrow-range patterns look better than they trade.
+> * Round 4's 15-ETF result used the buggy engine and mixed data sources (see `docs/DATA_AUDIT.md`).
+> * The 2021+ window has now been looked at **four times** (`results/etf/holdout_registry_full2etf.json`);
+>   it is permanently "previously viewed". **No untouched ETF holdout remains.**
+>
+> Current, audited results: **Round 5** at the end of this file, `docs/MARKET_RESULTS.md`,
+> `docs/FINAL_VALIDATION.md`.
 
 ## TL;DR
 * **The 15-ETF basket test could not be run**: the Alpha Vantage key in this session is a free key.
@@ -136,3 +153,44 @@ It fails. Only 9 ETFs have post-2021 data, and most of those stop in 2022-08, so
 2. Gap, NR7, RSI2-dip and downtrend-short families did not hold up on tradable data.
 3. 1–5 setups/week cannot be reached honestly: the rules that work fire ~1.2×/week on two correlated ETFs,
    and spreading them to other ETFs adds losing trades, not edge.
+
+
+## Round 5 (audit, 2026-10-26): corrected engine, exact windows, frozen re-selection
+Reproduce: `python -m swingtrader etf-study --reselect` → `results/etf/study/` (study.json, trades,
+equity, opportunity logs, selection). Same pre-registered grid (52 candidates) and gates, training only
+(2008–2020), SPY+QQQ executable prices with dividends, corrected slot accounting.
+
+### Reproduction first
+Round 3's numbers reproduce exactly from the old code and data: 355 trades, PF 1.37, +29.52 %, max DD
+−10.84 % (stacked: 472, 1.28, +36.49 %, −15.13 %; 3× costs PF 1.26 / 1.19). They are not valid results
+because of the defects listed in the banner.
+
+### Training (2008–2020) — the only clean evidence
+Frozen book (7 members, 10 of 52 candidates passed): see `docs/MARKET_RESULTS.md`. Training portfolio:
+763 trades (1.12/week), PF 1.28, +62.2 % over 13 years (CAGR 3.8 %), max DD −13.0 %, Sharpe 0.58.
+At 3× costs: PF 1.14, +29.3 %. Deflated Sharpe probability 0.48 for ~260 trials (52 candidates × 5
+selection rounds) — **not statistically significant**.
+
+### Walk-forward of the whole selection procedure (anchored, re-selected every year)
+| Years | Chained return | Positive years | Selected beats the average candidate |
+|---|---|---|---|
+| 2013–2020 (out-of-sample within research data) | **+1.05 %** | 5 / 8 | 4 / 8 |
+| 2021–2026 (viewed) | +27.5 % | 3 / 6 | 3 / 6 |
+The selection procedure shows **no out-of-sample skill** in 2013–2020.
+
+### 2021+ (previously viewed, reported with exact windows)
+| Test | Window | Trades | PF 1× / 3× | Net return | Max DD | Benchmark (same dates) |
+|---|---|---|---|---|---|---|
+| SPY only | 2021-01-04 → 2025-09-11 | 140 | 1.34 / 1.23 | +11.5 % | −8.2 % | +86.6 % |
+| QQQ only | 2021-01-04 → 2026-09-29 | 157 | 1.29 / 1.21 | +12.0 % | −9.0 % | +142.1 % |
+| Common SPY+QQQ | 2021-01-04 → 2025-09-11 | 267 | 1.49 / 1.38 | +33.0 % | −9.4 % | 50/50 +88.6 % |
+Gross (0× costs) common: +37.8 %. Costs at 1×: $293 commission, $3,095 slippage, +$787 dividends,
+−$13 borrow. Five largest trades = 26.5 % of net profit (SPY alone: 61 %). 2022 lost money (−$5,820).
+Block bootstrap (2,000 samples, 10-day blocks) of the common path: total return p5 / p50 / p95 =
++3.4 % / +32.7 % / +68.5 %, max DD p5 / p50 / p95 = −16.1 % / −8.9 % / −5.4 %.
+
+### Conclusion
+A small positive effect on US equity ETFs survives costs in training, but its significance does not
+survive the multiple-testing correction, the selection procedure has no demonstrated out-of-sample
+skill, the effect does not transfer to non-equity ETFs, and buy & hold beat it by a wide margin on every
+window. No untouched holdout remains; the only valid next evidence is forward paper trading.

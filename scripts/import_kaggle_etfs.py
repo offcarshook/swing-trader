@@ -15,7 +15,7 @@ import pandas as pd
 
 SRC = Path(sys.argv[1])
 OUT = Path("data/raw/etf_full")
-LIEW = ["DIA", "GLD", "XLE", "XLF", "XLK", "SMH"]
+LIEW = ["DIA", "GLD", "XLE", "XLF", "XLK", "SMH", "XLV", "DBC"]
 JACK = ["IEF", "SLV", "USO", "EFA", "EEM", "IWM"]
 prov = json.loads((OUT / "provenance.json").read_text()) if (OUT / "provenance.json").exists() else {}
 prov.setdefault("SPY", "user upload spy-historical.csv (dividend-adjusted via Adj Close)")
@@ -25,6 +25,8 @@ for s in LIEW:
     pd.read_csv(SRC / "etf" / f"{s}.csv").dropna().to_csv(OUT / f"{s}.csv", index=False)
     prov[s] = "kaggle liewyousheng/historical-etf (Adj Close), ends 2022-08-08"
 for s in JACK:
+    if not (SRC / "etfs" / f"{s}.csv").exists():
+        continue
     pd.read_csv(SRC / "etfs" / f"{s}.csv").dropna().to_csv(OUT / f"{s}.csv", index=False)
     prov[s] = "kaggle jacksoncrow/stock-market-dataset (Adj Close), ends 2020-04-01: TRAIN ONLY"
 t = pd.read_csv(SRC / "TLT_data.csv", sep=";", decimal=",", na_values=["#N/A N/A"]).dropna(subset=["Date"])

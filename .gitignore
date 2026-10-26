@@ -20,3 +20,4 @@ results/agent_cache/
 .env
 KILL_SWITCH
 .ruff_cache/
+results/parity/lumibot_logs/
