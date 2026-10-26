@@ -1,0 +1,120 @@
+{
+ "candidate": {
+  "family": "pullback",
+  "params": {
+   "trend_len": 100,
+   "rsi_len": 3,
+   "rsi_entry": 15,
+   "exit_ma": 5,
+   "max_hold": 10,
+   "stop_atr": 2.5
+  }
+ },
+ "window": [
+  "2020-07-20",
+  "2023-12-29"
+ ],
+ "lumibot_version": "4.6.30",
+ "lumibot_fee_per_contract_side": 2.875,
+ "lumibot": {
+  "final_equity": 102481.25,
+  "net_return_pct": 2.48,
+  "max_drawdown_pct": 1.02,
+  "entry_signals": 18,
+  "fills": 36,
+  "rolls": 0,
+  "lumibot_reported": {
+   "cagr": 0.007152974404557977,
+   "volatility": 0.012874225030306045,
+   "sharpe": 0.5556042703712114,
+   "max_drawdown": "{'drawdown': np.float64(0.010215120571315793), 'date': Timestamp('2022-08-26 00:00:00-0400', tz='America/New_York')}",
+   "romad": 0.7002339673448038,
+   "total_return": 0.024812500000000126
+  }
+ },
+ "internal_engine": {
+  "start": "2020-07-20",
+  "end": "2023-12-29",
+  "years": 3.44,
+  "start_equity": 100000.0,
+  "end_equity": 102506.25,
+  "net_return_pct": 2.51,
+  "cagr_pct": 0.72,
+  "avg_monthly_return_pct": 0.061,
+  "median_monthly_return_pct": 0.0,
+  "pct_positive_months": 26.8,
+  "best_month_pct": 0.87,
+  "worst_month_pct": -0.36,
+  "months_ge_5pct": 0,
+  "max_drawdown_pct": 0.67,
+  "max_dd_duration_sessions": 409,
+  "sharpe": 0.85,
+  "sortino": 1.38,
+  "exposure_pct": 4.9,
+  "trades": 18,
+  "long_trades": 18,
+  "short_trades": 0,
+  "win_rate_pct": 61.1,
+  "profit_factor": 2.895,
+  "expectancy_usd": 139.24,
+  "expectancy_r": 0.19,
+  "avg_win_usd": 348.05,
+  "avg_loss_usd": -188.89,
+  "avg_sessions_held": 2.44,
+  "avg_calendar_days_held": 3.11,
+  "avg_contracts": 1.11,
+  "total_fees_usd": 40.0,
+  "total_roll_costs_usd": 0.0,
+  "longest_losing_streak": 2
+ },
+ "parity": {
+  "internal_entries": 18,
+  "lumibot_entries": 18,
+  "matching_signal_dates": 0,
+  "only_internal": [
+   "2020-09-21",
+   "2020-10-27",
+   "2021-01-27",
+   "2021-02-22",
+   "2021-05-12",
+   "2021-06-18",
+   "2021-07-19",
+   "2021-08-18",
+   "2021-09-10",
+   "2021-09-20",
+   "2021-11-26",
+   "2022-01-07",
+   "2022-01-18",
+   "2022-08-22",
+   "2023-02-21",
+   "2023-04-25",
+   "2023-08-04",
+   "2023-08-16"
+  ],
+  "only_lumibot": [
+   "2020-09-22",
+   "2020-10-28",
+   "2021-01-28",
+   "2021-02-23",
+   "2021-05-13",
+   "2021-06-21",
+   "2021-07-20",
+   "2021-08-19",
+   "2021-09-13",
+   "2021-09-21",
+   "2021-11-29",
+   "2022-01-10",
+   "2022-01-19",
+   "2022-08-23",
+   "2023-02-22",
+   "2023-04-26",
+   "2023-08-07",
+   "2023-08-17"
+  ]
+ },
+ "parity_equity": {
+  "days_compared": 888,
+  "corr_daily_changes": 0.5471,
+  "final_diff_usd": -25.0
+ }
+}
