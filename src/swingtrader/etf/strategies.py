@@ -54,6 +54,19 @@ def features(df: pd.DataFrame) -> pd.DataFrame:
     f["nr4"] = rng == rng.rolling(4).min()
     f["nr7"] = rng == rng.rolling(7).min()
     f["inside"] = (df["high"] < df["high"].shift(1)) & (df["low"] > df["low"].shift(1))
+    c, h, l, o = df["close"], df["high"], df["low"], df["open"]
+    f["ibs"] = ((c - l) / (h - l).replace(0, np.nan)).fillna(0.5)
+    f["down3"] = (c < c.shift(1)) & (c.shift(1) < c.shift(2)) & (c.shift(2) < c.shift(3))
+    f["up3"] = (c > c.shift(1)) & (c.shift(1) > c.shift(2)) & (c.shift(2) > c.shift(3))
+    m20, s20 = c.rolling(20).mean(), c.rolling(20).std()
+    f["bb_low"], f["bb_high"] = c < m20 - 2 * s20, c > m20 + 2 * s20
+    f["low7"] = c <= c.rolling(7).min()
+    f["high10"] = c >= c.shift(1).rolling(10).max()
+    hh, ll = h.rolling(10).max(), l.rolling(10).min()
+    f["wr"] = 100 * (c - hh) / (hh - ll).replace(0, np.nan)
+    f["outside_weak"] = (h > h.shift(1)) & (l < l.shift(1)) & (f["ibs"] < 0.25)
+    f["key_rev"] = (o < l.shift(1)) & (c > c.shift(1))
+    f["mon_down"] = (pd.Series(df.index.dayofweek, index=df.index) == 0) & (c < o)
     month = df.index.to_period("M")
     pos = pd.Series(np.arange(len(df)), index=df.index)
     f["day_of_month"] = pos.groupby(month).cumcount() + 1                       # 1 = first session
@@ -113,10 +126,37 @@ def signals(df: pd.DataFrame, p: Params, f: pd.DataFrame | None = None) -> pd.Da
         cond = ok_prev & np.nan_to_num(hit, nan=0).astype(bool) & (trend_prev if p.trend_filter else True)
         j = np.flatnonzero(cond)
         return _frame(j - 1, j, p, p.stop_atr * a_prev[j])
+    elif p.family in ("mr", "mom", "mrshort"):  # 6-17. extra families (grid v2)
+        v = p.variant
+        if v == "ibs":
+            setup = f["ibs"].to_numpy() < p.threshold
+        elif v == "ibs_hi":
+            setup = f["ibs"].to_numpy() > p.threshold
+        elif v == "wr":
+            setup = f["wr"].to_numpy() < p.threshold
+        else:
+            setup = f[v].to_numpy().astype(bool)
+        trend = dn if p.family == "mrshort" else up
+        cond = ok & setup & (trend if p.trend_filter else True)
     else:
         raise ValueError(p.family)
     i = np.flatnonzero(np.asarray(cond)[:-1])
     return _frame(i, i + 1, p, p.stop_atr * a[i])
+
+
+def grid_v2() -> list[Params]:
+    """Grid v2 (12 more families, 24 candidates), registered after the v1 final test had been run."""
+    g: list[Params] = []
+    for v, th in (("ibs", 0.2), ("down3", 0), ("bb_low", 0), ("low7", 0), ("wr", -90),
+                  ("outside_weak", 0), ("key_rev", 0), ("mon_down", 0)):
+        g.append(Params("mr", "long", v, th, 2.0, None, 3, 5))
+        g.append(Params("mr", "long", v, th, 1.5, 1.0, 3))
+    for v, th in (("ibs_hi", 0.8), ("up3", 0), ("bb_high", 0)):
+        g.append(Params("mrshort", "short", v, th, 2.0, None, 3, 5))
+        g.append(Params("mrshort", "short", v, th, 1.5, 1.0, 3))
+    g.append(Params("mom", "long", "high10", 0, 1.5, 1.5, 3))
+    g.append(Params("mom", "long", "high10", 0, 1.0, 1.0, 2))
+    return g
 
 
 def grid() -> list[Params]:

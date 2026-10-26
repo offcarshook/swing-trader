@@ -36,6 +36,7 @@ class RiskCfg:
     slip_bps_wide: float = 3.0
     stop_extra_bps: float = 2.0
     cost_mult: float = 1.0
+    stack_symbols: bool = False      # True: different strategies may hold the same ETF at once
 
 
 @dataclass
@@ -139,7 +140,7 @@ def simulate(bars: dict[str, pd.DataFrame], params: list[Params], start, end, ri
             o, h, l, c = a["open"][k], a["high"][k], a["low"][k], a["close"][k]
             if np.isnan(o):
                 continue
-            if any(p_["sym"] == sym for p_ in open_pos):
+            if any(p_["sym"] == sym and (not risk.stack_symbols or p_["pid"] == sg["pid"]) for p_ in open_pos):
                 skipped["same_symbol"] += 1; continue
             s_ = slip(sym)
             stop_entry = not np.isnan(sg["entry_level"])

@@ -17,6 +17,7 @@ risk:
   risk_pct: 1.0                    # 1% of equity lost if the initial stop is hit
   max_open_risk_pct: 4.0           # portfolio cap: sum of open initial risk
   max_gross: 2.0                   # gross notional / equity (Reg-T margin)
+  stack_symbols: false             # --stack: different strategies may hold the same ETF
 costs:
   commission_per_share: 0.005
   slip_bps: 1.0                    # SPY/QQQ/IWM/DIA/TLT/IEF/GLD/XLF/XLK/EFA, per side

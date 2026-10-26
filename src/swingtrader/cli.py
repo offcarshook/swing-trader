@@ -124,7 +124,9 @@ def cmd_etf(cfg, args):
     ecfg = load_config(resolve("config/etf.yaml"))
     out = resolve("results/etf")
     out.mkdir(parents=True, exist_ok=True)
-    tag = args.source
+    if args.stack:
+        ecfg["risk"]["stack_symbols"] = True
+    tag = args.source + ("" if args.grid == "v1" else f"_{args.grid}") + ("_stack" if args.stack else "")
     if args.step == "fetch":
         print(json.dumps(ed.fetch_basket(resolve(ecfg["data"]["av_dir"]), ecfg["basket"]), indent=1))
         return
@@ -134,7 +136,7 @@ def cmd_etf(cfg, args):
         (out / f"audit_{tag}.json").write_text(json.dumps(a, indent=1))
         print(json.dumps(a, indent=1))
     elif args.step == "select":
-        sel = evaluate_train(ecfg, bars, seeds=args.random_seeds)
+        sel = evaluate_train(ecfg, bars, seeds=args.random_seeds, grid_name=args.grid)
         sel["hash"] = selection_hash(sel)
         (out / f"train_selection_{tag}.json").write_text(json.dumps(sel, indent=1, default=str))
         er.write(out / f"TRAIN_{tag}.md", er.train_md(sel, tag))
@@ -146,7 +148,7 @@ def cmd_etf(cfg, args):
         sel = json.loads((out / f"train_selection_{tag}.json").read_text())
         if not sel["selected"]:
             sys.exit("no candidate passed the training gates - there is nothing to test")
-        HoldoutGuard(f"results/etf/holdout_registry_{tag}.json").authorize(
+        HoldoutGuard(f"results/etf/holdout_registry_{args.source}.json").authorize(
             "+".join(sel["selected"]), sel["hash"], args.override_reason)
         res, run = final_test(ecfg, bars, sel)
         (out / f"final_{tag}.json").write_text(json.dumps(res, indent=1, default=str))
@@ -175,6 +177,8 @@ def main(argv=None):
     p.add_argument("--random-seeds", type=int, default=100)
     p = sub.add_parser("holdout", help="evaluate the selected candidate ONCE on the unseen holdout")
     p.add_argument("--override-reason", default=None)
+    p.add_argument("--grid", choices=["v1", "v2", "all"], default="v1")
+    p.add_argument("--stack", action="store_true", help="let different strategies hold the same ETF")
     sub.add_parser("report", help="regenerate markdown reports from saved results (no re-runs)")
     p = sub.add_parser("lumibot-backtest", help="re-run a candidate through LumiBot's backtester")
     p.add_argument("--start", default=None)
@@ -189,6 +193,8 @@ def main(argv=None):
     p.add_argument("--source", choices=["av", "full", "spx-proxy"], default="full")
     p.add_argument("--random-seeds", type=int, default=None)
     p.add_argument("--override-reason", default=None)
+    p.add_argument("--grid", choices=["v1", "v2", "all"], default="v1")
+    p.add_argument("--stack", action="store_true", help="let different strategies hold the same ETF")
     p = sub.add_parser("paper", help="paper-trading step (requires a promoted candidate)")
     p.add_argument("--as-of", default=None)
     p.add_argument("--dry-run", action="store_true")

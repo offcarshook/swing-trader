@@ -19,11 +19,19 @@ import numpy as np
 import pandas as pd
 
 from swingtrader.etf.engine import RiskCfg, build_signals, metrics, simulate
-from swingtrader.etf.strategies import Params, features, grid
+from swingtrader.etf.strategies import Params, features, grid, grid_v2
+
+
+GRIDS = {"v1": grid, "v2": grid_v2, "all": lambda: grid() + grid_v2()}
 
 
 def risk_from_cfg(cfg: dict, cost_mult: float = 1.0) -> RiskCfg:
     return RiskCfg(**{**cfg["risk"], **cfg["costs"], "cost_mult": cost_mult})
+
+
+def group(p: Params) -> str:
+    """Selection keeps one candidate per group: the v1 family, or family:setup for v2."""
+    return p.family if p.family in ("dip", "nrb", "gap", "calendar", "short") else f"{p.family}:{p.variant}"
 
 
 def random_baseline(bars, p: Params, feats, n_trades: int, start, end, risk: RiskCfg, seeds: int, rng) -> np.ndarray:
@@ -59,14 +67,14 @@ def fold_returns(res, folds) -> list[float | None]:
     return out
 
 
-def evaluate_train(cfg: dict, bars: dict[str, pd.DataFrame], seeds: int | None = None) -> dict:
+def evaluate_train(cfg: dict, bars: dict[str, pd.DataFrame], seeds: int | None = None, grid_name: str = "v1") -> dict:
     sp, g = cfg["splits"], cfg["gates"]
     folds = [(f"{y}-01-01", f"{y}-12-31") for y in range(int(sp["train_start"][:4]), int(sp["train_end"][:4]) + 1)]
     feats = {s: features(df) for s, df in bars.items()}
     rng = np.random.default_rng(cfg.get("seed", 7))
     seeds = g["random_seeds"] if seeds is None else seeds
     cands = []
-    for p in grid():
+    for p in GRIDS[grid_name]():
         sigs = build_signals(bars, [p], feats)
         r1 = simulate(bars, [p], sp["train_start"], sp["train_end"], risk_from_cfg(cfg, 1.0), sigs=sigs)
         r2 = simulate(bars, [p], sp["train_start"], sp["train_end"], risk_from_cfg(cfg, 2.0), sigs=sigs)
@@ -90,12 +98,12 @@ def evaluate_train(cfg: dict, bars: dict[str, pd.DataFrame], seeds: int | None =
             pct = float((base < pnl2).mean() * 100)
             if pct < g["random_pctile"]:
                 fails.append(f"random-entry percentile {pct:.0f} < {g['random_pctile']}")
-        cands.append({**p.to_dict(), "train_1x": m1, "train_2x": m2, "fold_share": round(fold_share, 2),
+        cands.append({**p.to_dict(), "group": group(p), "train_1x": m1, "train_2x": m2, "fold_share": round(fold_share, 2),
                       "n_folds": len(fr), "random_pctile": pct, "passed": not fails, "failures": fails})
     kept = {}
     for c in cands:
-        if c["passed"] and (c["family"] not in kept or c["train_1x"]["sharpe"] > kept[c["family"]]["train_1x"]["sharpe"]):
-            kept[c["family"]] = c
+        if c["passed"] and (c["group"] not in kept or c["train_1x"]["sharpe"] > kept[c["group"]]["train_1x"]["sharpe"]):
+            kept[c["group"]] = c
     chosen = [Params(**{k: v for k, v in c.items() if k in Params.__dataclass_fields__}) for c in kept.values()]
     port = None
     if chosen:
@@ -103,13 +111,13 @@ def evaluate_train(cfg: dict, bars: dict[str, pd.DataFrame], seeds: int | None =
         port = {"metrics_1x": metrics(rp, cfg["risk"]["equity"]), "skipped": rp.skipped,
                 "metrics_2x": metrics(simulate(bars, chosen, sp["train_start"], sp["train_end"],
                                                risk_from_cfg(cfg, 2.0)), cfg["risk"]["equity"])}
-    return {"symbols": sorted(bars), "splits": sp, "gates": g, "candidates": cands,
+    return {"grid": grid_name, "stack": cfg["risk"].get("stack_symbols", False), "symbols": sorted(bars), "splits": sp, "gates": g, "candidates": cands,
             "selected": [c["id"] for c in kept.values()], "selected_params": [p.to_dict() for p in chosen],
             "train_portfolio": port}
 
 
 def selection_hash(sel: dict) -> str:
-    return hashlib.sha256(json.dumps([sel["selected_params"], sel["symbols"], sel["splits"]],
+    return hashlib.sha256(json.dumps([sel["selected_params"], sel["symbols"], sel["splits"], sel.get("stack", False)],
                                      sort_keys=True, default=str).encode()).hexdigest()[:16]
 
 
