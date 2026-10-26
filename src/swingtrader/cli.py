@@ -159,6 +159,12 @@ def cmd_etf(cfg, args):
         print(json.dumps(res["costs_1x"], indent=1))
 
 
+def cmd_etf_study(cfg, args):
+    from swingtrader.etf.study import run_study
+    run_study(wf_seeds=args.wf_seeds, boot=args.boot, skip_wf=args.skip_wf)
+    print("wrote results/etf/study/study.json (+ trades/equity/opportunity CSVs)")
+
+
 def cmd_paper(cfg, args):
     from swingtrader.paper.runner import run_paper
     print(json.dumps(run_paper(cfg, as_of=args.as_of, dry_run=args.dry_run, mode=args.mode, start=args.start),
@@ -195,6 +201,10 @@ def main(argv=None):
     p.add_argument("--override-reason", default=None)
     p.add_argument("--grid", choices=["v1", "v2", "all"], default="v1")
     p.add_argument("--stack", action="store_true", help="let different strategies hold the same ETF")
+    p = sub.add_parser("etf-study", help="corrected-basis ETF study (windows, ablations, rules, walk-forward)")
+    p.add_argument("--wf-seeds", type=int, default=20)
+    p.add_argument("--boot", type=int, default=2000)
+    p.add_argument("--skip-wf", action="store_true")
     p = sub.add_parser("paper", help="paper-trading step (requires a promoted candidate)")
     p.add_argument("--as-of", default=None)
     p.add_argument("--dry-run", action="store_true")
@@ -203,7 +213,7 @@ def main(argv=None):
     args = ap.parse_args(argv)
     cfg = load_config(args.config)
     {"download": cmd_download, "data": cmd_data, "select": cmd_select, "holdout": cmd_holdout, "report": cmd_report,
-     "lumibot-backtest": cmd_lumibot, "agent-research": cmd_agent, "paper": cmd_paper, "etf": cmd_etf}[args.cmd](cfg, args)
+     "lumibot-backtest": cmd_lumibot, "agent-research": cmd_agent, "paper": cmd_paper, "etf": cmd_etf, "etf-study": cmd_etf_study}[args.cmd](cfg, args)
 
 
 if __name__ == "__main__":

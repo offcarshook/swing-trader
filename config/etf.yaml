@@ -29,3 +29,34 @@ gates:                             # evaluated at 2x costs on TRAIN only
   min_fold_share: 0.6              # share of yearly folds (>=3 trades) with positive P&L
   random_pctile: 90
   random_seeds: 100
+# HYPOTHETICAL account-rule scenarios (research only; not modelled on, or claimed compatible with,
+# any real programme). Written before any replay was run; never tuned to make a strategy "pass".
+account_rule_scenarios:
+  - name: H1_static_10_daily5_target8
+    starting_balance: 100000
+    profit_target_pct: 8
+    max_daily_loss_pct: 5
+    max_total_loss_pct: 10
+    drawdown_type: static
+    min_trading_days: 5
+    horizon_sessions: 60
+  - name: H2_trailing_intraday_6_daily3_target6_lock
+    starting_balance: 100000
+    profit_target_pct: 6
+    max_daily_loss_pct: 3
+    max_total_loss_pct: 6
+    drawdown_type: trailing
+    trailing_basis: intraday
+    trailing_lock_at_start: true
+    min_trading_days: 5
+    horizon_sessions: 60
+  - name: H3_trailing_eod_balance_5_daily4eod_target10_consistency50
+    starting_balance: 100000
+    profit_target_pct: 10
+    max_daily_loss_pct: 4
+    daily_loss_check: eod
+    max_total_loss_pct: 5
+    drawdown_type: trailing
+    trailing_basis: eod_balance
+    consistency_max_day_share_pct: 50
+    horizon_sessions: 120

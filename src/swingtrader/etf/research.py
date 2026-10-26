@@ -18,6 +18,7 @@ import json
 import numpy as np
 import pandas as pd
 
+from swingtrader.etf.data import coverage, signal_view
 from swingtrader.etf.engine import RiskCfg, build_signals, metrics, simulate
 from swingtrader.etf.strategies import Params, features, grid, grid_v2
 
@@ -26,7 +27,7 @@ GRIDS = {"v1": grid, "v2": grid_v2, "all": lambda: grid() + grid_v2()}
 
 
 def risk_from_cfg(cfg: dict, cost_mult: float = 1.0) -> RiskCfg:
-    return RiskCfg(**{**cfg["risk"], **cfg["costs"], "cost_mult": cost_mult})
+    return RiskCfg.from_dict({**cfg["risk"], **cfg["costs"], "cost_mult": cost_mult})
 
 
 def group(p: Params) -> str:
@@ -38,7 +39,7 @@ def random_baseline(bars, p: Params, feats, n_trades: int, start, end, risk: Ris
     """Total P&L of `seeds` runs that enter at random eligible opens with the candidate's exits."""
     pools = {}
     for s, df in bars.items():
-        a = feats[s]["atr"].to_numpy()
+        a = feats[s]["atr"].to_numpy() / (df["adj_factor"].to_numpy() if "adj_factor" in df else 1.0)  # raw units
         idx = np.flatnonzero((df.index >= pd.Timestamp(start)) & (df.index <= pd.Timestamp(end)))
         idx = idx[(idx > 0) & ~np.isnan(a[np.maximum(idx - 1, 0)])]
         pools[s] = (idx, a)
@@ -70,7 +71,7 @@ def fold_returns(res, folds) -> list[float | None]:
 def evaluate_train(cfg: dict, bars: dict[str, pd.DataFrame], seeds: int | None = None, grid_name: str = "v1") -> dict:
     sp, g = cfg["splits"], cfg["gates"]
     folds = [(f"{y}-01-01", f"{y}-12-31") for y in range(int(sp["train_start"][:4]), int(sp["train_end"][:4]) + 1)]
-    feats = {s: features(df) for s, df in bars.items()}
+    feats = {s: features(signal_view(df)) for s, df in bars.items()}
     rng = np.random.default_rng(cfg.get("seed", 7))
     seeds = g["random_seeds"] if seeds is None else seeds
     cands = []
@@ -142,7 +143,21 @@ def final_test(cfg: dict, bars: dict[str, pd.DataFrame], sel: dict) -> dict:
             pd.period_range(res.equity.index[0], res.equity.index[-1], freq="W"), fill_value=0)
         out["weeks_with_0_setups_pct"] = round(float((wk == 0).mean() * 100), 1)
         out["weeks_in_1_to_5_pct"] = round(float(((wk >= 1) & (wk <= 5)).mean() * 100), 1)
-    win = {s: b.loc[sp["final_start"]:sp["final_end"]] for s, b in bars.items()}
-    bh = {s: round(100.0 * float(w["close"].iloc[-1] / w["open"].iloc[0] - 1), 2) for s, w in win.items() if len(w)}
-    out["buy_and_hold_pct"] = bh
+    out["coverage"] = coverage(bars, sp["final_start"], sp["final_end"])
+    out["buy_and_hold_total_return_pct"] = {s: buy_hold(b, sp["final_start"], sp["final_end"]) for s, b in bars.items()}
     return out, res
+
+
+def buy_hold(b: pd.DataFrame, start, end) -> dict | None:
+    """Total-return buy & hold over the instrument's data inside [start, end]: buy at the first
+    session's raw open, dividends reinvested (adjusted close / adjusted open), exact dates reported."""
+    w = b.loc[pd.Timestamp(start):pd.Timestamp(end)]
+    if not len(w):
+        return None
+    f = w["adj_factor"] if "adj_factor" in w else pd.Series(1.0, index=w.index)
+    tr = float(w["close"].iloc[-1] * f.iloc[-1] / (w["open"].iloc[0] * f.iloc[0]) - 1)
+    pr = float(w["close"].iloc[-1] / w["open"].iloc[0] - 1)
+    eq = w["close"] * f
+    return {"first": str(w.index[0].date()), "last": str(w.index[-1].date()), "sessions": int(len(w)),
+            "total_return_pct": round(100 * tr, 2), "price_return_pct": round(100 * pr, 2),
+            "max_dd_pct": round(100 * float((eq / eq.cummax() - 1).min()), 2)}

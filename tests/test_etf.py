@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from swingtrader.etf.data import audit, parse_csv
+from swingtrader.etf.data import audit, parse_csv, signal_view
 from swingtrader.etf.engine import RiskCfg, simulate
 from swingtrader.etf.strategies import Params, features, grid, signals
 
@@ -89,11 +89,14 @@ def test_calendar_signal_enters_last_session_of_month():
     assert (ent.month != nxt.month).all()
 
 
-def test_parse_csv_adjusts_and_audit(tmp_path):
+def test_parse_csv_keeps_executable_prices_and_audit(tmp_path):
+    # Regression (price-basis bug): OHLC used to be scaled by Adj Close / Close, so fills happened
+    # at dividend-adjusted prices. Now OHLC stay raw; the adjustment lives in adj_factor.
     f = tmp_path / "X.csv"
     f.write_text("date,open,high,low,close,adj close,volume\n2020-01-03,10,11,9,10,5,1\n2020-01-02,10,11,9,10,5,1\n")
     d = parse_csv(f)
-    assert d.index.is_monotonic_increasing and d.close.iloc[0] == 5 and d.high.iloc[0] == 5.5
+    assert d.index.is_monotonic_increasing and d.close.iloc[0] == 10 and d.high.iloc[0] == 11
+    assert d.adj_factor.iloc[0] == 0.5 and signal_view(d).close.iloc[0] == 5 and signal_view(d).high.iloc[0] == 5.5
     assert audit({"X": d})["X"]["usable"] is False
 
 
