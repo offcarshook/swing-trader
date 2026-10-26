@@ -1,72 +1,72 @@
 # ETF phase - training selection (full_all)
 
-Symbols: QQQ, SPY. Train window 2008-01-01 -> 2020-12-31 only.
+Symbols: DIA, EEM, EFA, GLD, IEF, IWM, QQQ, SLV, SMH, SPY, TLT, USO, XLE, XLF, XLK. Train window 2008-01-01 -> 2020-12-31 only.
 Gates at 2x costs: {'min_trades': 30, 'min_pf': 1.2, 'min_fold_share': 0.6, 'random_pctile': 90, 'random_seeds': 100}.
 
-**Selected:** mr_long_ibs0.2_s2_none_h3_x5, mr_long_bb_low0_s1.5_1R_h3, mr_long_wr-90_s1.5_1R_h3, mr_long_mon_down0_s2_none_h3_x5
+**Selected:** calendar_long_tom1_s2_none_h3_notrend
 
 ## All candidates (2x costs)
 
 | candidate | pass | trades | /week | win | PF | exp R | sessions | total % | %/month | max DD % | Sharpe | folds+ | rand pct | failures |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| mr_long_wr-90_s1.5_1R_h3 | yes | 182 | 0.28 | 0.577 | 1.34 | 0.136 | 1.99 | 26.42 | 0.15 | -10.37 | 0.4 | 67% of 12 | 96.0 |  |
-| mr_long_ibs0.2_s2_none_h3_x5 | yes | 579 | 0.88 | 0.644 | 1.23 | 0.048 | 1.87 | 29.79 | 0.167 | -11.48 | 0.39 | 62% of 13 | 98.0 |  |
-| mr_long_mon_down0_s2_none_h3_x5 | yes | 343 | 0.52 | 0.589 | 1.24 | 0.046 | 1.77 | 16.18 | 0.096 | -7.29 | 0.32 | 69% of 13 | 94.0 |  |
-| mr_long_bb_low0_s1.5_1R_h3 | yes | 119 | 0.18 | 0.571 | 1.33 | 0.121 | 1.84 | 14.68 | 0.088 | -9.12 | 0.3 | 64% of 11 | 91.0 |  |
-| calendar_long_tom1_s2_none_h3_notrend | no | 127 | 0.19 | 0.575 | 1.38 | 0.116 | 2.7 | 14.9 | 0.089 | -6.18 | 0.34 | 54% of 13 | - | positive folds 54% < 60% |
-| calendar_long_tom0_s2_none_h3_notrend | no | 312 | 0.48 | 0.545 | 1.17 | 0.05 | 2.78 | 15.11 | 0.09 | -12.54 | 0.24 | 46% of 13 | - | PF@2x 1.17 < 1.2; positive folds 46% < 60% |
-| calendar_long_tom1_s2_none_h3 | no | 95 | 0.15 | 0.579 | 1.18 | 0.06 | 2.64 | 5.3 | 0.033 | -7.48 | 0.16 | 58% of 12 | - | PF@2x 1.18 < 1.2; positive folds 58% < 60% |
-| calendar_long_tom0_s2_none_h3 | no | 221 | 0.34 | 0.543 | 1.04 | 0.016 | 2.72 | 2.58 | 0.016 | -14.72 | 0.07 | 50% of 12 | - | PF@2x 1.04 < 1.2; positive folds 50% < 60% |
-| dip_long_rsi2<10_s2_1R_h3 | no | 242 | 0.37 | 0.521 | 1.05 | 0.021 | 2.47 | 4.01 | 0.025 | -16.68 | 0.09 | 50% of 12 | - | PF@2x 1.05 < 1.2; positive folds 50% < 60% |
-| dip_long_rsi2<5_s2_1R_h3 | no | 117 | 0.18 | 0.53 | 1.07 | 0.028 | 2.37 | 2.77 | 0.018 | -8.69 | 0.08 | 67% of 12 | - | PF@2x 1.07 < 1.2 |
-| dip_long_rsi2<10_s2_none_h3_x5 | no | 241 | 0.37 | 0.589 | 1.03 | 0.012 | 2.24 | 2.02 | 0.013 | -17.9 | 0.06 | 50% of 12 | - | PF@2x 1.03 < 1.2; positive folds 50% < 60% |
-| dip_long_rsi2<5_s2_none_h3_x5 | no | 116 | 0.18 | 0.56 | 1.0 | 0.003 | 2.21 | -0.14 | -0.001 | -11.96 | 0.01 | 67% of 12 | - | PF@2x 1.0 < 1.2 |
-| gap_short_fade1_s1_1R_h1 | no | 12 | 0.02 | 0.75 | 2.99 | 0.45 | 0.42 | 5.44 | 0.034 | -1.35 | 0.39 | 100% of 3 | - | trades 12 < 30 |
-| gap_long_go1_s1_1.5R_h2 | no | 41 | 0.06 | 0.512 | 1.44 | 0.174 | 1.41 | 7.13 | 0.044 | -3.63 | 0.27 | 75% of 8 | 75.0 | random-entry percentile 75 < 90 |
-| gap_long_fade1_s1_1R_h1 | no | 80 | 0.12 | 0.575 | 1.27 | 0.112 | 0.4 | 8.89 | 0.055 | -6.91 | 0.25 | 55% of 11 | - | positive folds 55% < 60% |
-| gap_long_fade0.5_s1_1R_h1 | no | 373 | 0.57 | 0.534 | 1.02 | 0.013 | 0.61 | 2.48 | 0.016 | -20.75 | 0.06 | 58% of 12 | - | PF@2x 1.02 < 1.2; positive folds 58% < 60% |
-| gap_long_fade1_s1.5_none_h3_x5 | no | 84 | 0.13 | 0.476 | 0.87 | -0.059 | 2.17 | -5.36 | -0.035 | -14.63 | -0.1 | 45% of 11 | - | PF@2x 0.87 < 1.2; expectancy@2x <= 0; positive folds 45% < 60% |
-| gap_long_fade0.5_s1.5_none_h3_x5 | no | 382 | 0.58 | 0.542 | 0.91 | -0.03 | 1.87 | -12.83 | -0.088 | -21.58 | -0.13 | 33% of 12 | - | PF@2x 0.91 < 1.2; expectancy@2x <= 0; positive folds 33% < 60% |
-| gap_long_go0.5_s1_1.5R_h2 | no | 398 | 0.61 | 0.51 | 0.9 | -0.041 | 1.56 | -17.22 | -0.121 | -35.08 | -0.19 | 42% of 12 | - | PF@2x 0.9 < 1.2; expectancy@2x <= 0; positive folds 42% < 60% |
-| gap_short_fade0.5_s1_1R_h1 | no | 123 | 0.19 | 0.455 | 0.74 | -0.106 | 0.72 | -12.89 | -0.089 | -18.62 | -0.31 | 30% of 10 | - | PF@2x 0.74 < 1.2; expectancy@2x <= 0; positive folds 30% < 60% |
-| mom_long_high100_s1_1R_h2 | no | 832 | 1.27 | 0.569 | 1.06 | 0.026 | 1.47 | 18.29 | 0.108 | -29.67 | 0.19 | 62% of 13 | - | PF@2x 1.06 < 1.2 |
-| mom_long_high100_s1.5_1.5R_h3 | no | 669 | 1.02 | 0.544 | 0.95 | -0.01 | 2.64 | -10.07 | -0.068 | -27.15 | -0.07 | 54% of 13 | - | PF@2x 0.95 < 1.2; expectancy@2x <= 0; positive folds 54% < 60% |
-| mr_long_wr-90_s2_none_h3_x5 | no | 176 | 0.27 | 0.676 | 1.66 | 0.154 | 2.3 | 30.23 | 0.17 | -6.98 | 0.57 | 58% of 12 | - | positive folds 58% < 60% |
-| mr_long_key_rev0_s1.5_1R_h3 | no | 161 | 0.25 | 0.615 | 1.39 | 0.117 | 2.41 | 19.85 | 0.116 | -5.92 | 0.43 | 58% of 12 | - | positive folds 58% < 60% |
-| mr_long_bb_low0_s2_none_h3_x5 | no | 105 | 0.16 | 0.648 | 1.46 | 0.123 | 2.16 | 13.3 | 0.08 | -6.34 | 0.32 | 55% of 11 | - | positive folds 55% < 60% |
-| mr_long_outside_weak0_s2_none_h3_x5 | no | 133 | 0.2 | 0.677 | 1.35 | 0.065 | 1.82 | 8.76 | 0.054 | -6.29 | 0.32 | 42% of 12 | - | positive folds 42% < 60% |
-| mr_long_mon_down0_s1.5_1R_h3 | no | 339 | 0.52 | 0.569 | 1.19 | 0.064 | 2.33 | 21.91 | 0.127 | -13.91 | 0.31 | 77% of 13 | - | PF@2x 1.19 < 1.2 |
-| mr_long_outside_weak0_s1.5_1R_h3 | no | 133 | 0.2 | 0.579 | 1.24 | 0.084 | 2.25 | 11.0 | 0.067 | -9.72 | 0.28 | 42% of 12 | - | positive folds 42% < 60% |
-| mr_long_down30_s2_none_h3_x5 | no | 218 | 0.33 | 0.638 | 1.17 | 0.05 | 2.02 | 10.75 | 0.065 | -12.77 | 0.23 | 50% of 12 | - | PF@2x 1.17 < 1.2; positive folds 50% < 60% |
-| mr_long_low70_s2_none_h3_x5 | no | 421 | 0.64 | 0.618 | 1.09 | 0.031 | 2.1 | 11.6 | 0.07 | -18.99 | 0.17 | 58% of 12 | - | PF@2x 1.09 < 1.2; positive folds 58% < 60% |
-| mr_long_down30_s1.5_1R_h3 | no | 235 | 0.36 | 0.54 | 1.1 | 0.044 | 2.1 | 9.4 | 0.058 | -14.63 | 0.16 | 42% of 12 | - | PF@2x 1.1 < 1.2; positive folds 42% < 60% |
-| mr_long_key_rev0_s2_none_h3_x5 | no | 165 | 0.25 | 0.558 | 1.07 | 0.013 | 1.41 | 1.93 | 0.012 | -8.21 | 0.08 | 50% of 12 | - | PF@2x 1.07 < 1.2; positive folds 50% < 60% |
-| mr_long_ibs0.2_s1.5_1R_h3 | no | 569 | 0.87 | 0.536 | 0.99 | 0.005 | 2.15 | -1.13 | -0.007 | -24.91 | 0.03 | 54% of 13 | - | PF@2x 0.99 < 1.2; positive folds 54% < 60% |
-| mr_long_low70_s1.5_1R_h3 | no | 466 | 0.71 | 0.526 | 1.0 | 0.006 | 1.93 | -0.4 | -0.003 | -21.29 | 0.03 | 54% of 13 | - | PF@2x 1.0 < 1.2; positive folds 54% < 60% |
-| mrshort_short_up30_s2_none_h3_x5 | no | 69 | 0.11 | 0.609 | 1.62 | 0.095 | 2.48 | 6.57 | 0.041 | -4.44 | 0.36 | 56% of 9 | - | positive folds 56% < 60% |
-| mrshort_short_up30_s1.5_1R_h3 | no | 69 | 0.11 | 0.536 | 1.18 | 0.059 | 2.65 | 3.83 | 0.024 | -6.79 | 0.15 | 56% of 9 | - | PF@2x 1.18 < 1.2; positive folds 56% < 60% |
-| mrshort_short_ibs_hi0.8_s2_none_h3_x5 | no | 210 | 0.32 | 0.505 | 1.07 | 0.017 | 2.12 | 3.14 | 0.02 | -10.11 | 0.11 | 40% of 10 | - | PF@2x 1.07 < 1.2; positive folds 40% < 60% |
-| mrshort_short_bb_high0_s2_none_h3_x5 | no | 8 | 0.01 | 0.5 | 1.12 | 0.014 | 3.0 | 0.11 | 0.001 | -1.22 | 0.02 | 50% of 2 | - | trades 8 < 30; PF@2x 1.12 < 1.2; positive folds 50% < 60% |
-| mrshort_short_bb_high0_s1.5_1R_h3 | no | 8 | 0.01 | 0.5 | 0.42 | -0.095 | 2.88 | -0.76 | -0.005 | -1.85 | -0.1 | 50% of 2 | - | trades 8 < 30; PF@2x 0.42 < 1.2; expectancy@2x <= 0; positive folds 50% < 60% |
-| mrshort_short_ibs_hi0.8_s1.5_1R_h3 | no | 205 | 0.31 | 0.459 | 0.83 | -0.063 | 2.6 | -12.93 | -0.089 | -27.58 | -0.25 | 30% of 10 | - | PF@2x 0.83 < 1.2; expectancy@2x <= 0; positive folds 30% < 60% |
-| nrb_long_nr70_s1_1R_h3 | no | 357 | 0.55 | 0.563 | 1.06 | 0.031 | 1.97 | 9.3 | 0.057 | -19.72 | 0.15 | 67% of 12 | - | PF@2x 1.06 < 1.2 |
-| nrb_long_nr70_s1_1.5R_h3 | no | 346 | 0.53 | 0.532 | 1.04 | 0.023 | 2.24 | 5.71 | 0.036 | -22.0 | 0.1 | 58% of 12 | - | PF@2x 1.04 < 1.2; positive folds 58% < 60% |
-| nrb_long_nr40_s1_1R_h3 | no | 563 | 0.86 | 0.54 | 1.01 | 0.012 | 1.87 | 3.01 | 0.019 | -29.09 | 0.07 | 46% of 13 | - | PF@2x 1.01 < 1.2; positive folds 46% < 60% |
-| nrb_long_nr40_s1_1.5R_h3 | no | 532 | 0.81 | 0.509 | 1.02 | 0.015 | 2.18 | 3.61 | 0.023 | -33.9 | 0.07 | 46% of 13 | - | PF@2x 1.02 < 1.2; positive folds 46% < 60% |
-| nrb_short_nr70_s1_1R_h3 | no | 75 | 0.11 | 0.507 | 1.04 | 0.023 | 1.81 | 1.23 | 0.008 | -8.73 | 0.05 | 62% of 8 | - | PF@2x 1.04 < 1.2 |
-| nrb_short_inside0_s1_1R_h3 | no | 54 | 0.08 | 0.481 | 0.91 | -0.04 | 1.76 | -2.44 | -0.016 | -7.86 | -0.07 | 57% of 7 | - | PF@2x 0.91 < 1.2; expectancy@2x <= 0; positive folds 57% < 60% |
-| nrb_long_inside0_s1_1.5R_h3 | no | 262 | 0.4 | 0.466 | 0.85 | -0.065 | 2.15 | -17.07 | -0.12 | -29.46 | -0.24 | 33% of 12 | - | PF@2x 0.85 < 1.2; expectancy@2x <= 0; positive folds 33% < 60% |
-| nrb_long_inside0_s1_1R_h3 | no | 265 | 0.4 | 0.483 | 0.79 | -0.095 | 1.89 | -23.39 | -0.171 | -30.95 | -0.38 | 33% of 12 | - | PF@2x 0.79 < 1.2; expectancy@2x <= 0; positive folds 33% < 60% |
-| short_short_rsi2>90_s2_none_h3_x5 | no | 56 | 0.09 | 0.643 | 1.62 | 0.088 | 2.55 | 4.95 | 0.031 | -2.86 | 0.31 | 50% of 8 | - | positive folds 50% < 60% |
-| short_short_rsi2>90_s2_1R_h3 | no | 56 | 0.09 | 0.607 | 1.53 | 0.094 | 2.96 | 5.25 | 0.033 | -4.41 | 0.29 | 50% of 8 | - | positive folds 50% < 60% |
-| short_short_rsi2>95_s2_none_h3_x5 | no | 23 | 0.04 | 0.522 | 1.02 | 0.004 | 2.39 | 0.06 | 0.0 | -3.26 | 0.01 | 50% of 4 | - | trades 23 < 30; PF@2x 1.02 < 1.2; positive folds 50% < 60% |
-| short_short_rsi2>95_s2_1R_h3 | no | 23 | 0.04 | 0.435 | 0.89 | -0.024 | 2.91 | -0.58 | -0.004 | -5.17 | -0.05 | 25% of 4 | - | trades 23 < 30; PF@2x 0.89 < 1.2; expectancy@2x <= 0; positive folds 25% < 60% |
+| calendar_long_tom1_s2_none_h3_notrend | yes | 498 | 0.73 | 0.546 | 1.33 | 0.096 | 2.79 | 55.56 | 0.274 | -13.86 | 0.49 | 77% of 13 | 100.0 |  |
+| calendar_long_tom1_s2_none_h3 | yes | 354 | 0.52 | 0.548 | 1.24 | 0.073 | 2.78 | 25.89 | 0.143 | -13.12 | 0.3 | 62% of 13 | 100.0 |  |
+| calendar_long_tom0_s2_none_h3_notrend | no | 587 | 0.87 | 0.532 | 1.1 | 0.035 | 2.79 | 18.62 | 0.106 | -26.6 | 0.21 | 54% of 13 | - | PF@2x 1.1 < 1.2; positive folds 54% < 60% |
+| calendar_long_tom0_s2_none_h3 | no | 536 | 0.79 | 0.532 | 1.02 | 0.012 | 2.77 | 3.22 | 0.02 | -27.15 | 0.07 | 46% of 13 | - | PF@2x 1.02 < 1.2; positive folds 46% < 60% |
+| dip_long_rsi2<10_s2_1R_h3 | no | 1049 | 1.55 | 0.516 | 0.97 | -0.006 | 2.55 | -12.17 | -0.08 | -39.89 | -0.03 | 54% of 13 | - | PF@2x 0.97 < 1.2; expectancy@2x <= 0; positive folds 54% < 60% |
+| dip_long_rsi2<5_s2_1R_h3 | no | 554 | 0.82 | 0.502 | 0.96 | -0.009 | 2.49 | -8.24 | -0.053 | -25.29 | -0.04 | 54% of 13 | - | PF@2x 0.96 < 1.2; expectancy@2x <= 0; positive folds 54% < 60% |
+| dip_long_rsi2<5_s2_none_h3_x5 | no | 536 | 0.79 | 0.552 | 0.92 | -0.021 | 2.3 | -12.88 | -0.085 | -28.81 | -0.1 | 46% of 13 | - | PF@2x 0.92 < 1.2; expectancy@2x <= 0; positive folds 46% < 60% |
+| dip_long_rsi2<10_s2_none_h3_x5 | no | 1031 | 1.52 | 0.549 | 0.94 | -0.016 | 2.31 | -20.18 | -0.139 | -40.65 | -0.12 | 54% of 13 | - | PF@2x 0.94 < 1.2; expectancy@2x <= 0; positive folds 54% < 60% |
+| gap_short_fade1_s1_1R_h1 | no | 281 | 0.41 | 0.505 | 0.92 | -0.023 | 0.72 | -8.3 | -0.054 | -21.58 | -0.09 | 38% of 13 | - | PF@2x 0.92 < 1.2; expectancy@2x <= 0; positive folds 38% < 60% |
+| gap_long_fade1_s1_1R_h1 | no | 562 | 0.83 | 0.512 | 0.86 | -0.058 | 0.62 | -31.99 | -0.238 | -42.35 | -0.26 | 31% of 13 | - | PF@2x 0.86 < 1.2; expectancy@2x <= 0; positive folds 31% < 60% |
+| gap_long_go1_s1_1.5R_h2 | no | 420 | 0.62 | 0.44 | 0.85 | -0.078 | 1.35 | -30.3 | -0.223 | -43.4 | -0.34 | 23% of 13 | - | PF@2x 0.85 < 1.2; expectancy@2x <= 0; positive folds 23% < 60% |
+| gap_short_fade0.5_s1_1R_h1 | no | 1400 | 2.06 | 0.459 | 0.82 | -0.08 | 0.82 | -71.09 | -0.765 | -80.01 | -0.62 | 15% of 13 | - | PF@2x 0.82 < 1.2; expectancy@2x <= 0; positive folds 15% < 60% |
+| gap_long_fade1_s1.5_none_h3_x5 | no | 549 | 0.81 | 0.437 | 0.7 | -0.157 | 2.17 | -59.88 | -0.564 | -64.75 | -0.7 | 23% of 13 | - | PF@2x 0.7 < 1.2; expectancy@2x <= 0; positive folds 23% < 60% |
+| gap_long_go0.5_s1_1.5R_h2 | no | 1689 | 2.49 | 0.448 | 0.79 | -0.1 | 1.48 | -84.16 | -1.134 | -86.35 | -0.81 | 8% of 13 | - | PF@2x 0.79 < 1.2; expectancy@2x <= 0; positive folds 8% < 60% |
+| gap_long_fade0.5_s1_1R_h1 | no | 1938 | 2.86 | 0.482 | 0.78 | -0.108 | 0.7 | -90.1 | -1.421 | -92.4 | -0.86 | 15% of 13 | - | PF@2x 0.78 < 1.2; expectancy@2x <= 0; positive folds 15% < 60% |
+| gap_long_fade0.5_s1.5_none_h3_x5 | no | 1764 | 2.6 | 0.496 | 0.77 | -0.1 | 1.95 | -85.18 | -1.175 | -86.9 | -0.87 | 23% of 13 | - | PF@2x 0.77 < 1.2; expectancy@2x <= 0; positive folds 23% < 60% |
+| mom_long_high100_s1.5_1.5R_h3 | no | 2144 | 3.16 | 0.492 | 0.88 | -0.038 | 2.5 | -63.75 | -0.626 | -71.9 | -0.37 | 23% of 13 | - | PF@2x 0.88 < 1.2; expectancy@2x <= 0; positive folds 23% < 60% |
+| mom_long_high100_s1_1R_h2 | no | 2558 | 3.77 | 0.491 | 0.79 | -0.09 | 1.29 | -92.37 | -1.58 | -93.74 | -0.86 | 8% of 13 | - | PF@2x 0.79 < 1.2; expectancy@2x <= 0; positive folds 8% < 60% |
+| mr_long_wr-90_s2_none_h3_x5 | no | 899 | 1.32 | 0.586 | 1.05 | 0.02 | 2.32 | 14.61 | 0.084 | -26.92 | 0.16 | 69% of 13 | - | PF@2x 1.05 < 1.2 |
+| mr_long_bb_low0_s1.5_1R_h3 | no | 519 | 0.76 | 0.52 | 1.03 | 0.022 | 1.91 | 6.34 | 0.038 | -27.51 | 0.1 | 54% of 13 | - | PF@2x 1.03 < 1.2; positive folds 54% < 60% |
+| mr_long_bb_low0_s2_none_h3_x5 | no | 463 | 0.68 | 0.592 | 1.03 | 0.014 | 2.29 | 4.17 | 0.025 | -19.74 | 0.08 | 69% of 13 | - | PF@2x 1.03 < 1.2 |
+| mr_long_key_rev0_s1.5_1R_h3 | no | 704 | 1.04 | 0.534 | 1.02 | 0.011 | 2.44 | 3.65 | 0.022 | -25.95 | 0.07 | 62% of 13 | - | PF@2x 1.02 < 1.2 |
+| mr_long_outside_weak0_s2_none_h3_x5 | no | 658 | 0.97 | 0.573 | 1.01 | 0.004 | 1.93 | 0.84 | 0.005 | -19.37 | 0.04 | 46% of 13 | - | PF@2x 1.01 < 1.2; positive folds 46% < 60% |
+| mr_long_key_rev0_s2_none_h3_x5 | no | 791 | 1.17 | 0.556 | 0.97 | -0.002 | 1.57 | -3.28 | -0.021 | -23.26 | -0.02 | 46% of 13 | - | PF@2x 0.97 < 1.2; expectancy@2x <= 0; positive folds 46% < 60% |
+| mr_long_wr-90_s1.5_1R_h3 | no | 914 | 1.35 | 0.503 | 0.95 | -0.013 | 2.21 | -17.96 | -0.122 | -39.52 | -0.06 | 46% of 13 | - | PF@2x 0.95 < 1.2; expectancy@2x <= 0; positive folds 46% < 60% |
+| mr_long_mon_down0_s2_none_h3_x5 | no | 1391 | 2.05 | 0.561 | 0.95 | -0.007 | 1.77 | -12.98 | -0.086 | -33.53 | -0.09 | 38% of 13 | - | PF@2x 0.95 < 1.2; expectancy@2x <= 0; positive folds 38% < 60% |
+| mr_long_down30_s2_none_h3_x5 | no | 1009 | 1.49 | 0.575 | 0.94 | -0.014 | 2.22 | -16.86 | -0.114 | -41.16 | -0.11 | 54% of 13 | - | PF@2x 0.94 < 1.2; expectancy@2x <= 0; positive folds 54% < 60% |
+| mr_long_outside_weak0_s1.5_1R_h3 | no | 617 | 0.91 | 0.514 | 0.92 | -0.021 | 2.32 | -15.76 | -0.106 | -37.52 | -0.12 | 46% of 13 | - | PF@2x 0.92 < 1.2; expectancy@2x <= 0; positive folds 46% < 60% |
+| mr_long_down30_s1.5_1R_h3 | no | 1035 | 1.53 | 0.501 | 0.94 | -0.024 | 2.23 | -28.16 | -0.205 | -53.14 | -0.14 | 46% of 13 | - | PF@2x 0.94 < 1.2; expectancy@2x <= 0; positive folds 46% < 60% |
+| mr_long_mon_down0_s1.5_1R_h3 | no | 1257 | 1.85 | 0.496 | 0.84 | -0.048 | 2.3 | -49.77 | -0.425 | -66.39 | -0.36 | 31% of 13 | - | PF@2x 0.84 < 1.2; expectancy@2x <= 0; positive folds 31% < 60% |
+| mr_long_low70_s2_none_h3_x5 | no | 1762 | 2.6 | 0.553 | 0.86 | -0.039 | 2.2 | -54.71 | -0.489 | -60.91 | -0.38 | 23% of 13 | - | PF@2x 0.86 < 1.2; expectancy@2x <= 0; positive folds 23% < 60% |
+| mr_long_ibs0.2_s2_none_h3_x5 | no | 2589 | 3.82 | 0.552 | 0.86 | -0.026 | 1.85 | -54.65 | -0.488 | -66.17 | -0.4 | 38% of 13 | - | PF@2x 0.86 < 1.2; expectancy@2x <= 0; positive folds 38% < 60% |
+| mr_long_low70_s1.5_1R_h3 | no | 1794 | 2.64 | 0.49 | 0.84 | -0.065 | 2.13 | -74.23 | -0.836 | -77.1 | -0.49 | 8% of 13 | - | PF@2x 0.84 < 1.2; expectancy@2x <= 0; positive folds 8% < 60% |
+| mr_long_ibs0.2_s1.5_1R_h3 | no | 2222 | 3.27 | 0.489 | 0.77 | -0.076 | 2.21 | -84.81 | -1.16 | -88.5 | -0.71 | 23% of 13 | - | PF@2x 0.77 < 1.2; expectancy@2x <= 0; positive folds 23% < 60% |
+| mrshort_short_bb_high0_s2_none_h3_x5 | no | 154 | 0.23 | 0.481 | 0.85 | -0.033 | 2.62 | -5.34 | -0.034 | -9.69 | -0.15 | 31% of 13 | - | PF@2x 0.85 < 1.2; expectancy@2x <= 0; positive folds 31% < 60% |
+| mrshort_short_bb_high0_s1.5_1R_h3 | no | 151 | 0.22 | 0.45 | 0.81 | -0.057 | 2.57 | -8.8 | -0.057 | -14.64 | -0.2 | 38% of 13 | - | PF@2x 0.81 < 1.2; expectancy@2x <= 0; positive folds 38% < 60% |
+| mrshort_short_up30_s2_none_h3_x5 | no | 616 | 0.91 | 0.516 | 0.86 | -0.031 | 2.45 | -18.75 | -0.128 | -35.52 | -0.26 | 38% of 13 | - | PF@2x 0.86 < 1.2; expectancy@2x <= 0; positive folds 38% < 60% |
+| mrshort_short_ibs_hi0.8_s1.5_1R_h3 | no | 1494 | 2.2 | 0.476 | 0.91 | -0.038 | 2.41 | -50.16 | -0.43 | -74.02 | -0.32 | 31% of 13 | - | PF@2x 0.91 < 1.2; expectancy@2x <= 0; positive folds 31% < 60% |
+| mrshort_short_ibs_hi0.8_s2_none_h3_x5 | no | 1636 | 2.41 | 0.496 | 0.89 | -0.025 | 1.98 | -37.01 | -0.286 | -56.15 | -0.34 | 23% of 13 | - | PF@2x 0.89 < 1.2; expectancy@2x <= 0; positive folds 23% < 60% |
+| mrshort_short_up30_s1.5_1R_h3 | no | 621 | 0.92 | 0.448 | 0.82 | -0.068 | 2.58 | -36.76 | -0.283 | -52.41 | -0.41 | 31% of 13 | - | PF@2x 0.82 < 1.2; expectancy@2x <= 0; positive folds 31% < 60% |
+| nrb_short_nr70_s1_1R_h3 | no | 791 | 1.17 | 0.482 | 0.92 | -0.041 | 1.82 | -33.25 | -0.25 | -55.99 | -0.22 | 23% of 13 | - | PF@2x 0.92 < 1.2; expectancy@2x <= 0; positive folds 23% < 60% |
+| nrb_short_inside0_s1_1R_h3 | no | 573 | 0.84 | 0.452 | 0.84 | -0.083 | 1.69 | -41.48 | -0.331 | -49.91 | -0.37 | 46% of 13 | - | PF@2x 0.84 < 1.2; expectancy@2x <= 0; positive folds 46% < 60% |
+| nrb_long_inside0_s1_1.5R_h3 | no | 987 | 1.45 | 0.459 | 0.83 | -0.068 | 2.03 | -53.2 | -0.469 | -67.02 | -0.43 | 31% of 13 | - | PF@2x 0.83 < 1.2; expectancy@2x <= 0; positive folds 31% < 60% |
+| nrb_long_inside0_s1_1R_h3 | no | 1025 | 1.51 | 0.5 | 0.83 | -0.064 | 1.76 | -52.1 | -0.455 | -64.03 | -0.45 | 38% of 13 | - | PF@2x 0.83 < 1.2; expectancy@2x <= 0; positive folds 38% < 60% |
+| nrb_long_nr70_s1_1.5R_h3 | no | 1173 | 1.73 | 0.462 | 0.85 | -0.072 | 2.12 | -61.44 | -0.588 | -65.6 | -0.5 | 15% of 13 | - | PF@2x 0.85 < 1.2; expectancy@2x <= 0; positive folds 15% < 60% |
+| nrb_long_nr70_s1_1R_h3 | no | 1276 | 1.88 | 0.498 | 0.85 | -0.066 | 1.83 | -61.18 | -0.584 | -64.89 | -0.51 | 31% of 13 | - | PF@2x 0.85 < 1.2; expectancy@2x <= 0; positive folds 31% < 60% |
+| nrb_long_nr40_s1_1.5R_h3 | no | 1653 | 2.44 | 0.445 | 0.78 | -0.108 | 2.03 | -85.99 | -1.209 | -88.81 | -0.84 | 15% of 13 | - | PF@2x 0.78 < 1.2; expectancy@2x <= 0; positive folds 15% < 60% |
+| nrb_long_nr40_s1_1R_h3 | no | 1805 | 2.66 | 0.479 | 0.8 | -0.099 | 1.76 | -85.97 | -1.208 | -88.73 | -0.86 | 23% of 13 | - | PF@2x 0.8 < 1.2; expectancy@2x <= 0; positive folds 23% < 60% |
+| short_short_rsi2>90_s2_none_h3_x5 | no | 584 | 0.86 | 0.526 | 0.9 | -0.023 | 2.47 | -14.22 | -0.095 | -29.85 | -0.18 | 46% of 13 | - | PF@2x 0.9 < 1.2; expectancy@2x <= 0; positive folds 46% < 60% |
+| short_short_rsi2>90_s2_1R_h3 | no | 585 | 0.86 | 0.446 | 0.84 | -0.044 | 2.82 | -24.16 | -0.171 | -36.31 | -0.31 | 38% of 13 | - | PF@2x 0.84 < 1.2; expectancy@2x <= 0; positive folds 38% < 60% |
+| short_short_rsi2>95_s2_none_h3_x5 | no | 285 | 0.42 | 0.505 | 0.74 | -0.064 | 2.52 | -17.29 | -0.117 | -24.62 | -0.39 | 31% of 13 | - | PF@2x 0.74 < 1.2; expectancy@2x <= 0; positive folds 31% < 60% |
+| short_short_rsi2>95_s2_1R_h3 | no | 284 | 0.42 | 0.426 | 0.69 | -0.086 | 2.83 | -22.36 | -0.156 | -30.19 | -0.47 | 23% of 13 | - | PF@2x 0.69 < 1.2; expectancy@2x <= 0; positive folds 23% < 60% |
 
 ## Combined train portfolio (shared 1% risk / 4% open-risk cap)
 
 | trades | /week | win | PF | exp R | sessions | total % | %/month | max DD % | Sharpe |
 |---|---|---|---|---|---|---|---|---|---|
-| 791 | 1.21 | 0.611 | 1.13 | 0.031 | 1.79 | 24.16 | 0.139 | -13.83 | 0.27 |  (1x costs)
-| 791 | 1.21 | 0.607 | 1.06 | 0.017 | 1.79 | 11.4 | 0.069 | -15.08 | 0.15 |  (2x costs)
+| 498 | 0.73 | 0.562 | 1.44 | 0.119 | 2.79 | 74.34 | 0.345 | -13.53 | 0.61 |  (1x costs)
+| 498 | 0.73 | 0.546 | 1.33 | 0.096 | 2.79 | 55.56 | 0.274 | -13.86 | 0.49 |  (2x costs)
 
-Signals skipped by the risk layer: {'open_risk_cap': 0, 'same_symbol': 604, 'gross_cap': 0, 'not_triggered': 0, 'zero_size': 0}
+Signals skipped by the risk layer: {'open_risk_cap': 385, 'same_symbol': 0, 'gross_cap': 109, 'not_triggered': 0, 'zero_size': 0}
