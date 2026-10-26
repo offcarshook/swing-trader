@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "swingtrader"
+version = "0.1.0"
+description = "Research-first, AI-assisted futures swing-trading system (MES). Deterministic risk core, LumiBot backtests, TradingAgents research overlay. Paper trading only."
+readme = "README.md"
+requires-python = ">=3.11"
+# The core must import cleanly under BOTH pandas 2.x (LumiBot env) and pandas 3.x
+# (TradingAgents env) -- see docs/ARCHITECTURE.md "Two environments".
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "pyarrow>=15",
+    "pyyaml>=6",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+# LumiBot env (.venv). Pinned to the version whose API was verified for this project.
+lumibot = ["lumibot==4.6.30"]
+# TradingAgents is NOT on PyPI. It is installed into a separate env (.venv-agents)
+# from the pinned upstream commit, because it requires pandas>=3.0.6 while
+# lumibot==4.6.30 resolves to pandas<3 (via llama-index-readers-file).
+# See scripts/setup_envs.sh.
+
+[project.scripts]
+swingtrader = "swingtrader.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra -m 'not integration'"
+markers = [
+    "integration: needs downloaded data, LumiBot, or network; run with -m integration",
+]
+filterwarnings = ["ignore::DeprecationWarning"]

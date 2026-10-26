@@ -1,0 +1,21 @@
+.venv/
+.venv-agents/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# Downloaded / derived market data (large, third-party). Provenance is pinned in data/manifest.json.
+data/raw/
+data/processed/
+
+# Runtime state and logs
+logs/
+state/
+.cache/
+results/lumibot_logs/
+results/agent_cache/
+.env
+KILL_SWITCH

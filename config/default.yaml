@@ -1,0 +1,119 @@
+# swingtrader default configuration.
+#
+# PRE-REGISTRATION: the split dates, selection rule and candidate grids below were
+# written BEFORE any backtest was run (see docs/VALIDATION_PROTOCOL.md). Changing
+# them after looking at holdout results is exactly the tuning-on-test-data the
+# protocol forbids; the HoldoutGuard records every holdout evaluation.
+
+instrument: MES            # chosen in docs/INSTRUMENT_SELECTION.md
+
+account:
+  starting_equity: 100000.0
+
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  # CME equity-index Globex session: 17:00 CT (prev day) -> 16:00 CT. RTH 08:30-15:00 CT.
+  session_tz: America/Chicago
+  rth_open: "08:30"
+  rth_close: "15:00"
+  min_session_minutes: 300        # sessions with fewer 1-min bars are flagged (holiday / data hole)
+
+splits:
+  # MES daily bars. Warm-up bars before train_start are used for indicators only.
+  train_start: "2019-05-06"
+  train_end:   "2023-12-31"
+  holdout_start: "2024-01-01"     # genuinely unseen: touched once, after selection
+  holdout_end:   null             # null = end of data
+  # AMENDMENT 1 (docs/VALIDATION_PROTOCOL.md): the S&P 500 cash-index period was
+  # pre-registered as a second unseen test. MES train alone gave 12-22 trades per
+  # candidate (< selection.min_trades), so before ANY proxy or holdout run it was
+  # moved into TRAINING. Proxy = RTH only, no overnight session, no roll/carry,
+  # MES contract specs and costs applied.
+  proxy_start: "2008-01-02"
+  proxy_end:   "2019-04-30"
+  # [source, start, end]; every candidate is run once per source, folds slice that run.
+  walk_forward_folds:
+    - [spx, "2008-01-02", "2010-12-31"]
+    - [spx, "2011-01-01", "2013-12-31"]
+    - [spx, "2014-01-01", "2016-12-31"]
+    - [spx, "2017-01-01", "2019-04-30"]
+    - [mes, "2019-05-06", "2020-12-31"]
+    - [mes, "2021-01-01", "2021-12-31"]
+    - [mes, "2022-01-01", "2022-12-31"]
+    - [mes, "2023-01-01", "2023-12-31"]
+
+costs:
+  # Per contract, per side. See docs/COSTS.md for sources/assumptions.
+  commission_per_side: 0.62        # broker commission (retail futures broker, micro)
+  exchange_fees_per_side: 0.38     # CME exchange + clearing + NFA, micro E-mini (approx.)
+  market_slippage_ticks: 1.0       # market orders at RTH open: ~half spread (1 tick quoted) + impact
+  stop_slippage_ticks: 2.0         # stop orders trigger into momentum
+  gap_extra_ticks: 1.0             # extra when price gaps through a stop
+  roll_slippage_ticks: 1.0         # per leg at the quarterly roll
+  cost_multiplier: 1.0             # sensitivity runs use 2.0 and 3.0
+
+risk:
+  risk_per_trade_pct: 1.0          # % of equity lost if the initial stop is hit (incl. est. costs)
+  max_open_risk_pct: 2.0           # sum of open initial-risk across positions
+  max_notional_leverage: 3.0       # gross notional / equity
+  max_margin_utilization: 0.5      # initial margin / equity
+  initial_margin_per_contract: 2500.0   # MES approx; broker-specific, conservative
+  max_contracts: 20
+  daily_loss_limit_pct: 3.0        # flatten + block entries for rest of session
+  max_drawdown_halt_pct: 20.0      # halt all trading until manual reset
+  min_stop_ticks: 8
+
+strategy_defaults:
+  atr_period: 20
+  entry_timing: next_rth_open      # signals on completed session bar, act at next RTH open
+  vol_filter_pct: 95               # no new entries when ATR% is above this trailing percentile
+  vol_filter_lookback: 252
+
+# Candidate grids are intentionally SMALL to limit multiple-testing.
+candidates:
+  trend:
+    - {fast: 50, slow: 100, trail_atr: 3.0, stop_atr: 2.5, allow_short: false}
+    - {fast: 20, slow: 100, trail_atr: 3.0, stop_atr: 2.5, allow_short: false}
+    - {fast: 50, slow: 100, trail_atr: 4.0, stop_atr: 3.0, allow_short: false}
+    - {fast: 50, slow: 100, trail_atr: 3.0, stop_atr: 2.5, allow_short: true}
+  breakout:
+    - {entry_lookback: 55, exit_lookback: 20, stop_atr: 2.0, allow_short: false}
+    - {entry_lookback: 20, exit_lookback: 10, stop_atr: 2.0, allow_short: false}
+    - {entry_lookback: 55, exit_lookback: 20, stop_atr: 2.0, allow_short: true}
+    - {entry_lookback: 40, exit_lookback: 15, stop_atr: 2.5, allow_short: false}
+  pullback:
+    - {trend_len: 100, rsi_len: 3, rsi_entry: 15, exit_ma: 5, max_hold: 10, stop_atr: 2.5}
+    - {trend_len: 100, rsi_len: 2, rsi_entry: 10, exit_ma: 5, max_hold: 10, stop_atr: 2.5}
+    - {trend_len: 50,  rsi_len: 3, rsi_entry: 20, exit_ma: 5, max_hold: 8,  stop_atr: 2.5}
+    - {trend_len: 100, rsi_len: 3, rsi_entry: 15, exit_ma: 10, max_hold: 15, stop_atr: 3.0}
+
+selection:
+  # Applied to TRAIN data only. A candidate must pass every gate; survivors are
+  # ranked by the median walk-forward-fold Sharpe (robustness over peak result).
+  min_trades: 30
+  min_profit_factor: 1.15
+  max_drawdown_pct: 25.0
+  min_positive_folds: 6            # of 8 walk-forward folds with net P&L > 0 (was 3 of 4; same 75%)
+  must_beat_random_pctile: 80      # beat >=80% of random-entry runs (same sizing/exits)
+  rank_by: median_fold_sharpe
+
+promotion:
+  # Gates that HOLDOUT results must clear before paper trading is unlocked.
+  min_trades: 15
+  min_profit_factor: 1.1
+  max_drawdown_pct: 25.0
+  require_positive_at_2x_costs: true
+
+agents:
+  mode: advisory                   # off | advisory (log only) | veto (may only block entries)
+  research_ticker: "ES=F"          # symbol TradingAgents uses for its own price/news tools
+  analysts: ["market"]             # fundamentals are meaningless for an index future
+  max_calls_per_day: 2
+  cache_dir: results/agent_cache
+  python: .venv-agents/bin/python  # separate env, see docs/ARCHITECTURE.md
+
+paper:
+  state_dir: state/paper
+  kill_switch_file: KILL_SWITCH
+  live_trading_enabled: false      # hard-wired off in code as well; this flag is informational

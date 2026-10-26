@@ -1,0 +1,570 @@
+{
+  "sources": {
+    "mes_1m_eth": {
+      "repo": "thillsss/SPX-MES-VIX-data",
+      "revision": "94f97451205af5320354610595da22f7dd6f5616",
+      "file": "MES_full_1min_continuous_absolute_adjusted_CT_market_close.txt",
+      "present": true,
+      "sha256": "796be1c8e181ad329823f2ee0c3d06bb14f41040096ef11b6b9409357cc32d93",
+      "pinned_sha256": "796be1c8e181ad329823f2ee0c3d06bb14f41040096ef11b6b9409357cc32d93",
+      "caveats": "Anonymous uploader, no licence/card. Format matches FirstRate-Data style exports. Roll schedule of the adjustment is undocumented (inferred in the data report)."
+    },
+    "mes_1m_rth": {
+      "repo": "thillsss/SPX-MES-VIX-data",
+      "revision": "94f97451205af5320354610595da22f7dd6f5616",
+      "file": "MES_full_1min_continuous_absolute_adjusted_CT_market_open.txt",
+      "present": true,
+      "sha256": "2bd44f5c58483c98930ab3c2fe870a2c60addbd11790b549666befbee5e4f4ba",
+      "pinned_sha256": "2bd44f5c58483c98930ab3c2fe870a2c60addbd11790b549666befbee5e4f4ba",
+      "caveats": "Same provenance as mes_1m_eth."
+    },
+    "spx_1m": {
+      "repo": "thillsss/SPX-MES-VIX-data",
+      "revision": "94f97451205af5320354610595da22f7dd6f5616",
+      "file": "SPX_full_1min_CT.txt",
+      "present": true,
+      "sha256": "93ca114db81fe5786805391343ce48a6586e9fafb20c6abd44dcd15902430534",
+      "pinned_sha256": "93ca114db81fe5786805391343ce48a6586e9fafb20c6abd44dcd15902430534",
+      "caveats": "Index, not tradable. Used only as (a) pre-2019 proxy test period and (b) cross-check of MES returns."
+    },
+    "vix_daily": {
+      "repo": "thillsss/SPX-MES-VIX-data",
+      "revision": "94f97451205af5320354610595da22f7dd6f5616",
+      "file": "VIX_daily.txt",
+      "present": true,
+      "sha256": "7501b8302b66986a1b9e31d0c52198a159d3d2e6fb99b893259bbeb408ec4ef3",
+      "pinned_sha256": null,
+      "caveats": "Early years carry O=H=L=C (close only)."
+    },
+    "mnq_1m": {
+      "repo": "thillsss/SPX-MES-VIX-data",
+      "revision": "94f97451205af5320354610595da22f7dd6f5616",
+      "file": "mnq_minute_data_CT.txt",
+      "present": true,
+      "sha256": "55532c09568b21ff329fcc511bf6711532fb4859ca157da7b61faabc47e4132c",
+      "pinned_sha256": "55532c09568b21ff329fcc511bf6711532fb4859ca157da7b61faabc47e4132c",
+      "caveats": "Audited for instrument selection only (too short, no volume)."
+    },
+    "es_1m_databento": {
+      "repo": "Khanhpham1992/es-futures-1m",
+      "revision": "3e05c0408e59cec1b4ec8ca6f26e5ab058a95e09",
+      "file": "es_continuous_1m.parquet",
+      "present": true,
+      "sha256": "60341739833d7fe98bbfd4c598e5885d04509c9133aa295f165f5243274a4e3a",
+      "pinned_sha256": "60341739833d7fe98bbfd4c598e5885d04509c9133aa295f165f5243274a4e3a",
+      "caveats": "Large gaps (e.g. 2023-05-05..2023-10-18). Used only as an independent cross-check of MES returns; its adj_* columns are inconsistent and ignored."
+    }
+  },
+  "mes_minute": {
+    "rows": 2627537,
+    "non_positive": 0,
+    "nan": 0,
+    "high_inconsistent": 0,
+    "low_inconsistent": 0,
+    "duplicate_ts": 0,
+    "unsorted": 0,
+    "off_tick_grid": 0,
+    "minute_moves_gt_1.5pct": 19,
+    "minute_moves_gt_1.5pct_dates": [
+      "2020-03-01",
+      "2020-03-03",
+      "2020-03-08",
+      "2020-03-09",
+      "2020-03-16",
+      "2020-03-22",
+      "2020-03-29",
+      "2022-02-27",
+      "2022-07-13",
+      "2022-09-13",
+      "2022-10-13",
+      "2022-11-10",
+      "2025-02-02",
+      "2025-04-06",
+      "2025-04-09",
+      "2025-10-12"
+    ],
+    "zero_volume_bars": 0,
+    "out_of_hours": {
+      "weekend_bars_dropped": 1,
+      "halt_bars_dropped": 0,
+      "dropped_timestamps": [
+        "2021-08-07 23:00:00"
+      ]
+    }
+  },
+  "mes_sessions": {
+    "sessions": 1923,
+    "first": "2019-05-06",
+    "last": "2026-10-20",
+    "short_sessions(<300 RTH bars)": 65,
+    "holiday_merged_sessions": 7,
+    "sessions_with_gap_gt_30min": {
+      "2020-03-16": 86.0,
+      "2021-04-05": 3406.0,
+      "2023-04-10": 3406.0,
+      "2023-09-18": 3391.0,
+      "2023-12-18": 3391.0,
+      "2024-03-18": 3391.0,
+      "2025-01-10": 511.0,
+      "2025-11-28": 646.0,
+      "2026-04-06": 3406.0
+    },
+    "return_outliers_gt_6sigma": {
+      "2025-04-04": -0.0578,
+      "2025-04-09": 0.0896,
+      "2025-10-10": -0.0332
+    },
+    "median_bars_per_session": 1380.0,
+    "calendar_missing_sessions": [
+      "2021-04-02",
+      "2023-04-07",
+      "2023-09-15",
+      "2023-12-15",
+      "2024-03-15",
+      "2024-03-29",
+      "2025-04-18",
+      "2026-04-03"
+    ],
+    "calendar_extra_sessions": []
+  },
+  "roll_audit_vs_es": {
+    "days_compared": 599,
+    "median_intraday_offset_iqr_points": 0.0,
+    "pct_days_offset_iqr_le_1tick": 95.82637729549248,
+    "offset_changes": [
+      {
+        "date": "2020-12-20",
+        "new_offset": 816.5,
+        "step": 6.75,
+        "es_instrument": "5482"
+      },
+      {
+        "date": "2021-03-30",
+        "new_offset": 826.75,
+        "step": 10.25,
+        "es_instrument": "3853"
+      },
+      {
+        "date": "2021-06-11",
+        "new_offset": 836.0,
+        "step": 9.25,
+        "es_instrument": "1030"
+      },
+      {
+        "date": "2021-09-13",
+        "new_offset": 846.25,
+        "step": 9.5,
+        "es_instrument": "8858"
+      },
+      {
+        "date": "2022-01-18",
+        "new_offset": 855.75,
+        "step": 9.25,
+        "es_instrument": "5782"
+      },
+      {
+        "date": "2022-03-22",
+        "new_offset": 863.75,
+        "step": 8.0,
+        "es_instrument": "3403"
+      },
+      {
+        "date": "2022-06-12",
+        "new_offset": 863.0,
+        "step": -0.75,
+        "es_instrument": "97042"
+      },
+      {
+        "date": "2022-06-13",
+        "new_offset": 862.25,
+        "step": -0.75,
+        "es_instrument": "97042"
+      },
+      {
+        "date": "2022-06-14",
+        "new_offset": 860.5,
+        "step": -1.75,
+        "es_instrument": "97042"
+      },
+      {
+        "date": "2022-06-16",
+        "new_offset": 859.0,
+        "step": -1.25,
+        "es_instrument": "97042"
+      },
+      {
+        "date": "2022-09-11",
+        "new_offset": 841.5,
+        "step": -17.5,
+        "es_instrument": "206323"
+      },
+      {
+        "date": "2022-09-12",
+        "new_offset": 840.75,
+        "step": -0.75,
+        "es_instrument": "206323"
+      },
+      {
+        "date": "2022-10-02",
+        "new_offset": 842.5,
+        "step": 1.75,
+        "es_instrument": "206323"
+      },
+      {
+        "date": "2022-12-11",
+        "new_offset": 810.5,
+        "step": -32.0,
+        "es_instrument": "206299"
+      },
+      {
+        "date": "2022-12-15",
+        "new_offset": 812.0,
+        "step": 2.5,
+        "es_instrument": "206299"
+      },
+      {
+        "date": "2023-03-12",
+        "new_offset": 779.75,
+        "step": -32.75,
+        "es_instrument": "95414"
+      },
+      {
+        "date": "2023-03-13",
+        "new_offset": 780.75,
+        "step": 1.0,
+        "es_instrument": "95414"
+      },
+      {
+        "date": "2023-03-14",
+        "new_offset": 779.25,
+        "step": -1.5,
+        "es_instrument": "95414"
+      },
+      {
+        "date": "2023-03-15",
+        "new_offset": 780.5,
+        "step": 1.25,
+        "es_instrument": "95414"
+      },
+      {
+        "date": "2023-10-17",
+        "new_offset": 718.75,
+        "step": -62.0,
+        "es_instrument": "314863"
+      },
+      {
+        "date": "2023-12-10",
+        "new_offset": 666.5,
+        "step": -52.25,
+        "es_instrument": "17077"
+      },
+      {
+        "date": "2024-03-10",
+        "new_offset": 602.75,
+        "step": -63.25,
+        "es_instrument": "5602"
+      },
+      {
+        "date": "2024-03-13",
+        "new_offset": 601.75,
+        "step": -1.0,
+        "es_instrument": "5602"
+      },
+      {
+        "date": "2024-03-15",
+        "new_offset": 602.75,
+        "step": 0.75,
+        "es_instrument": "5602"
+      },
+      {
+        "date": "2024-03-17",
+        "new_offset": 599.5,
+        "step": -3.25,
+        "es_instrument": "5602"
+      },
+      {
+        "date": "2024-06-16",
+        "new_offset": 534.5,
+        "step": -65.0,
+        "es_instrument": "118"
+      }
+    ],
+    "calendar_roll_dates_in_window": [
+      "2020-12-10",
+      "2021-03-11",
+      "2021-06-10",
+      "2021-09-09",
+      "2021-12-09",
+      "2022-03-10",
+      "2022-06-09",
+      "2022-09-08",
+      "2022-12-08",
+      "2023-03-09",
+      "2023-06-08",
+      "2023-09-07",
+      "2023-12-07",
+      "2024-03-07",
+      "2024-06-13"
+    ]
+  },
+  "crosscheck_mes_vs_es_points": {
+    "label": "daily RTH-close change, points (consecutive sessions only, roll days excluded)",
+    "n_days": 419,
+    "corr": 0.9999795481605852,
+    "mean_abs_diff": 0.1951073985680191,
+    "p95_abs_diff": 0.5,
+    "max_abs_diff": 1.5,
+    "max_abs_diff_date": "2022-06-20"
+  },
+  "spx_minute": {
+    "rows": 1871926,
+    "non_positive": 0,
+    "nan": 0,
+    "high_inconsistent": 0,
+    "low_inconsistent": 0,
+    "duplicate_ts": 0,
+    "unsorted": 0,
+    "off_tick_grid": 138,
+    "minute_moves_gt_1.5pct": 125,
+    "minute_moves_gt_1.5pct_dates": [
+      "2008-01-22",
+      "2008-09-08",
+      "2008-09-19",
+      "2008-09-30",
+      "2008-10-08",
+      "2008-10-10",
+      "2008-10-13",
+      "2008-10-14",
+      "2008-10-22",
+      "2008-10-24",
+      "2008-10-28",
+      "2008-10-30",
+      "2008-12-01",
+      "2008-12-03",
+      "2008-12-08",
+      "2008-12-12",
+      "2009-01-22",
+      "2009-01-23",
+      "2009-02-17",
+      "2009-03-23",
+      "2009-03-30",
+      "2009-04-02",
+      "2009-11-27",
+      "2010-05-06",
+      "2010-05-10",
+      "2011-08-18",
+      "2011-09-06",
+      "2011-11-01",
+      "2011-11-28",
+      "2015-08-24"
+    ]
+  },
+  "spx_sessions": {
+    "sessions": 4730,
+    "first": "2008-01-02",
+    "last": "2026-10-20",
+    "short_sessions(<300 RTH bars)": 37,
+    "holiday_merged_sessions": 0,
+    "sessions_with_gap_gt_30min": {
+      "2009-10-12": 56.0,
+      "2012-07-03": 38.0,
+      "2012-11-23": 50.0,
+      "2012-12-24": 35.0,
+      "2013-07-03": 46.0,
+      "2013-11-29": 36.0,
+      "2014-12-24": 33.0,
+      "2015-11-27": 37.0,
+      "2015-12-24": 34.0,
+      "2016-11-25": 43.0,
+      "2017-07-03": 54.0,
+      "2017-11-24": 70.0,
+      "2018-07-03": 56.0,
+      "2018-11-23": 70.0,
+      "2018-12-24": 99.0,
+      "2019-07-03": 85.0,
+      "2019-11-29": 72.0,
+      "2019-12-24": 119.0,
+      "2020-11-27": 47.0,
+      "2020-12-24": 62.0,
+      "2021-11-26": 52.0,
+      "2022-11-25": 72.0,
+      "2023-07-03": 63.0,
+      "2023-11-24": 55.0,
+      "2024-05-30": 78.0,
+      "2024-07-03": 43.0,
+      "2024-12-24": 38.0,
+      "2025-11-28": 53.0,
+      "2025-12-24": 94.0
+    },
+    "return_outliers_gt_6sigma": {
+      "2018-02-05": -0.0416,
+      "2018-10-10": -0.0332,
+      "2025-04-09": 0.0893
+    },
+    "median_bars_per_session": 390.0,
+    "calendar_missing_sessions": [],
+    "calendar_extra_sessions": []
+  },
+  "crosscheck_mes_vs_spx_pct": {
+    "label": "daily RTH-close change, % of SPX level (consecutive sessions only)",
+    "n_days": 1822,
+    "corr": 0.998954798994584,
+    "mean_abs_diff": 0.035713590828288164,
+    "p95_abs_diff": 0.09016416532573174,
+    "max_abs_diff": 0.6563528711224967,
+    "max_abs_diff_date": "2023-09-18"
+  },
+  "vix": {
+    "rows": 9298,
+    "first": "1990-01-02",
+    "last": "2026-10-20"
+  },
+  "mnq_audit": {
+    "rows": 1333197,
+    "non_positive": 0,
+    "nan": 0,
+    "high_inconsistent": 0,
+    "low_inconsistent": 0,
+    "duplicate_ts": 43701,
+    "unsorted": 0,
+    "off_tick_grid": 0,
+    "minute_moves_gt_1.5pct": 22,
+    "minute_moves_gt_1.5pct_dates": [
+      "2022-07-13",
+      "2022-09-13",
+      "2022-10-13",
+      "2022-11-02",
+      "2022-11-10",
+      "2022-12-02",
+      "2022-12-08",
+      "2022-12-09",
+      "2023-12-08",
+      "2024-03-08",
+      "2024-06-16",
+      "2025-04-06",
+      "2025-04-07",
+      "2025-04-09",
+      "2025-04-13",
+      "2025-04-22",
+      "2025-06-15"
+    ],
+    "has_volume": false,
+    "sessions": 942,
+    "first": "2022-01-03",
+    "last": "2025-09-03",
+    "median_bars_per_session": 1379.0
+  },
+  "es_audit": {
+    "rows": 646947,
+    "non_positive": 0,
+    "nan": 0,
+    "high_inconsistent": 0,
+    "low_inconsistent": 0,
+    "duplicate_ts": 0,
+    "unsorted": 0,
+    "off_tick_grid": 0,
+    "minute_moves_gt_1.5pct": 23,
+    "minute_moves_gt_1.5pct_dates": [
+      "2020-12-20",
+      "2021-01-20",
+      "2021-02-24",
+      "2021-06-08",
+      "2021-07-11",
+      "2021-08-08",
+      "2021-11-10",
+      "2021-12-06",
+      "2022-01-18",
+      "2022-02-10",
+      "2022-03-22",
+      "2022-03-27",
+      "2022-04-12",
+      "2022-06-02",
+      "2022-07-10",
+      "2022-07-13",
+      "2022-08-10",
+      "2022-08-14",
+      "2022-09-04",
+      "2022-10-02",
+      "2022-10-31",
+      "2022-11-10",
+      "2023-10-17"
+    ],
+    "zero_volume_bars": 0,
+    "sessions": 473,
+    "first": "2020-11-17",
+    "last": "2024-07-19",
+    "largest_calendar_holes_days": [
+      {
+        "after": "2023-05-05",
+        "resume": "2023-10-18",
+        "days": 166
+      },
+      {
+        "after": "2021-12-09",
+        "resume": "2022-01-19",
+        "days": 41
+      },
+      {
+        "after": "2022-02-11",
+        "resume": "2022-03-23",
+        "days": 40
+      },
+      {
+        "after": "2022-08-11",
+        "resume": "2022-09-05",
+        "days": 25
+      },
+      {
+        "after": "2022-10-07",
+        "resume": "2022-11-01",
+        "days": 25
+      },
+      {
+        "after": "2021-08-20",
+        "resume": "2021-09-14",
+        "days": 25
+      }
+    ],
+    "out_of_hours": {
+      "weekend_bars_dropped": 0,
+      "halt_bars_dropped": 1,
+      "dropped_timestamps": [
+        "2023-10-30 16:00:00"
+      ]
+    }
+  },
+  "mes_audit": {
+    "largest_calendar_holes_days": [
+      {
+        "after": "2026-04-02",
+        "resume": "2026-04-06",
+        "days": 4
+      },
+      {
+        "after": "2024-03-14",
+        "resume": "2024-03-18",
+        "days": 4
+      },
+      {
+        "after": "2022-12-30",
+        "resume": "2023-01-03",
+        "days": 4
+      },
+      {
+        "after": "2024-03-28",
+        "resume": "2024-04-01",
+        "days": 4
+      },
+      {
+        "after": "2022-12-23",
+        "resume": "2022-12-27",
+        "days": 4
+      },
+      {
+        "after": "2023-04-06",
+        "resume": "2023-04-10",
+        "days": 4
+      }
+    ]
+  }
+}
