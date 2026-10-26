@@ -1,0 +1,21 @@
+{
+ "candidate": "pullback[exit_ma=5,max_hold=10,rsi_entry=10,rsi_len=2,stop_atr=2.5,trend_len=100]",
+ "family": "pullback",
+ "params": {
+  "trend_len": 100,
+  "rsi_len": 2,
+  "rsi_entry": 10,
+  "exit_ma": 5,
+  "max_hold": 10,
+  "stop_atr": 2.5
+ },
+ "hash": "eaa3df914e93",
+ "passed": true,
+ "failures": [],
+ "gates": {
+  "min_trades": 15,
+  "min_profit_factor": 1.1,
+  "max_drawdown_pct": 25.0,
+  "require_positive_at_2x_costs": true
+ }
+}

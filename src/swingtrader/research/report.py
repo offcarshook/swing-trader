@@ -68,6 +68,12 @@ def train_report(sel: dict) -> str:
                f"time. Candidate total net P&L ${r['candidate_total_net_pnl']:,.0f} vs random median "
                f"${r['random_p50']:,.0f} (p90 ${r['random_p90']:,.0f}) -> beats **{r['candidate_percentile']}%** "
                "of random runs.\n")
+    out.append("\n### Losing periods (training)\n")
+    for src, eps in td.get("worst_drawdowns", {}).items():
+        out.append(f"\n**{src}** worst drawdowns:\n\n")
+        out.append(_table(eps, ["depth_pct", "dd_start", "trough", "recovered"]))
+        wm = td.get("worst_months", {}).get(src, {})
+        out.append("\nWorst months: " + ", ".join(f"{k[:7]} {v}%" for k, v in wm.items()) + "\n")
     out.append("\n### Cost sensitivity (training)\n")
     out.append(_table([{"costs": k, **v} for k, v in sel["cost_stress_top"].items()],
                       ["costs", "total_net_pnl", "profit_factor", "expectancy_usd", "spx_net_return_pct",
@@ -111,6 +117,14 @@ def holdout_report(h: dict) -> str:
                f"(random median ${r['random_p50']:,.0f}, candidate ${r['candidate_total_net_pnl']:,.0f}).\n")
     out.append("\n## Yearly returns (%)\n")
     out.append(_table([{"year": y, "return_pct": v} for y, v in h["yearly_returns_pct"].items()], ["year", "return_pct"]))
+    if h.get("worst_drawdowns") is not None:
+        out.append("\n## Losing periods\n### Worst drawdowns\n")
+        out.append(_table(h["worst_drawdowns"], ["depth_pct", "dd_start", "trough", "recovered"]))
+        neg = {m: v for m, v in h["monthly_returns_pct"].items() if v < 0}
+        out.append("\n### Losing months\n" + (", ".join(f"{m[:7]} {v}%" for m, v in neg.items()) or "none") + "\n")
+        out.append(f"\n### Losing trades ({len(h.get('losing_trades', []))})\n")
+        out.append(_table(h.get("losing_trades", []), ["entry_date", "exit_date", "contracts", "entry_price",
+                                                        "exit_price", "exit_reason", "net_pnl"]))
     out.append("\n## Monthly returns (%)\n")
     out.append(_table([{"month": m, "return_pct": v} for m, v in h["monthly_returns_pct"].items()], ["month", "return_pct"]))
     p = h["promotion"]

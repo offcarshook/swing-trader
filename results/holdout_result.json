@@ -1,0 +1,256 @@
+{
+ "candidate": "pullback[exit_ma=5,max_hold=10,rsi_entry=10,rsi_len=2,stop_atr=2.5,trend_len=100]",
+ "family": "pullback",
+ "params": {
+  "trend_len": 100,
+  "rsi_len": 2,
+  "rsi_entry": 10,
+  "exit_ma": 5,
+  "max_hold": 10,
+  "stop_atr": 2.5
+ },
+ "hash": "eaa3df914e93",
+ "promotable_from_training": true,
+ "holdout_access": {
+  "ts": "2026-10-26T13:40:25+00:00",
+  "candidate_id": "pullback[exit_ma=5,max_hold=10,rsi_entry=10,rsi_len=2,stop_atr=2.5,trend_len=100]",
+  "hash": "eaa3df914e93",
+  "evaluation_number": 2,
+  "override_reason": null,
+  "git": "45637d2+dirty"
+ },
+ "holdout_history": [
+  {
+   "ts": "2026-10-26T13:33:33+00:00",
+   "candidate_id": "pullback[exit_ma=5,max_hold=10,rsi_entry=10,rsi_len=2,stop_atr=2.5,trend_len=100]",
+   "hash": "eaa3df914e93",
+   "evaluation_number": 1,
+   "override_reason": null,
+   "git": "45637d2"
+  },
+  {
+   "ts": "2026-10-26T13:40:25+00:00",
+   "candidate_id": "pullback[exit_ma=5,max_hold=10,rsi_entry=10,rsi_len=2,stop_atr=2.5,trend_len=100]",
+   "hash": "eaa3df914e93",
+   "evaluation_number": 2,
+   "override_reason": null,
+   "git": "45637d2+dirty"
+  }
+ ],
+ "window": [
+  "2024-01-01",
+  "2026-10-20"
+ ],
+ "summary": {
+  "start": "2024-01-02",
+  "end": "2026-10-20",
+  "years": 2.8,
+  "start_equity": 100000.0,
+  "end_equity": 104445.0,
+  "net_return_pct": 4.45,
+  "cagr_pct": 1.57,
+  "avg_monthly_return_pct": 0.128,
+  "median_monthly_return_pct": 0.0,
+  "pct_positive_months": 41.2,
+  "best_month_pct": 1.21,
+  "worst_month_pct": -0.27,
+  "months_ge_5pct": 0,
+  "max_drawdown_pct": 0.56,
+  "max_dd_duration_sessions": 157,
+  "sharpe": 1.33,
+  "sortino": 2.42,
+  "exposure_pct": 8.6,
+  "trades": 25,
+  "long_trades": 25,
+  "short_trades": 0,
+  "win_rate_pct": 80.0,
+  "profit_factor": 4.799,
+  "expectancy_usd": 177.8,
+  "expectancy_r": 0.227,
+  "avg_win_usd": 280.75,
+  "avg_loss_usd": -234.0,
+  "avg_sessions_held": 2.48,
+  "avg_calendar_days_held": 3.72,
+  "avg_contracts": 1.0,
+  "total_fees_usd": 50.0,
+  "total_roll_costs_usd": 0.0,
+  "longest_losing_streak": 2,
+  "exit_reasons": {
+   "reverted above exit MA": 21,
+   "trend invalidated": 3,
+   "end_of_test": 1
+  }
+ },
+ "monthly_returns_pct": {
+  "2024-01-31": 0.211,
+  "2024-02-29": 0.0,
+  "2024-03-31": 0.0,
+  "2024-04-30": -0.088,
+  "2024-05-31": 0.32,
+  "2024-06-30": 0.113,
+  "2024-07-31": 0.261,
+  "2024-08-31": 0.035,
+  "2024-09-30": -0.27,
+  "2024-10-31": -0.029,
+  "2024-11-30": 1.213,
+  "2024-12-31": 0.284,
+  "2025-01-31": 0.314,
+  "2025-02-28": -0.246,
+  "2025-03-31": 0.0,
+  "2025-04-30": 0.0,
+  "2025-05-31": 0.0,
+  "2025-06-30": 0.0,
+  "2025-07-31": 0.0,
+  "2025-08-31": 0.652,
+  "2025-09-30": 0.0,
+  "2025-10-31": 0.292,
+  "2025-11-30": 0.21,
+  "2025-12-31": 0.0,
+  "2026-01-31": 0.389,
+  "2026-02-28": 0.0,
+  "2026-03-31": 0.0,
+  "2026-04-30": 0.0,
+  "2026-05-31": 0.0,
+  "2026-06-30": 0.0,
+  "2026-07-31": 0.0,
+  "2026-08-31": 0.0,
+  "2026-09-30": 0.47,
+  "2026-10-31": 0.232
+ },
+ "yearly_returns_pct": {
+  "2024": 2.06,
+  "2025": 1.23,
+  "2026": 1.09
+ },
+ "trades_by_year": {
+  "2024": {
+   "trades": 14,
+   "net_pnl": 2062.0,
+   "win_rate": 71.4
+  },
+  "2025": {
+   "trades": 6,
+   "net_pnl": 1251.75,
+   "win_rate": 83.3
+  },
+  "2026": {
+   "trades": 5,
+   "net_pnl": 1131.25,
+   "win_rate": 100.0
+  }
+ },
+ "cost_stress": {
+  "1x": {
+   "net_return_pct": 4.45,
+   "profit_factor": 4.799,
+   "expectancy_usd": 177.8,
+   "max_drawdown_pct": 0.56
+  },
+  "2x": {
+   "net_return_pct": 4.33,
+   "profit_factor": 4.632,
+   "expectancy_usd": 173.25,
+   "max_drawdown_pct": 0.56
+  },
+  "3x": {
+   "net_return_pct": 4.22,
+   "profit_factor": 4.471,
+   "expectancy_usd": 168.7,
+   "max_drawdown_pct": 0.56
+  },
+  "+2 ticks slippage": {
+   "net_return_pct": 4.32,
+   "profit_factor": 4.613,
+   "expectancy_usd": 172.7,
+   "max_drawdown_pct": 0.56
+  }
+ },
+ "random_baseline": {
+  "n_seeds": 200,
+  "candidate_total_net_pnl": 4445.0,
+  "random_mean": 216.9,
+  "random_p50": 275.0,
+  "random_p90": 1617.2,
+  "candidate_percentile": 100.0
+ },
+ "baselines": {
+  "buy_hold_1x": {
+   "start": "2024-01-02",
+   "end": "2026-10-20",
+   "years": 2.8,
+   "start_equity": 100000.0,
+   "end_equity": 134869.75,
+   "net_return_pct": 34.87,
+   "cagr_pct": 11.28,
+   "avg_monthly_return_pct": 0.918,
+   "median_monthly_return_pct": 1.176,
+   "pct_positive_months": 61.8,
+   "best_month_pct": 8.59,
+   "worst_month_pct": -4.82,
+   "months_ge_5pct": 1,
+   "max_drawdown_pct": 15.53,
+   "max_dd_duration_sessions": 143,
+   "sharpe": 0.94,
+   "sortino": 1.38,
+   "exposure_pct": 100.0,
+   "trades": 0,
+   "win_rate_pct": 0.0,
+   "profit_factor": 0.0,
+   "expectancy_usd": 0.0,
+   "expectancy_r": 0.0,
+   "avg_sessions_held": 0.0,
+   "avg_calendar_days_held": 0.0,
+   "total_fees_usd": 0.0,
+   "total_roll_costs_usd": 0.0,
+   "longest_losing_streak": 0
+  },
+  "ma_cross": {
+   "start": "2024-01-02",
+   "end": "2026-10-20",
+   "years": 2.8,
+   "start_equity": 100000.0,
+   "end_equity": 98331.25,
+   "net_return_pct": -1.67,
+   "cagr_pct": -0.6,
+   "avg_monthly_return_pct": -0.044,
+   "median_monthly_return_pct": 0.0,
+   "pct_positive_months": 41.2,
+   "best_month_pct": 1.51,
+   "worst_month_pct": -3.39,
+   "months_ge_5pct": 0,
+   "max_drawdown_pct": 6.95,
+   "max_dd_duration_sessions": 480,
+   "sharpe": -0.16,
+   "sortino": -0.2,
+   "exposure_pct": 68.8,
+   "trades": 2,
+   "long_trades": 2,
+   "short_trades": 0,
+   "win_rate_pct": 0.0,
+   "profit_factor": 0.0,
+   "expectancy_usd": -834.38,
+   "expectancy_r": -1.022,
+   "avg_win_usd": 0.0,
+   "avg_loss_usd": -834.38,
+   "avg_sessions_held": 248.5,
+   "avg_calendar_days_held": 354.0,
+   "avg_contracts": 1.0,
+   "total_fees_usd": 4.0,
+   "total_roll_costs_usd": 36.0,
+   "longest_losing_streak": 2,
+   "exit_reasons": {
+    "stop": 2
+   }
+  }
+ },
+ "promotion": {
+  "passed": true,
+  "failures": [],
+  "gates": {
+   "min_trades": 15,
+   "min_profit_factor": 1.1,
+   "max_drawdown_pct": 25.0,
+   "require_positive_at_2x_costs": true
+  }
+ }
+}

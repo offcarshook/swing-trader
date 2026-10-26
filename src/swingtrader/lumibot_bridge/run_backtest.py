@@ -55,8 +55,11 @@ def run_lumibot_backtest(cfg: dict, start=None, end=None, family=None, params_js
     sessions = load_sessions(cfg)
     # Default = MES training window. The holdout may only be replayed in LumiBot AFTER
     # the one-shot holdout evaluation has been registered (no peeking via a second engine).
-    start = pd.Timestamp(start or cfg["splits"]["train_start"]) + pd.Timedelta(days=200)  # after warm-up
-    end = pd.Timestamp(end or cfg["splits"]["train_end"])
+    if start is None:
+        start = pd.Timestamp(cfg["splits"]["train_start"]) + pd.Timedelta(days=200)  # after warm-up
+        end = end or cfg["splits"]["train_end"]
+    start = pd.Timestamp(start)
+    end = pd.Timestamp(end) if end else sessions.index[-1]
     if end >= pd.Timestamp(cfg["splits"]["holdout_start"]):
         from swingtrader.research.experiments import HoldoutGuard
         if not HoldoutGuard().history():
@@ -131,7 +134,9 @@ def run_lumibot_backtest(cfg: dict, start=None, end=None, family=None, params_js
                                         j["lumibot"].diff().shift(-1).corr(j["internal"].diff())), 4),
                                     "final_diff_usd": round(float(j["lumibot"].iloc[-1] - j["internal"].iloc[-1]), 2)}
     res_dir = resolve("results")
-    (res_dir / "lumibot_backtest.json").write_text(json.dumps(out, indent=1, default=str))
+    tag = f"{start.date()}_{end.date()}"
+    (res_dir / f"lumibot_backtest_{tag}.json").write_text(json.dumps(out, indent=1, default=str))
     if not ilog.empty:
-        ilog.to_csv(res_dir / "lumibot_events.csv", index=False)
+        ilog.to_csv(res_dir / f"lumibot_events_{tag}.csv", index=False)
+    out["written"] = f"results/lumibot_backtest_{tag}.json"
     return out

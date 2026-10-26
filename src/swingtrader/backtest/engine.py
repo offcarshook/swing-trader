@@ -62,6 +62,7 @@ class BacktestResult:
     start_equity: float
     params: dict = field(default_factory=dict)
     halted: str | None = None
+    final_state: dict = field(default_factory=dict)   # open position + order for the next session
 
 
 def _round_stop(spec: ContractSpec, price: float, side: int) -> float:
@@ -81,6 +82,7 @@ def run_backtest(
     entry_filter=None,
     regimes: pd.Series | None = None,
     instrument: str = "MES",
+    close_at_end: bool = True,
 ) -> BacktestResult:
     """Run one strategy over [start, end]. `entry_filter(date, side, row) -> multiplier`
     is the (optional) research overlay hook; it can only scale size into [0, 1]."""
@@ -198,7 +200,7 @@ def run_backtest(
         if pos is not None:
             pos.bars_held += 1
             pos.best_close = max(pos.best_close, bar["close"]) if pos.side > 0 else min(pos.best_close, bar["close"])
-        if pending is None and date < win.index[-1]:
+        if pending is None and (date < win.index[-1] or not close_at_end):
             view = PositionView(pos.side, pos.entry_price, pos.stop, pos.bars_held, pos.best_close) if pos else PositionView()
             d = strategy.decide(rows[i], view)
             if pos is not None:
@@ -222,8 +224,17 @@ def run_backtest(
                 events.append({"date": date, "event": "no_trade", "detail": d.reason})
         prev_date = date
 
-    # ---- end of window: close anything open at the final close ----
-    if pos is not None:
+    # ---- end of window ----
+    final_state = {
+        "last_session": str(win.index[-1].date()),
+        "equity": ledger.equity(),
+        "position": None if pos is None else {
+            "side": pos.side, "contracts": pos.contracts, "entry_date": str(pos.entry_date.date()),
+            "entry_price": pos.entry_price, "stop": pos.stop, "bars_held": pos.bars_held},
+        "next_session_order": pending,
+        "halted": risk.halt_reason,
+    }
+    if close_at_end and pos is not None:
         close_trade(win.index[-1], win["close"].iloc[-1], MARKET, "end_of_test")
         eq_curve[-1] = (win.index[-1], ledger.equity())
     ledger.check_invariants()
@@ -232,7 +243,7 @@ def run_backtest(
     tr = pd.DataFrame(trades)
     ev = pd.DataFrame(events)
     return BacktestResult(strategy.label, eq, tr, ev, pd.Series(dict(in_mkt)), starting_equity,
-                          dict(strategy.params), risk.halt_reason)
+                          dict(strategy.params), risk.halt_reason, final_state)
 
 
 def _effective_stop(pos: OpenTrade, daily_stop: float | None) -> tuple[float, str]:

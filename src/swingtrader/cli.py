@@ -6,7 +6,6 @@ import argparse
 import json
 import logging
 import sys
-from pathlib import Path
 
 from swingtrader.config import load_config, resolve
 
@@ -47,6 +46,8 @@ def cmd_select(cfg, args):
     for e in evals:
         if e["id"] == top["id"]:
             e["trades"].to_csv(resolve("results") / "train_trades_top.csv", index=False)
+            for src, r in e["runs"].items():
+                r.equity.to_csv(resolve("results") / f"train_equity_top_{src}.csv", header=True)
     ExperimentLog().append("train_selection", {
         "selected": sel["selected"], "top_ranked_if_none_passed": sel["top_ranked_if_none_passed"],
         "candidates": [{k: c[k] for k in ("id", "passed", "trades", "profit_factor", "median_fold_sharpe",
@@ -74,6 +75,29 @@ def cmd_holdout(cfg, args):
         "promotion": h["promotion"]}, indent=1))
 
 
+def cmd_report(cfg, args):
+    """Regenerate markdown from saved artefacts (does NOT re-run the holdout)."""
+    import pandas as pd
+
+    from swingtrader.backtest.metrics import drawdown_periods
+    from swingtrader.research import report
+    res = resolve("results")
+    if (res / "data_quality.json").exists():
+        report.write("DATA_QUALITY.md", report.data_report(_load_json("data_quality.json")))
+    if (res / "train_selection.json").exists():
+        report.write("TRAIN_REPORT.md", report.train_report(_load_json("train_selection.json")))
+    if (res / "holdout_result.json").exists():
+        h = _load_json("holdout_result.json")
+        eq = pd.read_csv(res / "holdout_equity.csv", index_col=0, parse_dates=True).iloc[:, 0]
+        h["worst_drawdowns"] = drawdown_periods(eq, cfg["account"]["starting_equity"], 3)
+        tr = pd.read_csv(res / "holdout_trades.csv") if (res / "holdout_trades.csv").exists() else pd.DataFrame()
+        h["losing_trades"] = tr[tr["net_pnl"] <= 0][["entry_date", "exit_date", "contracts", "entry_price",
+                                                     "exit_price", "exit_reason", "net_pnl"]].to_dict("records") \
+            if not tr.empty else []
+        report.write("HOLDOUT_REPORT.md", report.holdout_report(h))
+    print("reports regenerated in results/")
+
+
 def cmd_lumibot(cfg, args):
     from swingtrader.lumibot_bridge.run_backtest import run_lumibot_backtest
     res = run_lumibot_backtest(cfg, args.start, args.end, family=args.family, params_json=args.params)
@@ -87,7 +111,8 @@ def cmd_agent(cfg, args):
 
 def cmd_paper(cfg, args):
     from swingtrader.paper.runner import run_paper
-    print(json.dumps(run_paper(cfg, as_of=args.as_of, dry_run=args.dry_run, mode=args.mode), indent=1, default=str))
+    print(json.dumps(run_paper(cfg, as_of=args.as_of, dry_run=args.dry_run, mode=args.mode, start=args.start),
+                     indent=1, default=str))
 
 
 def main(argv=None):
@@ -102,6 +127,7 @@ def main(argv=None):
     p.add_argument("--random-seeds", type=int, default=100)
     p = sub.add_parser("holdout", help="evaluate the selected candidate ONCE on the unseen holdout")
     p.add_argument("--override-reason", default=None)
+    sub.add_parser("report", help="regenerate markdown reports from saved results (no re-runs)")
     p = sub.add_parser("lumibot-backtest", help="re-run a candidate through LumiBot's backtester")
     p.add_argument("--start", default=None)
     p.add_argument("--end", default=None)
@@ -114,9 +140,10 @@ def main(argv=None):
     p.add_argument("--as-of", default=None)
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--mode", choices=["local", "lumibot"], default="local")
+    p.add_argument("--start", default=None, help="paper start session (first run only)")
     args = ap.parse_args(argv)
     cfg = load_config(args.config)
-    {"download": cmd_download, "data": cmd_data, "select": cmd_select, "holdout": cmd_holdout,
+    {"download": cmd_download, "data": cmd_data, "select": cmd_select, "holdout": cmd_holdout, "report": cmd_report,
      "lumibot-backtest": cmd_lumibot, "agent-research": cmd_agent, "paper": cmd_paper}[args.cmd](cfg, args)
 
 

@@ -158,3 +158,24 @@ def test_summary_metrics_basic(spec, costs, risk):
     m = summarize(res.equity, res.trades, res.start_equity, res.in_market)
     assert m["trades"] == 1 and m["profit_factor"] == float("inf")
     assert m["net_return_pct"] > 0 and m["max_drawdown_pct"] >= 0
+
+
+def test_period_returns_include_first_period():
+    from swingtrader.backtest.metrics import monthly_returns, yearly_returns
+    idx = pd.bdate_range("2024-01-02", "2025-02-28")
+    eq = pd.Series(np.linspace(101_000, 120_000, len(idx)), index=idx)
+    m = monthly_returns(eq, 100_000)
+    assert m.index[0] == pd.Timestamp("2024-01-31")
+    assert m.iloc[0] == pytest.approx((eq.loc["2024-01"].iloc[-1] / 100_000 - 1) * 100)
+    y = yearly_returns(eq, 100_000)
+    assert list(y.index) == [2024, 2025]
+    assert y.loc[2024] == pytest.approx((eq.loc["2024"].iloc[-1] / 100_000 - 1) * 100)
+
+
+def test_drawdown_periods():
+    from swingtrader.backtest.metrics import drawdown_periods
+    idx = pd.bdate_range("2024-01-02", periods=8)
+    eq = pd.Series([100, 90, 95, 101, 101, 80, 85, 90], index=idx, dtype=float)
+    eps = drawdown_periods(eq, 100.0)
+    assert eps[0]["depth_pct"] == pytest.approx(-20.79, abs=0.01) and eps[0]["recovered"] == "not recovered"
+    assert eps[1]["depth_pct"] == pytest.approx(-10.0) and eps[1]["recovered"] == str(idx[3].date())

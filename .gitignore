@@ -19,3 +19,4 @@ results/lumibot_logs/
 results/agent_cache/
 .env
 KILL_SWITCH
+.ruff_cache/

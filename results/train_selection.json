@@ -386,7 +386,7 @@
     "cagr_pct": 0.3,
     "avg_monthly_return_pct": 0.026,
     "median_monthly_return_pct": 0.0,
-    "pct_positive_months": 26.4,
+    "pct_positive_months": 26.2,
     "best_month_pct": 1.29,
     "worst_month_pct": -1.24,
     "months_ge_5pct": 0,
@@ -424,9 +424,9 @@
     "end_equity": 103994.0,
     "net_return_pct": 3.99,
     "cagr_pct": 0.94,
-    "avg_monthly_return_pct": 0.079,
+    "avg_monthly_return_pct": 0.077,
     "median_monthly_return_pct": 0.0,
-    "pct_positive_months": 40.0,
+    "pct_positive_months": 39.2,
     "best_month_pct": 0.86,
     "worst_month_pct": -0.98,
     "months_ge_5pct": 0,
@@ -465,8 +465,67 @@
    "random_p90": 4263.66,
    "candidate_percentile": 99.0
   },
+  "worst_drawdowns": {
+   "spx": [
+    {
+     "depth_pct": -5.86,
+     "dd_start": "2014-06-18",
+     "trough": "2016-05-05",
+     "recovered": "not recovered"
+    },
+    {
+     "depth_pct": -0.79,
+     "dd_start": "2012-04-13",
+     "trough": "2012-05-15",
+     "recovered": "2012-09-06"
+    },
+    {
+     "depth_pct": -0.63,
+     "dd_start": "2010-04-30",
+     "trough": "2010-11-16",
+     "recovered": "2011-02-25"
+    }
+   ],
+   "mes": [
+    {
+     "depth_pct": -1.38,
+     "dd_start": "2020-01-31",
+     "trough": "2020-06-12",
+     "recovered": "2021-05-14"
+    },
+    {
+     "depth_pct": -0.87,
+     "dd_start": "2021-09-10",
+     "trough": "2022-01-19",
+     "recovered": "2022-11-30"
+    },
+    {
+     "depth_pct": -0.4,
+     "dd_start": "2023-08-08",
+     "trough": "2023-08-17",
+     "recovered": "2023-09-11"
+    }
+   ]
+  },
+  "worst_months": {
+   "spx": {
+    "2018-06-30": -1.24,
+    "2015-01-31": -1.14,
+    "2018-10-31": -0.97,
+    "2014-12-31": -0.95,
+    "2014-07-31": -0.94
+   },
+   "mes": {
+    "2020-02-29": -0.98,
+    "2020-10-31": -0.53,
+    "2021-11-30": -0.29,
+    "2021-12-31": -0.29,
+    "2023-02-28": -0.19
+   }
+  },
   "yearly": {
    "spx": {
+    "2008": 0.0,
     "2009": 2.08,
     "2010": 0.35,
     "2011": 0.81,
@@ -480,6 +539,7 @@
     "2019": 0.21
    },
    "mes": {
+    "2019": 0.8,
     "2020": -0.69,
     "2021": 1.83,
     "2022": 0.9,
@@ -519,9 +579,9 @@
    "end_equity": 195180.1,
    "net_return_pct": 95.18,
    "cagr_pct": 6.08,
-   "avg_monthly_return_pct": 0.632,
-   "median_monthly_return_pct": 1.073,
-   "pct_positive_months": 64.4,
+   "avg_monthly_return_pct": 0.582,
+   "median_monthly_return_pct": 1.045,
+   "pct_positive_months": 64.0,
    "best_month_pct": 10.04,
    "worst_month_pct": -15.71,
    "months_ge_5pct": 15,
@@ -541,6 +601,7 @@
    "total_roll_costs_usd": 0.0,
    "longest_losing_streak": 0,
    "yearly": {
+    "2008": -37.06,
     "2009": 23.96,
     "2010": 12.06,
     "2011": -0.28,
@@ -562,9 +623,9 @@
    "end_equity": 118365.7,
    "net_return_pct": 18.37,
    "cagr_pct": 1.61,
-   "avg_monthly_return_pct": 0.136,
-   "median_monthly_return_pct": 0.135,
-   "pct_positive_months": 55.6,
+   "avg_monthly_return_pct": 0.135,
+   "median_monthly_return_pct": 0.128,
+   "pct_positive_months": 55.1,
    "best_month_pct": 1.9,
    "worst_month_pct": -2.49,
    "months_ge_5pct": 0,
@@ -602,9 +663,9 @@
    "end_equity": 144455.0,
    "net_return_pct": 44.45,
    "cagr_pct": 8.23,
-   "avg_monthly_return_pct": 0.824,
-   "median_monthly_return_pct": 1.458,
-   "pct_positive_months": 60.0,
+   "avg_monthly_return_pct": 0.745,
+   "median_monthly_return_pct": 1.351,
+   "pct_positive_months": 58.9,
    "best_month_pct": 8.73,
    "worst_month_pct": -10.18,
    "months_ge_5pct": 8,
@@ -624,6 +685,7 @@
    "total_roll_costs_usd": 0.0,
    "longest_losing_streak": 0,
    "yearly": {
+    "2019": 8.15,
     "2020": 12.72,
     "2021": 21.49,
     "2022": -15.87,
@@ -638,9 +700,9 @@
    "end_equity": 105839.0,
    "net_return_pct": 5.84,
    "cagr_pct": 1.48,
-   "avg_monthly_return_pct": 0.154,
+   "avg_monthly_return_pct": 0.124,
    "median_monthly_return_pct": 0.0,
-   "pct_positive_months": 41.3,
+   "pct_positive_months": 40.4,
    "best_month_pct": 1.82,
    "worst_month_pct": -1.33,
    "months_ge_5pct": 0,
@@ -683,7 +745,7 @@
     "avg_contracts": 4.62
    },
    "mes": {
-    "avg_monthly_return_pct": 0.079,
+    "avg_monthly_return_pct": 0.077,
     "cagr_pct": 0.94,
     "max_drawdown_pct": 1.38,
     "worst_month_pct": -0.98,
@@ -694,7 +756,7 @@
   {
    "risk_per_trade_pct": 2.0,
    "spx": {
-    "avg_monthly_return_pct": 0.056,
+    "avg_monthly_return_pct": 0.055,
     "cagr_pct": 0.63,
     "max_drawdown_pct": 11.79,
     "worst_month_pct": -2.36,
@@ -702,7 +764,7 @@
     "avg_contracts": 9.94
    },
    "mes": {
-    "avg_monthly_return_pct": 0.208,
+    "avg_monthly_return_pct": 0.203,
     "cagr_pct": 2.49,
     "max_drawdown_pct": 2.82,
     "worst_month_pct": -1.94,
@@ -713,7 +775,7 @@
   {
    "risk_per_trade_pct": 3.0,
    "spx": {
-    "avg_monthly_return_pct": 0.078,
+    "avg_monthly_return_pct": 0.077,
     "cagr_pct": 0.85,
     "max_drawdown_pct": 17.85,
     "worst_month_pct": -3.77,
@@ -721,7 +783,7 @@
     "avg_contracts": 15.81
    },
    "mes": {
-    "avg_monthly_return_pct": 0.298,
+    "avg_monthly_return_pct": 0.292,
     "cagr_pct": 3.57,
     "max_drawdown_pct": 4.22,
     "worst_month_pct": -2.88,
@@ -732,7 +794,7 @@
   {
    "risk_per_trade_pct": 5.0,
    "spx": {
-    "avg_monthly_return_pct": 0.138,
+    "avg_monthly_return_pct": 0.137,
     "cagr_pct": 1.41,
     "max_drawdown_pct": 28.48,
     "worst_month_pct": -6.43,
@@ -740,7 +802,7 @@
     "avg_contracts": 28.68
    },
    "mes": {
-    "avg_monthly_return_pct": 0.511,
+    "avg_monthly_return_pct": 0.501,
     "cagr_pct": 6.1,
     "max_drawdown_pct": 6.91,
     "worst_month_pct": -4.7,
@@ -751,7 +813,7 @@
   {
    "risk_per_trade_pct": 8.0,
    "spx": {
-    "avg_monthly_return_pct": 0.154,
+    "avg_monthly_return_pct": 0.153,
     "cagr_pct": 1.28,
     "max_drawdown_pct": 40.37,
     "worst_month_pct": -10.57,
@@ -759,7 +821,7 @@
     "avg_contracts": 43.51
    },
    "mes": {
-    "avg_monthly_return_pct": 0.85,
+    "avg_monthly_return_pct": 0.833,
     "cagr_pct": 10.14,
     "max_drawdown_pct": 11.16,
     "worst_month_pct": -7.76,

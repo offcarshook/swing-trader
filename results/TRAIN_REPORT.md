@@ -39,9 +39,9 @@ Best per family: trend: `trend[allow_short=False,fast=20,slow=100,stop_atr=2.5,t
 |---|---|---|---|---|---|---|
 | net_return_pct | 3.28 | 3.99 | 95.18 | 18.37 | 44.45 | 5.84 |
 | cagr_pct | 0.30 | 0.94 | 6.08 | 1.61 | 8.23 | 1.48 |
-| avg_monthly_return_pct | 0.03 | 0.08 | 0.63 | 0.14 | 0.82 | 0.15 |
-| median_monthly_return_pct | 0.00 | 0.00 | 1.07 | 0.14 | 1.46 | 0.00 |
-| pct_positive_months | 26.40 | 40.00 | 64.40 | 55.60 | 60.00 | 41.30 |
+| avg_monthly_return_pct | 0.03 | 0.08 | 0.58 | 0.14 | 0.74 | 0.12 |
+| median_monthly_return_pct | 0.00 | 0.00 | 1.04 | 0.13 | 1.35 | 0.00 |
+| pct_positive_months | 26.20 | 39.20 | 64.00 | 55.10 | 58.90 | 40.40 |
 | worst_month_pct | -1.24 | -0.98 | -15.71 | -2.49 | -10.18 | -1.33 |
 | months_ge_5pct | 0 | 0 | 15 | 0 | 8 | 0 |
 | max_drawdown_pct | 5.86 | 1.38 | 52.49 | 4.58 | 25.90 | 3.66 |
@@ -60,6 +60,7 @@ Best per family: trend: `trend[allow_short=False,fast=20,slow=100,stop_atr=2.5,t
 ### Yearly returns (%)
 | year | spx | mes |
 |---|---|---|
+| 2008 | 0.00 |  |
 | 2009 | 2.08 |  |
 | 2010 | 0.35 |  |
 | 2011 | 0.81 |  |
@@ -70,7 +71,7 @@ Best per family: trend: `trend[allow_short=False,fast=20,slow=100,stop_atr=2.5,t
 | 2016 | 1.41 |  |
 | 2017 | 3.20 |  |
 | 2018 | -2.49 |  |
-| 2019 | 0.21 |  |
+| 2019 | 0.21 | 0.80 |
 | 2020 |  | -0.69 |
 | 2021 |  | 1.83 |
 | 2022 |  | 0.90 |
@@ -78,6 +79,28 @@ Best per family: trend: `trend[allow_short=False,fast=20,slow=100,stop_atr=2.5,t
 
 ### Random-entry baseline
 100 seeds, matched entry rate, side mix, stop and holding time. Candidate total net P&L $7,271 vs random median $920 (p90 $4,264) -> beats **99.0%** of random runs.
+
+### Losing periods (training)
+
+**spx** worst drawdowns:
+
+| depth_pct | dd_start | trough | recovered |
+|---|---|---|---|
+| -5.86 | 2014-06-18 | 2016-05-05 | not recovered |
+| -0.79 | 2012-04-13 | 2012-05-15 | 2012-09-06 |
+| -0.63 | 2010-04-30 | 2010-11-16 | 2011-02-25 |
+
+Worst months: 2018-06 -1.24%, 2015-01 -1.14%, 2018-10 -0.97%, 2014-12 -0.95%, 2014-07 -0.94%
+
+**mes** worst drawdowns:
+
+| depth_pct | dd_start | trough | recovered |
+|---|---|---|---|
+| -1.38 | 2020-01-31 | 2020-06-12 | 2021-05-14 |
+| -0.87 | 2021-09-10 | 2022-01-19 | 2022-11-30 |
+| -0.40 | 2023-08-08 | 2023-08-17 | 2023-09-11 |
+
+Worst months: 2020-02 -0.98%, 2020-10 -0.53%, 2021-11 -0.29%, 2021-12 -0.29%, 2023-02 -0.19%
 
 ### Cost sensitivity (training)
 | costs | total_net_pnl | profit_factor | expectancy_usd | spx_net_return_pct | mes_net_return_pct |
@@ -109,10 +132,10 @@ Risk limits loosened only for this experiment (leverage cap 15x, DD halt 90%).
 | 1.00 | spx | 0.03 | 0.30 | 5.86 | -1.24 | 0 | 4.62 |
 | 1.00 | mes | 0.08 | 0.94 | 1.38 | -0.98 | 0 | 1.19 |
 | 2.00 | spx | 0.06 | 0.63 | 11.79 | -2.36 | 0 | 9.94 |
-| 2.00 | mes | 0.21 | 2.49 | 2.82 | -1.94 | 0 | 2.94 |
+| 2.00 | mes | 0.20 | 2.49 | 2.82 | -1.94 | 0 | 2.94 |
 | 3.00 | spx | 0.08 | 0.85 | 17.85 | -3.77 | 0 | 15.81 |
-| 3.00 | mes | 0.30 | 3.57 | 4.22 | -2.88 | 0 | 4.59 |
+| 3.00 | mes | 0.29 | 3.57 | 4.22 | -2.88 | 0 | 4.59 |
 | 5.00 | spx | 0.14 | 1.41 | 28.48 | -6.43 | 5 | 28.68 |
-| 5.00 | mes | 0.51 | 6.10 | 6.91 | -4.70 | 0 | 8.56 |
+| 5.00 | mes | 0.50 | 6.10 | 6.91 | -4.70 | 0 | 8.56 |
 | 8.00 | spx | 0.15 | 1.28 | 40.37 | -10.57 | 7 | 43.51 |
-| 8.00 | mes | 0.85 | 10.14 | 11.16 | -7.76 | 6 | 15.03 |
+| 8.00 | mes | 0.83 | 10.14 | 11.16 | -7.76 | 6 | 15.03 |

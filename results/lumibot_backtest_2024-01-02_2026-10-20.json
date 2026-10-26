@@ -1,0 +1,83 @@
+{
+ "candidate": {
+  "family": "pullback",
+  "params": {
+   "trend_len": 100,
+   "rsi_len": 2,
+   "rsi_entry": 10,
+   "exit_ma": 5,
+   "max_hold": 10,
+   "stop_atr": 2.5
+  }
+ },
+ "window": [
+  "2024-01-02",
+  "2026-10-20"
+ ],
+ "lumibot_version": "4.6.30",
+ "lumibot_fee_per_contract_side": 2.875,
+ "lumibot": {
+  "final_equity": 104417.875,
+  "net_return_pct": 4.42,
+  "max_drawdown_pct": 0.61,
+  "entry_signals": 25,
+  "fills": 49,
+  "rolls": 0,
+  "lumibot_reported": {
+   "cagr": 0.015600844068047293,
+   "volatility": 0.012832805149598626,
+   "sharpe": 1.215700221906295,
+   "max_drawdown": "{'drawdown': np.float64(0.006070839716660833), 'date': Timestamp('2024-07-24 00:00:00-0400', tz='America/New_York')}",
+   "romad": 2.569800027042764,
+   "total_return": 0.04417875000000082
+  }
+ },
+ "internal_engine": {
+  "start": "2024-01-02",
+  "end": "2026-10-20",
+  "years": 2.8,
+  "start_equity": 100000.0,
+  "end_equity": 104445.0,
+  "net_return_pct": 4.45,
+  "cagr_pct": 1.57,
+  "avg_monthly_return_pct": 0.128,
+  "median_monthly_return_pct": 0.0,
+  "pct_positive_months": 41.2,
+  "best_month_pct": 1.21,
+  "worst_month_pct": -0.27,
+  "months_ge_5pct": 0,
+  "max_drawdown_pct": 0.56,
+  "max_dd_duration_sessions": 157,
+  "sharpe": 1.33,
+  "sortino": 2.42,
+  "exposure_pct": 8.6,
+  "trades": 25,
+  "long_trades": 25,
+  "short_trades": 0,
+  "win_rate_pct": 80.0,
+  "profit_factor": 4.799,
+  "expectancy_usd": 177.8,
+  "expectancy_r": 0.227,
+  "avg_win_usd": 280.75,
+  "avg_loss_usd": -234.0,
+  "avg_sessions_held": 2.48,
+  "avg_calendar_days_held": 3.72,
+  "avg_contracts": 1.0,
+  "total_fees_usd": 50.0,
+  "total_roll_costs_usd": 0.0,
+  "longest_losing_streak": 2
+ },
+ "parity": {
+  "internal_entries": 25,
+  "lumibot_entries": 25,
+  "matching_entry_sessions": 25,
+  "only_internal": [],
+  "only_lumibot": []
+ },
+ "parity_equity": {
+  "days_compared": 721,
+  "corr_daily_changes": 0.6049,
+  "corr_daily_changes_lb_lag1": -0.011,
+  "final_diff_usd": -27.12
+ }
+}

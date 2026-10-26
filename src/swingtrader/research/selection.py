@@ -10,7 +10,8 @@ import numpy as np
 import pandas as pd
 
 from swingtrader.backtest.engine import run_backtest
-from swingtrader.backtest.metrics import fold_metrics, summarize, trade_stats, yearly_returns
+from swingtrader.backtest.metrics import (drawdown_periods, fold_metrics, monthly_returns, summarize,
+                                         trade_stats, yearly_returns)
 from swingtrader.backtest.runner import components, run_buy_hold, run_candidate
 from swingtrader.config import config_hash
 from swingtrader.strategies.baselines import RandomEntry
@@ -67,7 +68,7 @@ def random_baseline(cfg, sources, ev: dict, n_seeds: int = 100) -> dict:
     feats_cache: dict = {}
     for seed in range(n_seeds):
         tot = 0.0
-        for src, (bars, a, b) in sources.items():
+        for src, (bars, _a, b) in sources.items():
             spec, costs, risk = components(cfg)
             strat = RandomEntry(params={"p_entry": rates[src], "hold_days": hold, "stop_atr": stop_atr,
                                         "seed": seed * 7919 + src_salt.get(src, 3), "side": 1,
@@ -213,6 +214,11 @@ def run_selection(cfg, mes, spx, n_random: int = 100, progress=print) -> dict:
         "anchored_walk_forward": anchored_walk_forward(evals),
         "top_detail": {"id": top["id"], "folds": top["folds"], "per_source": top["per_source"],
                        "random": top["random"],
+                       "worst_drawdowns": {s: drawdown_periods(r.equity, r.start_equity, 3)
+                                           for s, r in top["runs"].items()},
+                       "worst_months": {s: {str(k.date()): round(v, 2) for k, v in
+                                            monthly_returns(r.equity, r.start_equity).nsmallest(5).items()}
+                                        for s, r in top["runs"].items()},
                        "yearly": {s: yearly_returns(r.equity, r.start_equity).round(2).to_dict()
                                   for s, r in top["runs"].items()}},
         "cost_stress_top": cost_stress,

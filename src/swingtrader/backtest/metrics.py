@@ -8,14 +8,22 @@ import numpy as np
 import pandas as pd
 
 
+def _anchored(equity: pd.Series, start_equity: float, anchor: pd.Timestamp) -> pd.Series:
+    """Prepend the starting equity at `anchor` (end of the PREVIOUS period) so the
+    first calendar period's return is measured from the starting equity."""
+    return pd.concat([pd.Series([start_equity], index=[anchor]), equity])
+
+
 def monthly_returns(equity: pd.Series, start_equity: float) -> pd.Series:
-    eq = pd.concat([pd.Series([start_equity], index=[equity.index[0] - pd.Timedelta(days=1)]), equity])
+    first = equity.index[0]
+    eq = _anchored(equity, start_equity, first.normalize() - pd.Timedelta(days=first.day))
     m = eq.resample("ME").last().dropna()
     return m.pct_change().dropna() * 100
 
 
 def yearly_returns(equity: pd.Series, start_equity: float) -> pd.Series:
-    eq = pd.concat([pd.Series([start_equity], index=[equity.index[0] - pd.Timedelta(days=1)]), equity])
+    first = equity.index[0]
+    eq = _anchored(equity, start_equity, pd.Timestamp(first.year - 1, 12, 31))
     y = eq.resample("YE").last().dropna()
     out = y.pct_change().dropna() * 100
     out.index = out.index.year
@@ -25,6 +33,28 @@ def yearly_returns(equity: pd.Series, start_equity: float) -> pd.Series:
 def drawdown(equity: pd.Series) -> pd.Series:
     peak = equity.cummax()
     return (equity / peak - 1) * 100
+
+
+def drawdown_periods(equity: pd.Series, start_equity: float, n: int = 5) -> list[dict]:
+    """The n deepest peak-to-trough episodes (with recovery date if recovered)."""
+    eq = pd.concat([pd.Series([start_equity], index=[equity.index[0] - pd.Timedelta(days=1)]), equity])
+    peak = eq.cummax()
+    dd = eq / peak - 1
+    episodes, in_dd, start = [], False, None
+    for t, v in dd.items():
+        if v < 0 and not in_dd:
+            in_dd, start = True, t
+        elif v >= 0 and in_dd:
+            seg = dd.loc[start:t]
+            episodes.append((seg.min(), start, seg.idxmin(), t))
+            in_dd = False
+    if in_dd:
+        seg = dd.loc[start:]
+        episodes.append((seg.min(), start, seg.idxmin(), None))
+    episodes.sort(key=lambda e: e[0])
+    return [{"depth_pct": round(float(d) * 100, 2), "dd_start": str(s.date()),
+             "trough": str(tr.date()), "recovered": str(r.date()) if r is not None else "not recovered"}
+            for d, s, tr, r in episodes[:n]]
 
 
 def max_dd_duration(equity: pd.Series) -> int:

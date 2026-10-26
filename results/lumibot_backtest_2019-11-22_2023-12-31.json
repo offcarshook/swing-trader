@@ -1,0 +1,83 @@
+{
+ "candidate": {
+  "family": "pullback",
+  "params": {
+   "trend_len": 100,
+   "rsi_len": 2,
+   "rsi_entry": 10,
+   "exit_ma": 5,
+   "max_hold": 10,
+   "stop_atr": 2.5
+  }
+ },
+ "window": [
+  "2019-11-22",
+  "2023-12-31"
+ ],
+ "lumibot_version": "4.6.30",
+ "lumibot_fee_per_contract_side": 2.875,
+ "lumibot": {
+  "final_equity": 103945.25,
+  "net_return_pct": 3.95,
+  "max_drawdown_pct": 1.59,
+  "entry_signals": 32,
+  "fills": 64,
+  "rolls": 0,
+  "lumibot_reported": {
+   "cagr": 0.009498358759161274,
+   "volatility": 0.01564634862769625,
+   "sharpe": 0.6070655195773815,
+   "max_drawdown": "{'drawdown': np.float64(0.01590518178762781), 'date': Timestamp('2020-02-26 00:00:00-0500', tz='America/New_York')}",
+   "romad": 0.5971864318174457,
+   "total_return": 0.039452499999999
+  }
+ },
+ "internal_engine": {
+  "start": "2019-11-22",
+  "end": "2023-12-29",
+  "years": 4.1,
+  "start_equity": 100000.0,
+  "end_equity": 103994.0,
+  "net_return_pct": 3.99,
+  "cagr_pct": 0.96,
+  "avg_monthly_return_pct": 0.079,
+  "median_monthly_return_pct": 0.0,
+  "pct_positive_months": 40.0,
+  "best_month_pct": 0.86,
+  "worst_month_pct": -0.98,
+  "months_ge_5pct": 0,
+  "max_drawdown_pct": 1.38,
+  "max_dd_duration_sessions": 331,
+  "sharpe": 0.85,
+  "sortino": 1.22,
+  "exposure_pct": 7.4,
+  "trades": 32,
+  "long_trades": 32,
+  "short_trades": 0,
+  "win_rate_pct": 71.9,
+  "profit_factor": 2.298,
+  "expectancy_usd": 124.81,
+  "expectancy_r": 0.171,
+  "avg_win_usd": 307.43,
+  "avg_loss_usd": -341.89,
+  "avg_sessions_held": 2.44,
+  "avg_calendar_days_held": 3.25,
+  "avg_contracts": 1.19,
+  "total_fees_usd": 76.0,
+  "total_roll_costs_usd": 0.0,
+  "longest_losing_streak": 2
+ },
+ "parity": {
+  "internal_entries": 32,
+  "lumibot_entries": 32,
+  "matching_entry_sessions": 32,
+  "only_internal": [],
+  "only_lumibot": []
+ },
+ "parity_equity": {
+  "days_compared": 1056,
+  "corr_daily_changes": 0.4137,
+  "corr_daily_changes_lb_lag1": 0.366,
+  "final_diff_usd": -48.75
+ }
+}
