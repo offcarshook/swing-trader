@@ -14,5 +14,21 @@
   "evaluation_number": 2,
   "override_reason": "secondary variant (stacking) pre-declared in the same commit as the primary; same window",
   "git": "d400ffb+dirty"
+ },
+ {
+  "ts": "2026-10-26T22:43:24+00:00",
+  "candidate_id": "mr_long_ibs0.2_s2_none_h3_x5+mr_long_bb_low0_s1.5_1R_h3+mr_long_wr-90_s1.5_1R_h3+mr_long_key_rev0_s1.5_1R_h3+mr_long_mon_down0_s2_none_h3_x5",
+  "hash": "9d1f81a91551135f",
+  "evaluation_number": 3,
+  "override_reason": "corrected price basis (raw fills + dividends) rerun on the 2021+ window that round 3 already evaluated; reported as previously viewed, not as an untouched holdout",
+  "git": "77efd2e+dirty"
+ },
+ {
+  "ts": "2026-10-26T23:09:30+00:00",
+  "candidate_id": "gap_long_go1_s1_1.5R_h2+mr_long_bb_low0_s2_none_h3_x5+mr_long_low70_s2_none_h3_x5+mr_long_wr-90_s2_none_h3_x5+mr_long_key_rev0_s1.5_1R_h3+mr_long_mon_down0_s2_none_h3_x5+mrshort_short_up30_s2_none_h3_x5",
+  "hash": "4a875e67a82950ec",
+  "evaluation_number": 4,
+  "override_reason": "corrected price basis (raw fills + dividends) rerun on the 2021+ window that round 3 already evaluated; reported as previously viewed, not as an untouched holdout",
+  "git": "d6a3ccd+dirty"
  }
 ]
