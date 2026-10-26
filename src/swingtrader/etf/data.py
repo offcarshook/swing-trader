@@ -55,7 +55,13 @@ def parse_csv(src) -> pd.DataFrame:
             df[c] = df[c] * ratio
     if "volume" not in df.columns:
         df["volume"] = 0
-    return df[COLS].astype(float).sort_index()[lambda d: ~d.index.duplicated()]
+    df = df[COLS].astype(float).sort_index()[lambda d: ~d.index.duplicated()]
+    # snap float-rounding noise (adjusted prices) so high/low always contain open/close
+    oc_max, oc_min = df[["open", "close"]].max(axis=1), df[["open", "close"]].min(axis=1)
+    tiny = 1e-6 * df["close"].abs()
+    df.loc[(df["high"] < oc_max) & (oc_max - df["high"] <= tiny), "high"] = oc_max
+    df.loc[(df["low"] > oc_min) & (df["low"] - oc_min <= tiny), "low"] = oc_min
+    return df
 
 
 def fetch_basket(out_dir: Path, symbols=BASKET, outputsize: str = "compact", pause: float = 2.0,

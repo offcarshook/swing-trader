@@ -1,0 +1,20 @@
+{
+ "SPY": {
+  "rows": 8210,
+  "first": "1993-02-01",
+  "last": "2025-09-11",
+  "years": 32.61,
+  "bad_ohlc_rows": 0,
+  "max_calendar_gap_days": 7,
+  "usable": true
+ },
+ "QQQ": {
+  "rows": 6932,
+  "first": "1999-03-10",
+  "last": "2026-09-29",
+  "years": 27.56,
+  "bad_ohlc_rows": 0,
+  "max_calendar_gap_days": 7,
+  "usable": true
+ }
+}
