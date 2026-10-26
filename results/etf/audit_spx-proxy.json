@@ -1,0 +1,11 @@
+{
+ "SPY": {
+  "rows": 4693,
+  "first": "2008-01-02",
+  "last": "2026-10-20",
+  "years": 18.8,
+  "bad_ohlc_rows": 0,
+  "max_calendar_gap_days": 5,
+  "usable": true
+ }
+}

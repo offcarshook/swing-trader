@@ -1,0 +1,30 @@
+# ETF swing phase (1-3 day holds). PRE-REGISTERED before any backtest of this phase ran.
+# Splits, gates and the candidate grid (swingtrader/etf/strategies.py:grid) are fixed;
+# changing them after the final test has been run is tuning on test data.
+seed: 7
+basket: [SPY, QQQ, IWM, DIA, TLT, IEF, GLD, SLV, USO, XLE, XLF, XLK, SMH, EFA, EEM]
+data:
+  av_dir: data/raw/etf_av          # Alpha Vantage CSVs (free key: latest ~100 sessions only)
+  full_dir: data/raw/etf_full      # drop full-history CSVs here (any date,open,high,low,close[,adj close])
+  raw_dir: data/raw                # pinned SPX 1-min (SPY proxy)
+splits:
+  train_start: "2008-01-01"        # indicators warm up on 2007 bars when available
+  train_end:   "2020-12-31"
+  final_start: "2021-01-01"        # touched once, after selection (HoldoutGuard)
+  final_end:   "2026-12-31"
+risk:
+  equity: 100000.0
+  risk_pct: 1.0                    # 1% of equity lost if the initial stop is hit
+  max_open_risk_pct: 4.0           # portfolio cap: sum of open initial risk
+  max_gross: 2.0                   # gross notional / equity (Reg-T margin)
+costs:
+  commission_per_share: 0.005
+  slip_bps: 1.0                    # SPY/QQQ/IWM/DIA/TLT/IEF/GLD/XLF/XLK/EFA, per side
+  slip_bps_wide: 3.0               # SLV/USO/XLE/SMH/EEM
+  stop_extra_bps: 2.0              # stops trigger into momentum
+gates:                             # evaluated at 2x costs on TRAIN only
+  min_trades: 30
+  min_pf: 1.2
+  min_fold_share: 0.6              # share of yearly folds (>=3 trades) with positive P&L
+  random_pctile: 90
+  random_seeds: 100

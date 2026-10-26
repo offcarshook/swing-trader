@@ -109,6 +109,54 @@ def cmd_agent(cfg, args):
     print(json.dumps(research_cli(cfg, args.date, dry_run=args.dry_run), indent=1, default=str))
 
 
+def _etf_bars(ecfg, source):
+    from swingtrader.etf import data as ed
+    if source == "spx-proxy":
+        return {"SPY": ed.spx_daily_proxy(resolve(ecfg["data"]["raw_dir"]))}
+    return ed.load_basket(resolve(ecfg["data"]["full_dir" if source == "full" else "av_dir"]), ecfg["basket"])
+
+
+def cmd_etf(cfg, args):
+    from swingtrader.etf import data as ed
+    from swingtrader.etf import report as er
+    from swingtrader.etf.research import evaluate_train, final_test, selection_hash
+    from swingtrader.research.experiments import ExperimentLog, HoldoutGuard
+    ecfg = load_config(resolve("config/etf.yaml"))
+    out = resolve("results/etf")
+    out.mkdir(parents=True, exist_ok=True)
+    tag = args.source
+    if args.step == "fetch":
+        print(json.dumps(ed.fetch_basket(resolve(ecfg["data"]["av_dir"]), ecfg["basket"]), indent=1))
+        return
+    bars = _etf_bars(ecfg, args.source)
+    if args.step == "audit":
+        a = ed.audit(bars)
+        (out / f"audit_{tag}.json").write_text(json.dumps(a, indent=1))
+        print(json.dumps(a, indent=1))
+    elif args.step == "select":
+        sel = evaluate_train(ecfg, bars, seeds=args.random_seeds)
+        sel["hash"] = selection_hash(sel)
+        (out / f"train_selection_{tag}.json").write_text(json.dumps(sel, indent=1, default=str))
+        er.write(out / f"TRAIN_{tag}.md", er.train_md(sel, tag))
+        ExperimentLog("results/etf/experiment_log.jsonl").append(f"etf_train_{tag}", {
+            "selected": sel["selected"], "hash": sel["hash"],
+            "passed": [c["id"] for c in sel["candidates"] if c["passed"]]}, ecfg)
+        print("selected:", sel["selected"])
+    elif args.step == "final":
+        sel = json.loads((out / f"train_selection_{tag}.json").read_text())
+        if not sel["selected"]:
+            sys.exit("no candidate passed the training gates - there is nothing to test")
+        HoldoutGuard(f"results/etf/holdout_registry_{tag}.json").authorize(
+            "+".join(sel["selected"]), sel["hash"], args.override_reason)
+        res, run = final_test(ecfg, bars, sel)
+        (out / f"final_{tag}.json").write_text(json.dumps(res, indent=1, default=str))
+        run.trades.to_csv(out / f"final_trades_{tag}.csv", index=False)
+        run.equity.to_csv(out / f"final_equity_{tag}.csv")
+        er.write(out / f"FINAL_{tag}.md", er.final_md(res, sel, tag))
+        ExperimentLog("results/etf/experiment_log.jsonl").append(f"etf_final_{tag}", res, ecfg)
+        print(json.dumps(res["costs_1x"], indent=1))
+
+
 def cmd_paper(cfg, args):
     from swingtrader.paper.runner import run_paper
     print(json.dumps(run_paper(cfg, as_of=args.as_of, dry_run=args.dry_run, mode=args.mode, start=args.start),
@@ -136,6 +184,11 @@ def main(argv=None):
     p = sub.add_parser("agent-research", help="TradingAgents thesis for a date (separate env)")
     p.add_argument("--date", required=True)
     p.add_argument("--dry-run", action="store_true")
+    p = sub.add_parser("etf", help="ETF 1-3 day phase: fetch | audit | select | final")
+    p.add_argument("step", choices=["fetch", "audit", "select", "final"])
+    p.add_argument("--source", choices=["av", "full", "spx-proxy"], default="full")
+    p.add_argument("--random-seeds", type=int, default=None)
+    p.add_argument("--override-reason", default=None)
     p = sub.add_parser("paper", help="paper-trading step (requires a promoted candidate)")
     p.add_argument("--as-of", default=None)
     p.add_argument("--dry-run", action="store_true")
@@ -144,7 +197,7 @@ def main(argv=None):
     args = ap.parse_args(argv)
     cfg = load_config(args.config)
     {"download": cmd_download, "data": cmd_data, "select": cmd_select, "holdout": cmd_holdout, "report": cmd_report,
-     "lumibot-backtest": cmd_lumibot, "agent-research": cmd_agent, "paper": cmd_paper}[args.cmd](cfg, args)
+     "lumibot-backtest": cmd_lumibot, "agent-research": cmd_agent, "paper": cmd_paper, "etf": cmd_etf}[args.cmd](cfg, args)
 
 
 if __name__ == "__main__":
