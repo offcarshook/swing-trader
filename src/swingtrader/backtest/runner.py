@@ -20,12 +20,22 @@ def components(cfg: dict, cost_multiplier: float = 1.0, risk_overrides: dict | N
     return spec, costs, risk
 
 
+_REGIME_CACHE: dict = {}
+
+
+def regimes_for(bars: pd.DataFrame) -> pd.Series:
+    key = (id(bars), len(bars), bars.index[-1], float(bars["close"].iloc[-1]))
+    if key not in _REGIME_CACHE:
+        _REGIME_CACHE[key] = classify(bars)["regime"]
+    return _REGIME_CACHE[key]
+
+
 def run_candidate(cfg: dict, bars: pd.DataFrame, family: str, params: dict, start, end,
                   cost_multiplier: float = 1.0, risk_overrides: dict | None = None,
                   entry_filter=None) -> BacktestResult:
     spec, costs, risk = components(cfg, cost_multiplier, risk_overrides)
     strat = make_strategy(family, params, cfg)
-    regimes = classify(bars)["regime"]
+    regimes = regimes_for(bars)
     return run_backtest(bars, strat, spec, costs, risk, start, end, cfg["account"]["starting_equity"],
                         entry_filter=entry_filter, regimes=regimes, instrument=cfg["instrument"])
 

@@ -1,0 +1,124 @@
+"""Command-line entry point: `swingtrader <command>` (or `python -m swingtrader`)."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import logging
+import sys
+from pathlib import Path
+
+from swingtrader.config import load_config, resolve
+
+
+def _load_json(name: str) -> dict:
+    p = resolve("results") / name
+    if not p.exists():
+        sys.exit(f"{p} not found - run the previous step first")
+    return json.loads(p.read_text())
+
+
+def cmd_download(cfg, args):
+    from swingtrader.data.sources import CORE_SOURCES, download
+    for key in CORE_SOURCES:
+        p = download(key, resolve(cfg["data"]["raw_dir"]), force=args.force)
+        print(f"{key}: {p}")
+
+
+def cmd_data(cfg, args):
+    from swingtrader.data.pipeline import build_all
+    from swingtrader.research import report
+    q = build_all(cfg)
+    report.write("DATA_QUALITY.md", report.data_report(q))
+    print("wrote results/data_quality.json and results/DATA_QUALITY.md")
+
+
+def cmd_select(cfg, args):
+    from swingtrader.data.pipeline import load_sessions
+    from swingtrader.research import report
+    from swingtrader.research.experiments import ExperimentLog
+    from swingtrader.research.selection import run_selection
+    mes, spx = load_sessions(cfg), load_sessions(cfg, "spx_sessions")
+    print("Evaluating candidates on TRAINING windows only ...")
+    sel, evals = run_selection(cfg, mes, spx, n_random=args.random_seeds)
+    (resolve("results") / "train_selection.json").write_text(json.dumps(sel, indent=1, default=str))
+    report.write("TRAIN_REPORT.md", report.train_report(sel))
+    top = sel["selected"] or sel["top_ranked_if_none_passed"]
+    for e in evals:
+        if e["id"] == top["id"]:
+            e["trades"].to_csv(resolve("results") / "train_trades_top.csv", index=False)
+    ExperimentLog().append("train_selection", {
+        "selected": sel["selected"], "top_ranked_if_none_passed": sel["top_ranked_if_none_passed"],
+        "candidates": [{k: c[k] for k in ("id", "passed", "trades", "profit_factor", "median_fold_sharpe",
+                                          "random_pctile", "failures")} for c in sel["candidates"]]}, cfg)
+    print(f"selected: {sel['selected']}\nwrote results/train_selection.json, results/TRAIN_REPORT.md")
+
+
+def cmd_holdout(cfg, args):
+    from swingtrader.data.pipeline import load_sessions
+    from swingtrader.research import report
+    from swingtrader.research.experiments import ExperimentLog
+    from swingtrader.research.holdout import evaluate_holdout
+    sel = _load_json("train_selection.json")
+    h = evaluate_holdout(cfg, load_sessions(cfg), sel, override_reason=args.override_reason)
+    (resolve("results") / "holdout_result.json").write_text(json.dumps(h, indent=1, default=str))
+    (resolve("results") / "promotion.json").write_text(json.dumps(
+        {"candidate": h["candidate"], "family": h["family"], "params": h["params"], "hash": h["hash"],
+         **h["promotion"]}, indent=1))
+    report.write("HOLDOUT_REPORT.md", report.holdout_report(h))
+    ExperimentLog().append("holdout_evaluation", {"candidate": h["candidate"], "summary": h["summary"],
+                                                  "promotion": h["promotion"],
+                                                  "evaluation_number": h["holdout_access"]["evaluation_number"]}, cfg)
+    print(json.dumps({"candidate": h["candidate"], **{k: h["summary"][k] for k in (
+        "net_return_pct", "avg_monthly_return_pct", "max_drawdown_pct", "trades", "profit_factor")},
+        "promotion": h["promotion"]}, indent=1))
+
+
+def cmd_lumibot(cfg, args):
+    from swingtrader.lumibot_bridge.run_backtest import run_lumibot_backtest
+    res = run_lumibot_backtest(cfg, args.start, args.end, family=args.family, params_json=args.params)
+    print(json.dumps(res, indent=1, default=str))
+
+
+def cmd_agent(cfg, args):
+    from swingtrader.agents.adapter import research_cli
+    print(json.dumps(research_cli(cfg, args.date, dry_run=args.dry_run), indent=1, default=str))
+
+
+def cmd_paper(cfg, args):
+    from swingtrader.paper.runner import run_paper
+    print(json.dumps(run_paper(cfg, as_of=args.as_of, dry_run=args.dry_run, mode=args.mode), indent=1, default=str))
+
+
+def main(argv=None):
+    logging.basicConfig(level=logging.WARNING, format="%(levelname)s %(name)s: %(message)s")
+    ap = argparse.ArgumentParser(prog="swingtrader")
+    ap.add_argument("--config", default=None)
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    p = sub.add_parser("download", help="download pinned data files (sha256-verified)")
+    p.add_argument("--force", action="store_true")
+    sub.add_parser("data", help="build session bars + data-quality report")
+    p = sub.add_parser("select", help="evaluate candidates on TRAINING data and select one")
+    p.add_argument("--random-seeds", type=int, default=100)
+    p = sub.add_parser("holdout", help="evaluate the selected candidate ONCE on the unseen holdout")
+    p.add_argument("--override-reason", default=None)
+    p = sub.add_parser("lumibot-backtest", help="re-run a candidate through LumiBot's backtester")
+    p.add_argument("--start", default=None)
+    p.add_argument("--end", default=None)
+    p.add_argument("--family", default=None)
+    p.add_argument("--params", default=None, help="JSON params (default: promoted/selected candidate)")
+    p = sub.add_parser("agent-research", help="TradingAgents thesis for a date (separate env)")
+    p.add_argument("--date", required=True)
+    p.add_argument("--dry-run", action="store_true")
+    p = sub.add_parser("paper", help="paper-trading step (requires a promoted candidate)")
+    p.add_argument("--as-of", default=None)
+    p.add_argument("--dry-run", action="store_true")
+    p.add_argument("--mode", choices=["local", "lumibot"], default="local")
+    args = ap.parse_args(argv)
+    cfg = load_config(args.config)
+    {"download": cmd_download, "data": cmd_data, "select": cmd_select, "holdout": cmd_holdout,
+     "lumibot-backtest": cmd_lumibot, "agent-research": cmd_agent, "paper": cmd_paper}[args.cmd](cfg, args)
+
+
+if __name__ == "__main__":
+    main()

@@ -65,7 +65,8 @@ class RandomEntry(Strategy):
         if pos.side == 0:
             if self._rng.random() < p["p_entry"] and np.isfinite(r.atr):
                 self._hold = int(self._rng.choice(p["hold_days"]))
-                return Decision(entry_side=p["side"], stop_distance=p["stop_atr"] * r.atr, reason="random")
+                side = -1 if self._rng.random() < p.get("p_short", 0.0) else p.get("side", 1)
+                return Decision(entry_side=side, stop_distance=p["stop_atr"] * r.atr, reason="random")
             return Decision()
         if pos.bars_held >= (self._hold or 1):
             return Decision(exit=True, reason="random hold elapsed")

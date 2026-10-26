@@ -60,7 +60,8 @@ SOURCES: dict[str, PinnedFile] = {
         "(b) cross-check of MES returns.",
     ),
     "vix_daily": PinnedFile(
-        "vix_daily", *_THILLSSS, "VIX_daily.txt", None,
+        "vix_daily", *_THILLSSS, "VIX_daily.txt",
+        "7501b8302b66986a1b9e31d0c52198a159d3d2e6fb99b893259bbeb408ec4ef3",
         "CBOE VIX daily", "Early years carry O=H=L=C (close only).",
     ),
     "mnq_1m": PinnedFile(
